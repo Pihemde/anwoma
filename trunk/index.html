@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style type="text/css">
+    	canvas {
+    		border: solid 1px black;
+    	}
+    </style>
+    <script type="text/javascript" src="images.js"></script>
+    <script>
+    	const IMAGE_FOLDER = 'images/';
+    
+	function display() {
+		var canvas = document.getElementById("myCanvas");
+		var context = canvas.getContext("2d");
+		context.drawImage(IMAGES[0].object, 0, 0);
+	}
+    
+	window.onload = function() {
+		preload(IMAGE_FOLDER, display);
+	};
+    </script>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="578" height="200"></canvas>
+  </body>
+</html>
