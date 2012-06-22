@@ -1,31 +1,42 @@
-var IMAGES = [
-	{
-		name: 'herbe1',
+var IMAGES = {
+	herbe1: {
 		src: 'terrains/Land1a_00002.png',
 		width: 1,
 		height: 1
 	},
-	{
-		name: 'herbe2',
+	herbe2 :{
 		src: 'terrains/Land1a_00003.png',
 		width: 1,
 		height: 1
 	},
-	{
-		name: 'herbe3',
+	herbe3: {
 		src: 'terrains/Land1a_00004.png',
 		width: 1,
 		height: 1
+	},
+	panneau1: {
+		src: 'terrains/land3a_00092.png',
+		width: 1,
+		height: 1,
+		buildable: false
+	},
+	grenierplein: {
+		src: 'grenier/grenier-plein.png',
+		width: 1,
+		height: 1
 	}
-];
+};
 
 function preload(folder, callback) {
 	var loadedImages = 0;
-	for(var i = 0 ; i < IMAGES.length ; i++) {
-		var image = IMAGES[0];
+	var nbImages = 0;
+	for(var i in IMAGES) {
+		nbImages++;
+		var image = IMAGES[i];
+	console.log(image);
 		object = new Image();
 		object.onload = function() {
-			if(++loadedImages >= IMAGES.length) {
+			if(++loadedImages >= nbImages) {
 				callback();
 			}
 		}
