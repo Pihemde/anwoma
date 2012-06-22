@@ -22,8 +22,16 @@
     <script type="text/javascript" src="map.js"></script>
     <script>
     	const IMAGE_FOLDER = '../images/';
+    	
+    	/*
+    	 * xxx_WIDTH, xxx_HEIGHT => nombre de pixels
+    	 */
     	const SQUARE_WIDTH = 58;
     	const SQUARE_HEIGHT = 30;
+    	
+    	/*
+    	 * xxx_SIZE => nombre de cases
+    	 */
     	const MAP_SIZE = MAP.length;
     
 		window.onload = function() {
@@ -72,8 +80,8 @@
 		function paintLand(context) {
 			for (var y = 0 ; y < MAP_SIZE ; y++) {
 				for (var x = 0 ; x < MAP_SIZE ; x++) {
-					var posx = (SQUARE_WIDTH*MAP_SIZE)*0.5 + SQUARE_WIDTH*0.5*(x-1) - SQUARE_WIDTH*0.5*y;
-					var posy = SQUARE_HEIGHT*0.5*y + SQUARE_HEIGHT*0.5*x + 30;
+					var posx = MAP_SIZE * SQUARE_WIDTH * 0.5 + SQUARE_WIDTH * 0.5 * (x - 1) - SQUARE_WIDTH*0.5*y;
+					var posy = SQUARE_HEIGHT * 0.5 * y + SQUARE_HEIGHT * 0.5 * x + 15;
 					var image = MAP[y][x];
 					afficherImage(context, image, posx, posy);
 				}
@@ -81,15 +89,34 @@
 		}	
 
 		function paintGrid(context) {
-			for(var i = 0 ; i < MAP_SIZE ; i++) {
-				
+			var xa, xb, ya, yb;
+			context.lineWidth = 0.5;
+			context.strokeStyle = "#ff0000";
+			for(var i = 0 ; i <= MAP_SIZE ; i++) {
+				context.beginPath();
+				xa = MAP_SIZE * SQUARE_WIDTH * 0.5  + SQUARE_WIDTH * 0.5 * i;
+				ya = SQUARE_HEIGHT * 0.5 * i;
+				context.moveTo(xa, ya);
+				xb = SQUARE_WIDTH * 0.5 * i;
+				yb = MAP_SIZE * SQUARE_HEIGHT * 0.5 + SQUARE_HEIGHT * 0.5 * i;
+				context.lineTo(xb, yb);
+		        context.stroke();
+
+				context.beginPath();
+				xa = SQUARE_WIDTH * 0.5 * i;
+				ya = MAP_SIZE * SQUARE_HEIGHT * 0.5 - SQUARE_HEIGHT * 0.5 * i;
+				context.moveTo(xa, ya);
+				xb = MAP_SIZE * SQUARE_WIDTH * 0.5  + SQUARE_WIDTH * 0.5 * i;
+				yb = MAP_SIZE * SQUARE_HEIGHT - SQUARE_HEIGHT * 0.5 * i;
+				context.lineTo(xb, yb);
+		        context.stroke();
 			}	
 		}
 	
 		function afficherImage(context, image, x, y) {
 			if(!!image) {
-				y = y - image.object.height;
-				x = x + (58-image.object.width)/2;
+				// x = x + (58-image.object.width)/2;
+				y = y - image.object.height / 2;
 				context.drawImage(image.object, x, y);
 			}
 		}
@@ -104,6 +131,16 @@
 				tr.appendChild(td);
 				var image = document.createElement('img');
 				image.src = IMAGE_FOLDER + TERRAINS[i].src;
+				td.appendChild(image);
+			}
+			for(var i in BUILDINGS) {
+				var tr = document.createElement('tr');
+				table.appendChild(tr);
+				var td = document.createElement('td');
+				td.className = 'object';
+				tr.appendChild(td);
+				var image = document.createElement('img');
+				image.src = IMAGE_FOLDER + BUILDINGS[i].src;
 				td.appendChild(image);
 			}
 		}
