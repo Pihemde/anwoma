@@ -20,10 +20,16 @@ var IMAGES = {
 		height: 1,
 		buildable: false
 	},
+	rocher1: {
+		src: 'terrains/land3a_00083.png',
+		width: 3,
+		height: 3,
+		buildable: false
+	},
 	grenierplein: {
 		src: 'grenier/grenier-plein.png',
-		width: 1,
-		height: 1
+		width: 3,
+		height: 2
 	}
 };
 
@@ -33,7 +39,6 @@ function preload(folder, callback) {
 	for(var i in IMAGES) {
 		nbImages++;
 		var image = IMAGES[i];
-	console.log(image);
 		object = new Image();
 		object.onload = function() {
 			if(++loadedImages >= nbImages) {

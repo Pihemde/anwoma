@@ -23,19 +23,14 @@
 		}	
 
 		function afficherPlateau(context) {
-			for (var y = 0 ; y < MAP.length ; y++) {
-				for (var x = 0 ; x < MAP[y].length ; x++) {
-					var posx = (58*MAP[y].length)*0.5 + 58*0.5*(x-1) - 58*0.5*y;
-					var posy = 30*0.5*y + 30*0.5*x + 50;
-					var image = MAP[y][x];
-					afficherImage(context, image, posx, posy);
-				}
-			}
 			for (var y = 0 ; y < BUILDINGS.length ; y++) {
 				for (var x = 0 ; x < BUILDINGS[y].length ; x++) {
 					var posx = (58*BUILDINGS[y].length)*0.5 + 58*0.5*(x-1) - 58*0.5*y;
 					var posy = 30*0.5*y + 30*0.5*x + 50;
 					var image = BUILDINGS[y][x];
+					if(image == undefined) {
+						image = MAP[y][x];
+					}
 					afficherImage(context, image, posx, posy);
 				}
 			}
