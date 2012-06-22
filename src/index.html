@@ -80,13 +80,21 @@
 		function paintLand(context) {
 			for (var y = 0 ; y < MAP_SIZE ; y++) {
 				for (var x = 0 ; x < MAP_SIZE ; x++) {
-					var posx = MAP_SIZE * SQUARE_WIDTH * 0.5 + SQUARE_WIDTH * 0.5 * (x - 1) - SQUARE_WIDTH*0.5*y;
-					var posy = SQUARE_HEIGHT * 0.5 * y + SQUARE_HEIGHT * 0.5 * x + 15;
 					var image = MAP[y][x];
-					afficherImage(context, image, posx, posy);
+					if(!!image) {
+						var posx = MAP_SIZE * SQUARE_WIDTH * 0.5 + SQUARE_WIDTH * 0.5 * (x - 1) - SQUARE_WIDTH * 0.5 * y;
+						var posy = SQUARE_HEIGHT * 0.5 * y + SQUARE_HEIGHT * 0.5 * x + 15;
+						paintObject(context, image, posx, posy);
+					}
 				}
 			}
-		}	
+		}
+	
+		function paintObject(context, image, x, y) {
+			x += (SQUARE_WIDTH - image.object.width) * 0.5;
+			y -= image.object.height * 0.5 + (image.object.height - SQUARE_HEIGHT) * 0.5;
+			context.drawImage(image.object, x, y);
+		}
 
 		function paintGrid(context) {
 			var xa, xb, ya, yb;
@@ -111,14 +119,6 @@
 				context.lineTo(xb, yb);
 		        context.stroke();
 			}	
-		}
-	
-		function afficherImage(context, image, x, y) {
-			if(!!image) {
-				// x = x + (58-image.object.width)/2;
-				y = y - image.object.height / 2;
-				context.drawImage(image.object, x, y);
-			}
 		}
 
 		function fillObjectList() {
