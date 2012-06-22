@@ -35,4 +35,4 @@ var BUILDINGS = {
 		width: 3,
 		height: 3
 	}	
-}
+};
