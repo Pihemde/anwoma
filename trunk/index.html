@@ -7,21 +7,51 @@
     	}
     </style>
     <script type="text/javascript" src="images.js"></script>
+    <script type="text/javascript" src="map.js"></script>
+    <script type="text/javascript" src="buildings.js"></script>
     <script>
     	const IMAGE_FOLDER = 'images/';
     
-	function display() {
-		var canvas = document.getElementById("myCanvas");
-		var context = canvas.getContext("2d");
-		context.drawImage(IMAGES[0].object, 0, 0);
-	}
-    
-	window.onload = function() {
-		preload(IMAGE_FOLDER, display);
-	};
+		window.onload = function() {
+			preload(IMAGE_FOLDER, display);
+		};
+		
+		function display() {
+			var canvas = document.getElementById("myCanvas");
+			var context = canvas.getContext("2d");
+			afficherPlateau(context);
+		}	
+
+		function afficherPlateau(context) {
+			for (var y = 0 ; y < MAP.length ; y++) {
+				for (var x = 0 ; x < MAP[y].length ; x++) {
+					var posx = (58*MAP[y].length)*0.5 + 58*0.5*(x-1) - 58*0.5*y;
+					var posy = 30*0.5*y + 30*0.5*x + 50;
+					var image = MAP[y][x];
+					afficherImage(context, image, posx, posy);
+				}
+			}
+			for (var y = 0 ; y < BUILDINGS.length ; y++) {
+				for (var x = 0 ; x < BUILDINGS[y].length ; x++) {
+					var posx = (58*BUILDINGS[y].length)*0.5 + 58*0.5*(x-1) - 58*0.5*y;
+					var posy = 30*0.5*y + 30*0.5*x + 50;
+					var image = BUILDINGS[y][x];
+					afficherImage(context, image, posx, posy);
+				}
+			}
+		}
+	
+		function afficherImage(context, image, x, y) {
+			if(!!image) {
+				y = y - image.object.height;
+				x = x + (58-image.object.width)/2;
+				context.drawImage(image.object, x, y);
+			}
+		}
+
     </script>
   </head>
   <body>
-    <canvas id="myCanvas" width="578" height="200"></canvas>
+    <canvas id="myCanvas" width="986" height="768"></canvas>
   </body>
 </html>
