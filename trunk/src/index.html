@@ -8,10 +8,8 @@
     	}
     	
     	#objectList {
-    		position: absolute;
-    		right : 0px;
-    		top: 0px;
     		border: solid 1px black;
+    		float: left;
     	}
     	
     	.object {
@@ -33,13 +31,50 @@
     	 * xxx_SIZE => nombre de cases
     	 */
     	const MAP_SIZE = MAP.length;
+    	 
+		var canvas = undefined;
+		var mousePosition = {
+				x: 0,
+				y: 0
+		};
     
 		window.onload = function() {
+			canvas = document.getElementById("canvas");
+			
 			/*
 			 * On commence par précharger les images avant toute chose 
 			 */
 			preloadImages(IMAGE_FOLDER, main);
+			
+			canvas.addEventListener('mousemove', onmousemove, false);
 		};
+		
+		onmousemove = function(evt){
+			// get canvas position
+		    var top = 0;
+		    var left = 0;
+	        top += canvas.offsetTop;
+	        left += canvas.offsetLeft;
+	        obj = canvas.offsetParent;
+		 
+		    // return relative mouse position
+		    mousePosition.x = evt.clientX - left + window.pageXOffset;
+		    mousePosition.y = evt.clientY - top + window.pageYOffset;
+		    console.log('mouse : ' + mousePosition.x + ' ; ' + mousePosition.y);
+
+		    var context = canvas.getContext("2d");
+
+	        context.beginPath();
+	        context.moveTo(mousePosition.x, mousePosition.y);
+	        context.lineTo(mousePosition.x + SQUARE_WIDTH * 0.5, mousePosition.y - SQUARE_HEIGHT * 0.5);
+	        context.lineTo(mousePosition.x, mousePosition.y - SQUARE_HEIGHT);
+	        context.lineTo(mousePosition.x - SQUARE_WIDTH * 0.5, mousePosition.y - SQUARE_HEIGHT * 0.5);
+	        context.lineTo(mousePosition.x, mousePosition.y);
+	        context.closePath();
+	        context.lineWidth = 5;
+	        context.strokeStyle = "blue";
+	        context.stroke();
+		}
 
 		function preloadImages(folder, callback) {
 			var loadedImages = 0;
@@ -71,7 +106,6 @@
 		}
 		
 		function paint() {
-			var canvas = document.getElementById("canvas");
 			var context = canvas.getContext("2d");
 			paintLand(context);
 			paintGrid(context);
