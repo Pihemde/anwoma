@@ -159,7 +159,11 @@ canvas {
 		
 		var c = fromRealCoord([mousePosition.x, mousePosition.y]);
 		var x = c[0];
-		var y = c[1];		
+		var y = c[1];
+		
+		if(x < 0 || x > MAP_SIZE - 1 || y < 0 || y > MAP_SIZE - 1) {
+			return;
+		}
 
 		context.beginPath();
 		c = toRealCoord([x, y]);
