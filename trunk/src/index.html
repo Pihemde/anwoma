@@ -1,226 +1,245 @@
 <!DOCTYPE HTML>
 <html>
-  <head>
-    <style type="text/css">
-    	canvas {
-    		border: solid 1px black;
-    		float: left;
-    	}
-    	
-    	#objectList {
-    		border: solid 1px black;
-    		float: left;
-    	}
-    	
-    	.object {
-    		border: solid 1px black;
-    	}
-    </style>
-    <script type="text/javascript" src="images.js"></script>
-    <script type="text/javascript" src="map.js"></script>
-    <script>
-    	const IMAGE_FOLDER = '../images/';
-    	
-    	/*
-    	 * xxx_WIDTH, xxx_HEIGHT => nombre de pixels
-    	 */
-    	const SQUARE_WIDTH = 58;
-    	const SQUARE_HEIGHT = 30;
-    	
-    	/*
-    	 * xxx_SIZE => nombre de cases
-    	 */
-    	const MAP_SIZE = MAP.length;
-    	 
-		var canvas = undefined;
-		var mousePosition = {
-				x: 0,
-				y: 0
-		};
-    
-		window.onload = function() {
-			canvas = document.getElementById("canvas");
-			
-			/*
-			 * On commence par précharger les images avant toute chose 
-			 */
-			preloadImages(IMAGE_FOLDER, main);
-			
-			canvas.addEventListener('mousemove', onmousemove, false);
-		};
-		
-		onmousemove = function(evt){
-			// get canvas position
-		    var top = 0;
-		    var left = 0;
-	        top += canvas.offsetTop;
-	        left += canvas.offsetLeft;
-	        obj = canvas.offsetParent;
-		 
-		    // return relative mouse position
-		    mousePosition.x = evt.clientX - left + window.pageXOffset;
-		    mousePosition.y = evt.clientY - top + window.pageYOffset;
-		    //console.log('mouse : ' + mousePosition.x + ' ; ' + mousePosition.y);
-		}
+<head>
+<style type="text/css">
+canvas {
+	border: solid 1px black;
+	float: left;
+}
 
-		function preloadImages(folder, callback) {
-			var loadedImages = 0;
-			var imageCount = 0;
-			for(var i in TERRAINS) {
-				imageCount++;
-				var image = TERRAINS[i];
-				object = new Image();
-				object.onload = function() {
-					if(++loadedImages >= imageCount) {
-						callback();
-					}
-				}
-				object.src = folder + image.src;
-				image.object = object;
-			}
-		}
-		
-		function main() {
-			/*
-			 * On repli la liste de droite avec les images (terrains, batiments) dispos.
-			 */
-			fillObjectList();
-			
-			/*
-			 * On dessine le terrain
-			 */
-			setTimeout(paint, 100);
-		}
-		
-		function paint() {
-			var context = canvas.getContext("2d");
-			clear(context, canvas);
-			paintLand(context);
-			paintGrid(context);
-			paintMousePosition(context);
-			
+#objectList {
+	border: solid 1px black;
+	float: left;
+}
 
-			setTimeout(paint, 100);
-		}
-		
-		function clear(context, canvas) {
-			context.clearRect(0, 0, canvas.width, canvas.height);
-		}
-		
-		function paintLand(context) {
-			for (var y = 0 ; y < MAP_SIZE ; y++) {
-				for (var x = 0 ; x < MAP_SIZE ; x++) {
-					var image = MAP[y][x];
-					if(!!image) {
-						var posx = MAP_SIZE * SQUARE_WIDTH * 0.5 + SQUARE_WIDTH * 0.5 * (x - 1) - SQUARE_WIDTH * 0.5 * y;
-						var posy = SQUARE_HEIGHT * 0.5 * y + SQUARE_HEIGHT * 0.5 * x + 15;
-						paintObject(context, image, posx, posy);
-					}
+.object {
+	border: solid 1px black;
+}
+</style>
+<script type="text/javascript" src="images.js"></script>
+<script type="text/javascript" src="map.js"></script>
+<script>
+	const
+	IMAGE_FOLDER = '../images/';
+
+	/*
+	 * xxx_WIDTH, xxx_HEIGHT => nombre de pixels
+	 */
+	const
+	SQUARE_WIDTH = 58;
+	const
+	SQUARE_HEIGHT = 30;
+
+	/*
+	 * xxx_SIZE => nombre de cases
+	 */
+	const
+	MAP_SIZE = MAP.length;
+
+	var canvas = undefined;
+	var mousePosition = {
+		x : 0,
+		y : 0
+	};
+
+	window.onload = function() {
+		canvas = document.getElementById("canvas");
+
+		/*
+		 * On commence par précharger les images avant toute chose 
+		 */
+		preloadImages(IMAGE_FOLDER, main);
+
+		canvas.addEventListener('mousemove', onmousemove, false);
+	};
+
+	onmousemove = function(evt) {
+		// get canvas position
+		var top = 0;
+		var left = 0;
+		top += canvas.offsetTop;
+		left += canvas.offsetLeft;
+		obj = canvas.offsetParent;
+
+		// return relative mouse position
+		mousePosition.x = evt.clientX - left + window.pageXOffset;
+		mousePosition.y = evt.clientY - top + window.pageYOffset;
+		//console.log('mouse : ' + mousePosition.x + ' ; ' + mousePosition.y);
+	}
+
+	function preloadImages(folder, callback) {
+		var loadedImages = 0;
+		var imageCount = 0;
+		for ( var i in TERRAINS) {
+			imageCount++;
+			var image = TERRAINS[i];
+			object = new Image();
+			object.onload = function() {
+				if (++loadedImages >= imageCount) {
+					callback();
 				}
 			}
+			object.src = folder + image.src;
+			image.object = object;
 		}
-	
-		function paintObject(context, image, x, y) {
-			x += (SQUARE_WIDTH - image.object.width) * 0.5;
-			y -= image.object.height * 0.5 + (image.object.height - SQUARE_HEIGHT) * 0.5;
-			context.drawImage(image.object, x, y);
-		}
+	}
 
-		function paintGrid(context) {
-			var xa, xb, ya, yb;
-			context.lineWidth = 0.5;
-			context.strokeStyle = "#ff0000";
-			for(var i = 0 ; i <= MAP_SIZE ; i++) {
-				context.beginPath();
-				xa = MAP_SIZE * SQUARE_WIDTH * 0.5  + SQUARE_WIDTH * 0.5 * i;
-				ya = SQUARE_HEIGHT * 0.5 * i;
-				context.moveTo(xa, ya);
-				xb = SQUARE_WIDTH * 0.5 * i;
-				yb = MAP_SIZE * SQUARE_HEIGHT * 0.5 + SQUARE_HEIGHT * 0.5 * i;
-				context.lineTo(xb, yb);
-		        context.stroke();
+	function main() {
+		/*
+		 * On rempli la liste de droite avec les images (terrains, batiments) dispos.
+		 */
+		fillObjectList();
 
-				context.beginPath();
-				xa = SQUARE_WIDTH * 0.5 * i;
-				ya = MAP_SIZE * SQUARE_HEIGHT * 0.5 - SQUARE_HEIGHT * 0.5 * i;
-				context.moveTo(xa, ya);
-				xb = MAP_SIZE * SQUARE_WIDTH * 0.5  + SQUARE_WIDTH * 0.5 * i;
-				yb = MAP_SIZE * SQUARE_HEIGHT - SQUARE_HEIGHT * 0.5 * i;
-				context.lineTo(xb, yb);
-		        context.stroke();
-			}	
-		}
-	
-		function paintMousePosition(context) {
-			if(mousePosition.x == 0 && mousePosition.y == 0) {
-				return;
-			}
-			
-			var sw = SQUARE_WIDTH * 0.5;
-			var sh = SQUARE_HEIGHT * 0.5;
-			
-			function round(x, y) {
-				var mx = x % SQUARE_WIDTH; 
-				var my = y % SQUARE_HEIGHT;
-				if(my - mx < sw) { // L'erreur est là
-					return {
-						x: Math.round(x / SQUARE_WIDTH) * SQUARE_WIDTH,
-						y: Math.round(y / sh) * sh
-					}
-				} else {
-					return {
-						x: Math.round(x / sw) * sw,
-						y: Math.round(y / SQUARE_HEIGHT) * SQUARE_HEIGHT
-					}
+		/*
+		 * On dessine le terrain
+		 */
+		setTimeout(paint, 100);
+	}
+
+	function paint() {
+		var context = canvas.getContext("2d");
+		clear(context, canvas);
+		paintLand(context);
+		paintGrid(context);
+		paintMousePosition(context);
+
+		setTimeout(paint, 100);
+	}
+
+	function clear(context, canvas) {
+		context.clearRect(0, 0, canvas.width, canvas.height);
+	}
+
+	function paintLand(context) {
+		for ( var y = 0; y < MAP_SIZE; y++) {
+			for ( var x = 0; x < MAP_SIZE; x++) {
+				var image = MAP[y][x];
+				if (!!image) {
+					var posx = MAP_SIZE * SQUARE_WIDTH * 0.5 + SQUARE_WIDTH
+							* 0.5 * (x - 1) - SQUARE_WIDTH * 0.5 * y;
+					var posy = SQUARE_HEIGHT * 0.5 * y + SQUARE_HEIGHT * 0.5
+							* x + 15;
+					paintObject(context, image, posx, posy);
 				}
 			}
-			
-			var r = round(mousePosition.x, mousePosition.y);
-			var x = r.x;
-			var y = r.y;
-			
-	        context.beginPath();
-	        context.moveTo(x, y - sh);
-	        context.lineTo(x + sw, y);
-       		context.lineTo(x, y + sh);
-	        context.lineTo(x - sw, y);
-	        context.lineTo(x, y - sh);
-	        context.closePath();
-	        context.lineWidth = 5;
-	        context.fillStyle = "red";
-	        context.globalAlpha = 0.5;
-	        context.fill();
-	        context.globalAlpha = 1;
+		}
+	}
+
+	function paintObject(context, image, x, y) {
+		x += (SQUARE_WIDTH - image.object.width) * 0.5;
+		y -= image.object.height * 0.5 + (image.object.height - SQUARE_HEIGHT)
+				* 0.5;
+		context.drawImage(image.object, x, y);
+	}
+
+	function paintGrid(context) {
+		var xa, xb, ya, yb;
+		context.lineWidth = 0.5;
+		context.strokeStyle = "#ff0000";
+		for ( var i = 0; i <= MAP_SIZE; i++) {
+			context.beginPath();
+			xa = MAP_SIZE * SQUARE_WIDTH * 0.5 + SQUARE_WIDTH * 0.5 * i;
+			ya = SQUARE_HEIGHT * 0.5 * i;
+			context.moveTo(xa, ya);
+			xb = SQUARE_WIDTH * 0.5 * i;
+			yb = MAP_SIZE * SQUARE_HEIGHT * 0.5 + SQUARE_HEIGHT * 0.5 * i;
+			context.lineTo(xb, yb);
+			context.stroke();
+
+			context.beginPath();
+			xa = SQUARE_WIDTH * 0.5 * i;
+			ya = MAP_SIZE * SQUARE_HEIGHT * 0.5 - SQUARE_HEIGHT * 0.5 * i;
+			context.moveTo(xa, ya);
+			xb = MAP_SIZE * SQUARE_WIDTH * 0.5 + SQUARE_WIDTH * 0.5 * i;
+			yb = MAP_SIZE * SQUARE_HEIGHT - SQUARE_HEIGHT * 0.5 * i;
+			context.lineTo(xb, yb);
+			context.stroke();
+		}
+	}
+
+	function paintMousePosition(context) {
+		if (mousePosition.x == 0 && mousePosition.y == 0) {
+			return;
 		}
 
-		function fillObjectList() {
-			var table = document.getElementById("objectList");
-			for(var i in TERRAINS) {
-				var tr = document.createElement('tr');
-				table.appendChild(tr);
-				var td = document.createElement('td');
-				td.className = 'object';
-				tr.appendChild(td);
-				var image = document.createElement('img');
-				image.src = IMAGE_FOLDER + TERRAINS[i].src;
-				td.appendChild(image);
-			}
-			for(var i in BUILDINGS) {
-				var tr = document.createElement('tr');
-				table.appendChild(tr);
-				var td = document.createElement('td');
-				td.className = 'object';
-				tr.appendChild(td);
-				var image = document.createElement('img');
-				image.src = IMAGE_FOLDER + BUILDINGS[i].src;
-				td.appendChild(image);
+		var sw = SQUARE_WIDTH * 0.5;
+		var sh = SQUARE_HEIGHT * 0.5;
+
+		/*
+		 * Ici on va calculer le coordonnées de la case la lpus près afin de faire un effet "magnétique"  
+		 */
+		function round(x, y) {
+			var mx = x % SQUARE_WIDTH;
+			var my = y % SQUARE_HEIGHT;
+			var srx = Math.round(x / sw) * sw;
+			var sry = Math.round(y / sh) * sh;
+			var brx = Math.round(x / SQUARE_WIDTH) * SQUARE_WIDTH;
+			var bry = Math.round(y / SQUARE_HEIGHT) * SQUARE_HEIGHT;
+
+			/*
+			 * Etant donné qu'on est sur un losange, selon qu'on veuille aller une case à droite (ou gauche)
+			 * ou une case en bas (ou haut), les x vont prendre 0.5 ou 1 et inversement pour les y.
+			 */
+			if (brx - x < bry - y) { // L'erreur est là
+				return {
+					x : brx,
+					y : sry
+				}
+			} else {
+				return {
+					x : srx,
+					y : bry
+				}
 			}
 		}
-		
-    </script>
-  </head>
-  <body>
-    <canvas id="canvas" width="986" height="768"></canvas>
-    <table id="objectList"></table>
-  </body>
+
+		var r = round(mousePosition.x, mousePosition.y);
+		var x = r.x;
+		var y = r.y;
+
+		/*
+		 * Allez hop on dessine un losange centré sur la souris.
+		 */
+		context.beginPath();
+		context.moveTo(x, y - sh); // On se déplace sur le point supérieur (au dessus de la souris) 
+		context.lineTo(x + sw, y); // On trace jusqu'au point droit
+		context.lineTo(x, y + sh); // On trace jusqu'au point inférieur
+		context.lineTo(x - sw, y); // On trace jusqu'au point gauche
+		context.lineTo(x, y - sh); // On trace en revenant au point de départ
+		context.closePath();
+		context.fillStyle = "red";
+		context.globalAlpha = 0.5; // Transparence
+		context.fill(); // On rempli
+		context.globalAlpha = 1; // On la remet à sa valeur pas défaut pour les copains
+	}
+
+	function fillObjectList() {
+		var table = document.getElementById("objectList");
+		for ( var i in TERRAINS) {
+			var tr = document.createElement('tr');
+			table.appendChild(tr);
+			var td = document.createElement('td');
+			td.className = 'object';
+			tr.appendChild(td);
+			var image = document.createElement('img');
+			image.src = IMAGE_FOLDER + TERRAINS[i].src;
+			td.appendChild(image);
+		}
+		for ( var i in BUILDINGS) {
+			var tr = document.createElement('tr');
+			table.appendChild(tr);
+			var td = document.createElement('td');
+			td.className = 'object';
+			tr.appendChild(td);
+			var image = document.createElement('img');
+			image.src = IMAGE_FOLDER + BUILDINGS[i].src;
+			td.appendChild(image);
+		}
+	}
+</script>
+</head>
+<body>
+	<canvas id="canvas" width="986" height="768"></canvas>
+	<table id="objectList"></table>
+</body>
 </html>
