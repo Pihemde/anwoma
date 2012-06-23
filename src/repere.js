@@ -5,14 +5,14 @@ function toRealCoord(coord) {
 	var coord = $M([[coord[0]], [coord[1]]]);
 	coord = transform.multiply(coord);
 	
-	return [coord.elements[0][0] / Math.sqrt(2) * 58, coord.elements[1][0] / Math.sqrt(2) * 30];
+	return [coord.elements[0][0] / Math.sqrt(2) * 58 + SQUARE_WIDTH*MAP_SIZE/2, coord.elements[1][0] / Math.sqrt(2) * 30];
 }
 
 function fromRealCoord(coord) {
 	var angle = -Math.PI/4;
 
 	var transform = Matrix.Rotation(angle);
-	var coord = $M([[coord[0] / 58 * Math.sqrt(2)], [coord[1] / 30 * Math.sqrt(2)]]);
+	var coord = $M([[(coord[0] - SQUARE_WIDTH*MAP_SIZE/2) / 58 * Math.sqrt(2)], [coord[1] / 30 * Math.sqrt(2)]]);
 	coord = transform.multiply(coord);
 	
 	return [Math.floor(coord.elements[0][0]), Math.floor(coord.elements[1][0])];
