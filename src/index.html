@@ -20,10 +20,12 @@ canvas {
 <script type="text/javascript" src="repere.js"></script>
 <script type="text/javascript" src="images.js"></script>
 <script type="text/javascript" src="map.js"></script>
-<script type="text/javascript" src="matrix.js"></script>
 <script>
 	const
 	IMAGE_FOLDER = '../images/';
+	
+	const
+	REPAINT_DELAI = 50;
 
 	/*
 	 * xxx_WIDTH, xxx_HEIGHT => nombre de pixels
@@ -89,7 +91,7 @@ canvas {
 		/*
 		 * On dessine le terrain
 		 */
-		setTimeout(paint, 50);
+		paint();
 	}
 
 	function paint() {
@@ -99,7 +101,7 @@ canvas {
 		paintGrid(context);
 		paintMousePosition(context);
 
-		setTimeout(paint, 50);
+		setTimeout(paint, REPAINT_DELAI);
 	}
 
 	function clear(context, canvas) {
