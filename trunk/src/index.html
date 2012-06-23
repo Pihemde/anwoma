@@ -114,12 +114,6 @@ canvas {
 					var coord = toRealCoord([x, y]);
 					var posx = coord[0] - 29;
 					var posy = coord[1] + 15;
-/*
-					var posx = MAP_SIZE * SQUARE_WIDTH * 0.5 + SQUARE_WIDTH
-							* 0.5 * (x - 1) - SQUARE_WIDTH * 0.5 * y;
-					var posy = SQUARE_HEIGHT * 0.5 * y + SQUARE_HEIGHT * 0.5
-							* x + 15;
-//*/
 					paintObject(context, image, posx, posy);
 				}
 			}
