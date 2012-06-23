@@ -89,7 +89,7 @@ canvas {
 		/*
 		 * On dessine le terrain
 		 */
-		setTimeout(paint, 100);
+		setTimeout(paint, 50);
 	}
 
 	function paint() {
@@ -99,7 +99,7 @@ canvas {
 		paintGrid(context);
 		paintMousePosition(context);
 
-		setTimeout(paint, 100);
+		setTimeout(paint, 50);
 	}
 
 	function clear(context, canvas) {
@@ -128,7 +128,7 @@ canvas {
 	}
 
 	function paintGrid(context) {
-		var xa, xb, ya, yb;
+		var c;
 		context.lineWidth = 0.5;
 		context.strokeStyle = "#ff0000";
 		for ( var i = 0; i <= MAP_SIZE; i++) {
@@ -152,59 +152,29 @@ canvas {
 		if (mousePosition.x == 0 && mousePosition.y == 0) {
 			return;
 		}
+		
 		console.log(fromRealCoord([mousePosition.x, mousePosition.y]));
+		
+		var c = fromRealCoord([mousePosition.x, mousePosition.y]);
+		var x = c[0];
+		var y = c[1];		
 
-		var sw = SQUARE_WIDTH * 0.5;
-		var sh = SQUARE_HEIGHT * 0.5;
-
-		/*
-		 * Ici on va calculer les coordonnées de la case la plus près de la souris afin de faire un effet "magnétique"  
-		 */
-		function round(x, y) {
-			var mx = x % SQUARE_WIDTH;
-			var my = y % SQUARE_HEIGHT;
-			var srx = Math.round(x / sw) * sw;
-			var sry = Math.round(y / sh) * sh;
-			var brx = Math.round(x / SQUARE_WIDTH) * SQUARE_WIDTH;
-			var bry = Math.round(y / SQUARE_HEIGHT) * SQUARE_HEIGHT;
-
-// 			console.log('Modulos : ' + mx + ' ; ' + my);
-			
-			/*
-			 * Etant donné qu'on est sur un losange, selon qu'on veuille aller une case à droite
-			 * ou une case en bas, les x vont prendre 0.5 ou 1 et inversement pour les y.
-			 */
-			if (mx * SQUARE_HEIGHT > my * SQUARE_WIDTH) { // L'erreur est là 
-				return {
-					x : brx,
-					y : sry
-				}
-			} else {
-				return {
-					x : srx,
-					y : bry
-				}
-			}
-		}
-
-		var r = round(mousePosition.x, mousePosition.y);
-		var x = r.x;
-		var y = r.y;
-
-		/*
-		 * Allez hop on dessine un losange centré sur la souris.
-		 */
 		context.beginPath();
-		context.moveTo(x, y - sh); // On se déplace sur le point supérieur (au dessus de la souris) 
-		context.lineTo(x + sw, y); // On trace jusqu'au point droit 
-		context.lineTo(x, y + sh); // On trace jusqu'au point inférieur 
-		context.lineTo(x - sw, y); // On trace jusqu'au point gauche 
-		context.lineTo(x, y - sh); // On trace en revenant au point de départ 
+		c = toRealCoord([x, y]);
+		context.moveTo(c[0], c[1]);
+		c = toRealCoord([x + 1, y]);
+		context.lineTo(c[0], c[1]);
+		c = toRealCoord([x + 1, y + 1]); 
+		context.lineTo(c[0], c[1]);
+		c = toRealCoord([x, y + 1]);
+		context.lineTo(c[0], c[1]);
+		c = toRealCoord([x, y]);
+		context.lineTo(c[0], c[1]);
 		context.closePath();
 		context.fillStyle = "red";
 		context.globalAlpha = 0.5; // Transparence 
-		context.fill(); // On rempli 
-		context.globalAlpha = 1; // On la remet à sa valeur pas défaut pour les copains 
+		context.fill(); // On remplit 
+		context.globalAlpha = 1; // On la remet à sa valeur par défaut pour les copains 
 	}
 
 	function fillObjectList() {
