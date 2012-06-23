@@ -112,8 +112,8 @@ canvas {
 				var image = MAP[y][x];
 				if (!!image) {
 					var coord = toRealCoord([x, y]);
-					var posx = coord[0];
-					var posy = coord[1];
+					var posx = coord[0] - 29;
+					var posy = coord[1] + 15;
 /*
 					var posx = MAP_SIZE * SQUARE_WIDTH * 0.5 + SQUARE_WIDTH
 							* 0.5 * (x - 1) - SQUARE_WIDTH * 0.5 * y;
@@ -158,6 +158,7 @@ canvas {
 		if (mousePosition.x == 0 && mousePosition.y == 0) {
 			return;
 		}
+		console.log(fromRealCoord([mousePosition.x, mousePosition.y]));
 
 		var sw = SQUARE_WIDTH * 0.5;
 		var sh = SQUARE_HEIGHT * 0.5;
