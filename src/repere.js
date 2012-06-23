@@ -15,6 +15,6 @@ function fromRealCoord(coord) {
 	var coord = $M([[coord[0] / 58 * Math.sqrt(2)], [coord[1] / 30 * Math.sqrt(2)]]);
 	coord = transform.multiply(coord);
 	
-	return [Math.round(coord.elements[0][0]), Math.round(coord.elements[1][0])];
+	return [Math.floor(coord.elements[0][0]), Math.floor(coord.elements[1][0])];
 }
 
