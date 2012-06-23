@@ -60,7 +60,7 @@
 		    // return relative mouse position
 		    mousePosition.x = evt.clientX - left + window.pageXOffset;
 		    mousePosition.y = evt.clientY - top + window.pageYOffset;
-		    console.log('mouse : ' + mousePosition.x + ' ; ' + mousePosition.y);
+		    //console.log('mouse : ' + mousePosition.x + ' ; ' + mousePosition.y);
 		}
 
 		function preloadImages(folder, callback) {
@@ -156,17 +156,35 @@
 				return;
 			}
 			
-			function roundIt(val, r) {
-				var rounder = r - (0.5 * r);
-				return Math.floor(val / rounder) * rounder;
+			var sw = SQUARE_WIDTH * 0.5;
+			var sh = SQUARE_HEIGHT * 0.5;
+			
+			function round(x, y) {
+				var mx = x % SQUARE_WIDTH; 
+				var my = y % SQUARE_HEIGHT;
+				if(my - mx < sw) { // L'erreur est là
+					return {
+						x: Math.round(x / SQUARE_WIDTH) * SQUARE_WIDTH,
+						y: Math.round(y / sh) * sh
+					}
+				} else {
+					return {
+						x: Math.round(x / sw) * sw,
+						y: Math.round(y / SQUARE_HEIGHT) * SQUARE_HEIGHT
+					}
+				}
 			}
 			
+			var r = round(mousePosition.x, mousePosition.y);
+			var x = r.x;
+			var y = r.y;
+			
 	        context.beginPath();
-	        context.moveTo(roundIt(mousePosition.x, SQUARE_WIDTH) , roundIt(mousePosition.y, SQUARE_HEIGHT));
-	        context.lineTo(roundIt(mousePosition.x + SQUARE_WIDTH * 0.5, SQUARE_WIDTH), roundIt(mousePosition.y - SQUARE_HEIGHT * 0.5, SQUARE_HEIGHT));
-	        context.lineTo(roundIt(mousePosition.x, SQUARE_WIDTH), roundIt(mousePosition.y - SQUARE_HEIGHT, SQUARE_HEIGHT));
-	        context.lineTo(roundIt(mousePosition.x - SQUARE_WIDTH * 0.5, SQUARE_WIDTH), roundIt(mousePosition.y - SQUARE_HEIGHT * 0.5, SQUARE_HEIGHT));
-	        context.lineTo(roundIt(mousePosition.x, SQUARE_WIDTH), roundIt(mousePosition.y, SQUARE_HEIGHT));
+	        context.moveTo(x, y - sh);
+	        context.lineTo(x + sw, y);
+       		context.lineTo(x, y + sh);
+	        context.lineTo(x - sw, y);
+	        context.lineTo(x, y - sh);
 	        context.closePath();
 	        context.lineWidth = 5;
 	        context.fillStyle = "red";
