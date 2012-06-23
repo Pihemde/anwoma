@@ -61,19 +61,6 @@
 		    mousePosition.x = evt.clientX - left + window.pageXOffset;
 		    mousePosition.y = evt.clientY - top + window.pageYOffset;
 		    console.log('mouse : ' + mousePosition.x + ' ; ' + mousePosition.y);
-
-		    var context = canvas.getContext("2d");
-
-	        context.beginPath();
-	        context.moveTo(mousePosition.x, mousePosition.y);
-	        context.lineTo(mousePosition.x + SQUARE_WIDTH * 0.5, mousePosition.y - SQUARE_HEIGHT * 0.5);
-	        context.lineTo(mousePosition.x, mousePosition.y - SQUARE_HEIGHT);
-	        context.lineTo(mousePosition.x - SQUARE_WIDTH * 0.5, mousePosition.y - SQUARE_HEIGHT * 0.5);
-	        context.lineTo(mousePosition.x, mousePosition.y);
-	        context.closePath();
-	        context.lineWidth = 5;
-	        context.strokeStyle = "blue";
-	        context.stroke();
 		}
 
 		function preloadImages(folder, callback) {
@@ -102,13 +89,22 @@
 			/*
 			 * On dessine le terrain
 			 */
-			paint();
+			setTimeout(paint, 100);
 		}
 		
 		function paint() {
 			var context = canvas.getContext("2d");
+			clear(context, canvas);
 			paintLand(context);
 			paintGrid(context);
+			paintMousePosition(context);
+			
+
+			setTimeout(paint, 100);
+		}
+		
+		function clear(context, canvas) {
+			context.clearRect(0, 0, canvas.width, canvas.height);
 		}
 		
 		function paintLand(context) {
@@ -153,6 +149,24 @@
 				context.lineTo(xb, yb);
 		        context.stroke();
 			}	
+		}
+	
+		function paintMousePosition(context) {
+			if(mousePosition.x == 0 && mousePosition.y == 0) {
+				return;
+			}
+	        context.beginPath();
+	        context.moveTo(mousePosition.x, mousePosition.y);
+	        context.lineTo(mousePosition.x + SQUARE_WIDTH * 0.5, mousePosition.y - SQUARE_HEIGHT * 0.5);
+	        context.lineTo(mousePosition.x, mousePosition.y - SQUARE_HEIGHT);
+	        context.lineTo(mousePosition.x - SQUARE_WIDTH * 0.5, mousePosition.y - SQUARE_HEIGHT * 0.5);
+	        context.lineTo(mousePosition.x, mousePosition.y);
+	        context.closePath();
+	        context.lineWidth = 5;
+	        context.fillStyle = "red";
+	        context.globalAlpha = 0.5;
+	        context.fill();
+	        context.globalAlpha = 1;
 		}
 
 		function fillObjectList() {
