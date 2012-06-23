@@ -155,12 +155,18 @@
 			if(mousePosition.x == 0 && mousePosition.y == 0) {
 				return;
 			}
+			
+			function roundIt(val, r) {
+				var rounder = r - (0.5 * r);
+				return Math.floor(val / rounder) * rounder;
+			}
+			
 	        context.beginPath();
-	        context.moveTo(mousePosition.x, mousePosition.y);
-	        context.lineTo(mousePosition.x + SQUARE_WIDTH * 0.5, mousePosition.y - SQUARE_HEIGHT * 0.5);
-	        context.lineTo(mousePosition.x, mousePosition.y - SQUARE_HEIGHT);
-	        context.lineTo(mousePosition.x - SQUARE_WIDTH * 0.5, mousePosition.y - SQUARE_HEIGHT * 0.5);
-	        context.lineTo(mousePosition.x, mousePosition.y);
+	        context.moveTo(roundIt(mousePosition.x, SQUARE_WIDTH) , roundIt(mousePosition.y, SQUARE_HEIGHT));
+	        context.lineTo(roundIt(mousePosition.x + SQUARE_WIDTH * 0.5, SQUARE_WIDTH), roundIt(mousePosition.y - SQUARE_HEIGHT * 0.5, SQUARE_HEIGHT));
+	        context.lineTo(roundIt(mousePosition.x, SQUARE_WIDTH), roundIt(mousePosition.y - SQUARE_HEIGHT, SQUARE_HEIGHT));
+	        context.lineTo(roundIt(mousePosition.x - SQUARE_WIDTH * 0.5, SQUARE_WIDTH), roundIt(mousePosition.y - SQUARE_HEIGHT * 0.5, SQUARE_HEIGHT));
+	        context.lineTo(roundIt(mousePosition.x, SQUARE_WIDTH), roundIt(mousePosition.y, SQUARE_HEIGHT));
 	        context.closePath();
 	        context.lineWidth = 5;
 	        context.fillStyle = "red";
