@@ -18,6 +18,7 @@ canvas {
 </style>
 <script type="text/javascript" src="images.js"></script>
 <script type="text/javascript" src="map.js"></script>
+<script type="text/javascript" src="matrix.js"></script>
 <script>
 	const
 	IMAGE_FOLDER = '../images/';
@@ -38,9 +39,9 @@ canvas {
 
 	var canvas = undefined;
 	var mousePosition = {
-		x : 0,
-		y : 0
-	};
+			x : 0,
+			y : 0
+		};
 
 	window.onload = function() {
 		canvas = document.getElementById("canvas");
@@ -53,18 +54,11 @@ canvas {
 		canvas.addEventListener('mousemove', onmousemove, false);
 	};
 
-	onmousemove = function(evt) {
-		// get canvas position
-		var top = 0;
-		var left = 0;
-		top += canvas.offsetTop;
-		left += canvas.offsetLeft;
-		obj = canvas.offsetParent;
-
-		// return relative mouse position
-		mousePosition.x = evt.clientX - left + window.pageXOffset;
-		mousePosition.y = evt.clientY - top + window.pageYOffset;
-		//console.log('mouse : ' + mousePosition.x + ' ; ' + mousePosition.y);
+	function onmousemove(event) {
+		mousePosition.x = event.clientX - canvas.offsetLeft + window.pageXOffset;
+		mousePosition.y = event.clientY - canvas.offsetTop + window.pageYOffset;
+		//console.log('last mouse position : ' + mousePosition.x + ' ; ' + mousePosition.y);
+		//console.log('mouse position : ' + mousePosition.x + ' ; ' + mousePosition.y);
 	}
 
 	function preloadImages(folder, callback) {
@@ -166,7 +160,7 @@ canvas {
 		var sh = SQUARE_HEIGHT * 0.5;
 
 		/*
-		 * Ici on va calculer le coordonnées de la case la lpus près afin de faire un effet "magnétique"  
+		 * Ici on va calculer les coordonnées de la case la plus près de la souris afin de faire un effet "magnétique"  
 		 */
 		function round(x, y) {
 			var mx = x % SQUARE_WIDTH;
@@ -176,11 +170,13 @@ canvas {
 			var brx = Math.round(x / SQUARE_WIDTH) * SQUARE_WIDTH;
 			var bry = Math.round(y / SQUARE_HEIGHT) * SQUARE_HEIGHT;
 
+// 			console.log('Modulos : ' + mx + ' ; ' + my);
+			
 			/*
-			 * Etant donné qu'on est sur un losange, selon qu'on veuille aller une case à droite (ou gauche)
-			 * ou une case en bas (ou haut), les x vont prendre 0.5 ou 1 et inversement pour les y.
+			 * Etant donné qu'on est sur un losange, selon qu'on veuille aller une case à droite
+			 * ou une case en bas, les x vont prendre 0.5 ou 1 et inversement pour les y.
 			 */
-			if (brx - x < bry - y) { // L'erreur est là
+			if (mx * SQUARE_HEIGHT > my * SQUARE_WIDTH) { // L'erreur est là 
 				return {
 					x : brx,
 					y : sry
@@ -202,15 +198,15 @@ canvas {
 		 */
 		context.beginPath();
 		context.moveTo(x, y - sh); // On se déplace sur le point supérieur (au dessus de la souris) 
-		context.lineTo(x + sw, y); // On trace jusqu'au point droit
-		context.lineTo(x, y + sh); // On trace jusqu'au point inférieur
-		context.lineTo(x - sw, y); // On trace jusqu'au point gauche
-		context.lineTo(x, y - sh); // On trace en revenant au point de départ
+		context.lineTo(x + sw, y); // On trace jusqu'au point droit 
+		context.lineTo(x, y + sh); // On trace jusqu'au point inférieur 
+		context.lineTo(x - sw, y); // On trace jusqu'au point gauche 
+		context.lineTo(x, y - sh); // On trace en revenant au point de départ 
 		context.closePath();
 		context.fillStyle = "red";
-		context.globalAlpha = 0.5; // Transparence
-		context.fill(); // On rempli
-		context.globalAlpha = 1; // On la remet à sa valeur pas défaut pour les copains
+		context.globalAlpha = 0.5; // Transparence 
+		context.fill(); // On rempli 
+		context.globalAlpha = 1; // On la remet à sa valeur pas défaut pour les copains 
 	}
 
 	function fillObjectList() {
