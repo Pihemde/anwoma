@@ -139,21 +139,17 @@ canvas {
 		context.strokeStyle = "#ff0000";
 		for ( var i = 0; i <= MAP_SIZE; i++) {
 			context.beginPath();
-			xa = MAP_SIZE * SQUARE_WIDTH * 0.5 + SQUARE_WIDTH * 0.5 * i;
-			ya = SQUARE_HEIGHT * 0.5 * i;
-			context.moveTo(xa, ya);
-			xb = SQUARE_WIDTH * 0.5 * i;
-			yb = MAP_SIZE * SQUARE_HEIGHT * 0.5 + SQUARE_HEIGHT * 0.5 * i;
-			context.lineTo(xb, yb);
+			c = toRealCoord([i, 0]);
+			context.moveTo(c[0], c[1]);
+			c = toRealCoord([i, MAP_SIZE]);
+			context.lineTo(c[0], c[1]);
 			context.stroke();
 
 			context.beginPath();
-			xa = SQUARE_WIDTH * 0.5 * i;
-			ya = MAP_SIZE * SQUARE_HEIGHT * 0.5 - SQUARE_HEIGHT * 0.5 * i;
-			context.moveTo(xa, ya);
-			xb = MAP_SIZE * SQUARE_WIDTH * 0.5 + SQUARE_WIDTH * 0.5 * i;
-			yb = MAP_SIZE * SQUARE_HEIGHT - SQUARE_HEIGHT * 0.5 * i;
-			context.lineTo(xb, yb);
+			c = toRealCoord([0, i]);
+			context.moveTo(c[0], c[1]);
+			c = toRealCoord([MAP_SIZE, i]);
+			context.lineTo(c[0], c[1]);
 			context.stroke();
 		}
 	}
