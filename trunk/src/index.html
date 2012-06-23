@@ -18,7 +18,7 @@ canvas {
 </style>
 <script type="text/javascript" src="sylvester.src.js"></script>
 <script type="text/javascript" src="repere.js"></script>
-<script type="text/javascript" src="images.js"></script>
+<script type="text/javascript" src="tiles.js"></script>
 <script type="text/javascript" src="map.js"></script>
 <script>
 	const
@@ -46,12 +46,13 @@ canvas {
 			x : 0,
 			y : 0
 		};
+	var selectedTile = undefined;
 
 	window.onload = function() {
 		canvas = document.getElementById("canvas");
 
 		/*
-		 * On commence par précharger les images avant toute chose 
+		 * On commence par précharger les images 
 		 */
 		preloadImages(IMAGE_FOLDER, main);
 
@@ -61,8 +62,8 @@ canvas {
 	function onmousemove(event) {
 		mousePosition.x = event.clientX - canvas.offsetLeft + window.pageXOffset;
 		mousePosition.y = event.clientY - canvas.offsetTop + window.pageYOffset;
-		//console.log('last mouse position : ' + mousePosition.x + ' ; ' + mousePosition.y);
-		//console.log('mouse position : ' + mousePosition.x + ' ; ' + mousePosition.y);
+		
+		//console.log(fromRealCoord([mousePosition.x, mousePosition.y]));
 	}
 
 	function preloadImages(folder, callback) {
@@ -89,7 +90,7 @@ canvas {
 		fillObjectList();
 
 		/*
-		 * On dessine le terrain
+		 * On dessine
 		 */
 		paint();
 	}
@@ -100,6 +101,7 @@ canvas {
 		paintLand(context);
 		paintGrid(context);
 		paintMousePosition(context);
+		paintSelectedTile(context);
 
 		setTimeout(paint, REPAINT_DELAI);
 	}
@@ -114,15 +116,15 @@ canvas {
 				var image = MAP[y][x];
 				if (!!image) {
 					var coord = toRealCoord([x, y]);
-					var posx = coord[0] - 29;
-					var posy = coord[1] + 15;
-					paintObject(context, image, posx, posy);
+					var posx = coord[0] - 29;// FIXME Il faut sortir ça dans une méthode 
+					var posy = coord[1] + 15;// FIXME Il faut sortir ça dans une méthode 
+					paintTileOnGrid(context, image, posx, posy);
 				}
 			}
 		}
 	}
 
-	function paintObject(context, image, x, y) {
+	function paintTileOnGrid(context, image, x, y) {
 		x += (SQUARE_WIDTH - image.object.width) * 0.5;
 		y -= image.object.height * 0.5 + (image.object.height - SQUARE_HEIGHT)
 				* 0.5;
@@ -155,8 +157,6 @@ canvas {
 			return;
 		}
 		
-		console.log(fromRealCoord([mousePosition.x, mousePosition.y]));
-		
 		var c = fromRealCoord([mousePosition.x, mousePosition.y]);
 		var x = c[0];
 		var y = c[1];
@@ -183,6 +183,21 @@ canvas {
 		context.globalAlpha = 1; // On la remet à sa valeur par défaut pour les copains 
 	}
 
+	function paintSelectedTile(context) {
+		var c = fromRealCoord([mousePosition.x, mousePosition.y]);
+		var x = c[0];
+		var y = c[1];
+		
+		if(!selectedTile || x < 0 || x > MAP_SIZE - 1 || y < 0 || y > MAP_SIZE - 1) {
+			return;
+		}
+
+		context.globalAlpha = 0.5; // Transparence
+		c = toRealCoord([x, y]);
+		paintTileOnGrid(context, selectedTile, c[0] - 29, c[1] + 15); // FIXME Il faut sortir ça dans une méthode 
+		context.globalAlpha = 1; // On la remet à sa valeur par défaut pour les copains 
+	}
+
 	function fillObjectList() {
 		var table = document.getElementById("objectList");
 		for ( var i in TERRAINS) {
@@ -192,7 +207,12 @@ canvas {
 			td.className = 'object';
 			tr.appendChild(td);
 			var image = document.createElement('img');
+			image.id = i;
 			image.src = IMAGE_FOLDER + TERRAINS[i].src;
+			image.onclick = function(e) {
+				console.log(e.target.id);
+				selectedTile = TERRAINS[e.target.id];
+			}
 			td.appendChild(image);
 		}
 		for ( var i in BUILDINGS) {
