@@ -16,6 +16,8 @@ canvas {
 	border: solid 1px black;
 }
 </style>
+<script type="text/javascript" src="sylvester.src.js"></script>
+<script type="text/javascript" src="repere.js"></script>
 <script type="text/javascript" src="images.js"></script>
 <script type="text/javascript" src="map.js"></script>
 <script type="text/javascript" src="matrix.js"></script>
@@ -109,10 +111,15 @@ canvas {
 			for ( var x = 0; x < MAP_SIZE; x++) {
 				var image = MAP[y][x];
 				if (!!image) {
+					var coord = toRealCoord([x, y]);
+					var posx = coord[0];
+					var posy = coord[1];
+/*
 					var posx = MAP_SIZE * SQUARE_WIDTH * 0.5 + SQUARE_WIDTH
 							* 0.5 * (x - 1) - SQUARE_WIDTH * 0.5 * y;
 					var posy = SQUARE_HEIGHT * 0.5 * y + SQUARE_HEIGHT * 0.5
 							* x + 15;
+//*/
 					paintObject(context, image, posx, posy);
 				}
 			}
