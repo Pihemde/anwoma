@@ -1,6 +1,8 @@
 function multiplication(matrixA, matrixB) {
 	// Coder le controle des matrices d'entrée
 	
+	//console.log('multiplication', matrixA, matrixB);
+	
 	var result = [];
 	for(var i = 0 ; i < matrixA.length ; i++) {
 		result[i] = [];
@@ -14,6 +16,7 @@ function multiplication(matrixA, matrixB) {
 }
 
 function composeMatrixOne(matrix, index) {
+	//console.log('composeMatrixOne', matrix, index);
 	var result = [];
 	for(var i = 0 ; i < matrix[index].length ; i++) {
 		result[i] = matrix[index][i];
@@ -22,9 +25,10 @@ function composeMatrixOne(matrix, index) {
 }
 
 function multiplicationMatrixOne(matrixA, matrixB) {
+	//console.log('multiplicationMatrixOne', matrixA, matrixB);
 	var result = 0;
 	for(var i = 0 ; i < matrixA.length ; i++) {
-		result += matrixA[i] * matrixB[i];
+		result += matrixA[i] * matrixB[0];
 	}
 	return result;
 }
