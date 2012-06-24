@@ -31,6 +31,7 @@ canvas {
 </style>
 <script type="text/javascript" src="../lib/sylvester.src.js"></script>
 <script type="text/javascript" src="tiles.js"></script>
+<script type="text/javascript" src="../maps/map_test.js"></script>
 <script type="text/javascript" src="map.js"></script>
 <script>
 	const
@@ -52,15 +53,8 @@ canvas {
 	 */
 	const
 	MAP_SIZE = MAP.length;
-	 
-	var MMAP = []; // Memory MAP   
 
 	var map = undefined;
-	var mousePosition = {
-			x : 0,
-			y : 0
-		};
-	var selectedTile = undefined;
 
 	window.onload = function() {
 		/*
@@ -72,28 +66,7 @@ canvas {
 		 * On instancie les objets
 		 */
 		//loadingMap();
-
-		canvas.addEventListener('mousemove', onmousemove, false);
-		canvas.addEventListener('click', onclick, false);
 	};
-
-	function onmousemove(event) {
-		mousePosition.x = event.clientX - canvas.offsetLeft + window.pageXOffset;
-		mousePosition.y = event.clientY - canvas.offsetTop + window.pageYOffset;
-		//console.log(mousePosition.x, mousePosition.y);
-		//console.log(fromRealCoord([mousePosition.x, mousePosition.y]));
-	}
-
-	function onclick(event) {
-		mousePosition.x = event.clientX - canvas.offsetLeft + window.pageXOffset;
-		mousePosition.y = event.clientY - canvas.offsetTop + window.pageYOffset;
-		c = fromRealCoord([mousePosition.x, mousePosition.y]);
-		
-		// 1er cas, l'utilisateur a selectionné l'outil de destruction 
-		
-		// 2ème cas, l'utilisateur a selectionné un objet dans la liste des terrains/batiments/... 
-		
-	}
 
 	function preloadImages(folder, callback) {
 		var loadedImages = 0;
@@ -113,15 +86,6 @@ canvas {
 			image.object = object;
 		}
 	}
-	
-	function loadingMap() {
-		// Effectuer une copie de la carte dans le tableau MMAP 
-		for(var i = 0 ; i < MAP_SIZE ; i++) {
-			for(var j = 0 ; j < MAP_SIZE ; j++) {
-				//MMAP[i][j] = 
-			}
-		}
-	}
 
 	function main() {
 		/*
@@ -134,70 +98,10 @@ canvas {
 		/*
 		 * On dessine
 		 */
-		paint();
+		map.paint();
 	}
 
 	function paint() {
-		map.paint();
-		paintMousePosition(map.context);
-		paintSelectedTile(map.context);
-
-		setTimeout(paint, REPAINT_DELAI);
-	}
-
-	function paintLand(context) {
-		for ( var y = 0; y < MAP_SIZE; y++) {
-			for ( var x = 0; x < MAP_SIZE; x++) {
-				var tile = MAP[y][x];
-				Tile.draw(tile, context, x, y);
-			}
-		}
-	}
-
-	function paintMousePosition(context) {
-		if (mousePosition.x == 0 && mousePosition.y == 0) {
-			return;
-		}
-		
-		var c = map.fromRealCoord([mousePosition.x, mousePosition.y]);
-		var x = c[0];
-		var y = c[1];
-		
-		if(x < 0 || x > MAP_SIZE - 1 || y < 0 || y > MAP_SIZE - 1) {
-			return;
-		}
-
-		context.beginPath();
-		c = map.toRealCoord([x, y]);
-		context.moveTo(c[0], c[1]);
-		c = map.toRealCoord([x + 1, y]);
-		context.lineTo(c[0], c[1]);
-		c = map.toRealCoord([x + 1, y + 1]); 
-		context.lineTo(c[0], c[1]);
-		c = map.toRealCoord([x, y + 1]);
-		context.lineTo(c[0], c[1]);
-		c = map.toRealCoord([x, y]);
-		context.lineTo(c[0], c[1]);
-		context.closePath();
-		context.fillStyle = "red";
-		context.globalAlpha = 0.5; // Transparence 
-		context.fill(); // On remplit 
-		context.globalAlpha = 1; // On la remet à sa valeur par défaut pour les copains 
-	}
-
-	function paintSelectedTile(context) {
-		var c = map.fromRealCoord([mousePosition.x, mousePosition.y]);
-		var x = c[0];
-		var y = c[1];
-		
-		if(!selectedTile || x < 0 || x > MAP_SIZE - 1 || y < 0 || y > MAP_SIZE - 1) {
-			return;
-		}
-
-		context.globalAlpha = 0.5; // Transparence 
-		c = map.toRealCoord([x, y]);
-		paintTileOnGrid(context, selectedTile, c[0] - 29, c[1] + 15); // FIXME Il faut sortir ça dans une méthode 
-		context.globalAlpha = 1; // On la remet à sa valeur par défaut pour les copains 
 	}
 	
 	function get(c) {
