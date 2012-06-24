@@ -1,23 +1,3 @@
-const MAP = [
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, undefined,                 {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe2}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1, building: BUILDINGS.rocher1}],
-];
-
 var Map = function() {
 	var Class = function(canvas, width, height, mapDescr) {
 		this.canvas = canvas;
@@ -28,6 +8,8 @@ var Map = function() {
 		this.offsetX = 100;
 		this.offsetY = 50;
 		this.zoom = 1;
+		this.mousePosition = {x : 0,y : 0};
+		this.selectedTile = undefined;
 		for(var y=0; y<this.height; y++) {
 			this.tiles[y] = [];
 			for(var x=0; x<this.width; x++) {
@@ -39,14 +21,11 @@ var Map = function() {
 			}
 		}
 		var map = this;
-		canvas.addEventListener("mousewheel", function(e) {
-			if(e.shiftKey) {
-				if(e.wheelDelta>0) map.zoom = map.zoom * 1.5;
-				else map.zoom = map.zoom / 1.5;
-				e.stopPropagation();
-			}
-		});
+		canvas.addEventListener('mousemove', function(event) {map.onmousemove(event);}, false);
+		canvas.addEventListener('click', function(event) {map.onclick(event);}, false);
+		canvas.addEventListener("mousewheel", function(event) {map.onmousewheel(event);});
 	};
+	
 	Class.prototype.toRealCoord = function(coord) {
 		var angle = Math.PI/4;
 		// Centrage de la carte sur l'origine des axes
@@ -91,17 +70,56 @@ var Map = function() {
 			Math.floor(y)
 		];
 	}
+
 	Class.prototype.paint = function() {
 		paintLand(this);
 		paintGrid(this);
+		paintMousePosition(this);
+		paintSelectedTile(this);
 /*
 		this.context.scale(this.zoom, this.zoom);
 		this.zoom = 1;
 */
+		function repaint() {
+			map.paint();
+		}
+		
+		//setTimeout(repaint, REPAINT_DELAI);
 	}
-	function paintLand(map) {
+
+	Class.prototype.onmousemove = function(event) {
+		this.mousePosition.x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
+		this.mousePosition.y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
+		console.log(this.mousePosition.x, this.mousePosition.y);
+		//console.log(fromRealCoord([mousePosition.x, mousePosition.y]));
+	}
+
+	Class.prototype.onclick = function(event) {
+		this.mousePosition.x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
+		this.mousePosition.y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
+		var c = this.fromRealCoord([this.mousePosition.x, this.mousePosition.y]);
+		
+		// 1er cas, l'utilisateur a selectionné l'outil de destruction 
+		
+		// 2ème cas, l'utilisateur a selectionné un objet dans la liste des terrains/batiments/... 
+		
+	}
+	
+	Class.prototype.onmousewheel = function(event) {
+		if(event.shiftKey) {
+			if(event.wheelDelta>0) {
+				this.zoom *= 1.5;
+			} else {
+				this.zoom /= 1.5;
+			}
+			event.stopPropagation();
+		}
+	}
+	
+	
+	function paintLand() {
 		// Clear all the map
-		map.context.clearRect(0, 0, map.canvas.width, map.canvas.height);
+		map.context.clearRect(0, 0, map.canvas.width, map.canvas.height); // FIXME Ne devrait pas être ici, ce n'est pas seulement pour le décors qu'on nettoye le canvas  
 		// Now, we can draw the map
 		for(var y=0; y<map.height; y++) {
 			for(var x=0; x<map.width; x++) {
@@ -111,7 +129,7 @@ var Map = function() {
 	}
 
 	function paintGrid(map) {
-		var c;
+		var c = undefined;
 		map.context.lineWidth = 0.5;
 		map.context.strokeStyle = "#ff0000";
 		for ( var i = 0; i <= map.width; i++) {
@@ -131,6 +149,53 @@ var Map = function() {
 			map.context.stroke();
 		}
 	}
+
+	function paintMousePosition(map) {
+		//if (map.mousePosition.x == 0 && map.mousePosition.y == 0) {
+		//	return;
+		//}
+		
+		var c = map.fromRealCoord([map.mousePosition.x, map.mousePosition.y]);
+		var x = c[0];
+		var y = c[1];
+		
+		//if(x < 0 || x > MAP_SIZE - 1 || y < 0 || y > MAP_SIZE - 1) {
+		//	return;
+		//}
+
+		map.context.beginPath();
+		c = map.toRealCoord([x, y]);
+		map.context.moveTo(c[0], c[1]);
+		c = map.toRealCoord([x + 1, y]);
+		map.context.lineTo(c[0], c[1]);
+		c = map.toRealCoord([x + 1, y + 1]); 
+		map.context.lineTo(c[0], c[1]);
+		c = map.toRealCoord([x, y + 1]);
+		map.context.lineTo(c[0], c[1]);
+		c = map.toRealCoord([x, y]);
+		map.context.lineTo(c[0], c[1]);
+		map.context.closePath();
+		map.context.fillStyle = "red";
+		map.context.globalAlpha = 0.5; // Transparence 
+		map.context.fill(); // On remplit 
+		map.context.globalAlpha = 1; // On la remet à sa valeur par défaut pour les copains 
+	}
+
+	function paintSelectedTile(map) {
+		var c = map.fromRealCoord([map.mousePosition.x, map.mousePosition.y]);
+		var x = c[0];
+		var y = c[1];
+		
+		if(!map.selectedTile || x < 0 || x > MAP_SIZE - 1 || y < 0 || y > MAP_SIZE - 1) {
+			return;
+		}
+
+		map.context.globalAlpha = 0.5; // Transparence 
+		c = map.toRealCoord([x, y]);
+		paintTileOnGrid(map.context, map.selectedTile, c[0], c[1]); 
+		map.context.globalAlpha = 1; 
+	}
+
 	return Class;
 }();
 
