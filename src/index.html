@@ -1,3 +1,16 @@
+<!--
+TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+
+ - Il nous faut une méthode pratique qui permette de passer de 2 entiers représentant les indexes
+   des objets dans un tableau à un objet ayant 2 membres x et y representant les coordonnées
+   d'affichage de l'image en pixels.
+ - Il nous faut une méthode pratique inverse de la précédente qui prenne 2 entiers représentant
+   des coordonnées en pixels et qui retourne un objet ayant 2 membres i et j.
+ - Il faut sortir tout le code JS de la page HTML vers des fichiers xxx.js.   
+
+TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+-->
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -16,7 +29,7 @@ canvas {
 	border: solid 1px black;
 }
 </style>
-<script type="text/javascript" src="sylvester.js"></script>
+<script type="text/javascript" src="../lib/sylvester.src.js"></script>
 <script type="text/javascript" src="tiles.js"></script>
 <script type="text/javascript" src="map.js"></script>
 <script>
@@ -39,6 +52,8 @@ canvas {
 	 */
 	const
 	MAP_SIZE = MAP.length;
+	 
+	var MMAP = []; // Memory MAP   
 
 	var map = undefined;
 	var mousePosition = {
@@ -52,15 +67,32 @@ canvas {
 		 * On commence par précharger les images 
 		 */
 		preloadImages(IMAGE_FOLDER, main);
+		
+		/*
+		 * On instancie les objets
+		 */
+		//loadingMap();
 
 		canvas.addEventListener('mousemove', onmousemove, false);
+		canvas.addEventListener('click', onclick, false);
 	};
 
 	function onmousemove(event) {
 		mousePosition.x = event.clientX - canvas.offsetLeft + window.pageXOffset;
 		mousePosition.y = event.clientY - canvas.offsetTop + window.pageYOffset;
-		
+		//console.log(mousePosition.x, mousePosition.y);
 		//console.log(fromRealCoord([mousePosition.x, mousePosition.y]));
+	}
+
+	function onclick(event) {
+		mousePosition.x = event.clientX - canvas.offsetLeft + window.pageXOffset;
+		mousePosition.y = event.clientY - canvas.offsetTop + window.pageYOffset;
+		c = fromRealCoord([mousePosition.x, mousePosition.y]);
+		
+		// 1er cas, l'utilisateur a selectionné l'outil de destruction 
+		
+		// 2ème cas, l'utilisateur a selectionné un objet dans la liste des terrains/batiments/... 
+		
 	}
 
 	function preloadImages(folder, callback) {
@@ -79,6 +111,15 @@ canvas {
 			}
 			object.src = folder + image.src;
 			image.object = object;
+		}
+	}
+	
+	function loadingMap() {
+		// Effectuer une copie de la carte dans le tableau MMAP 
+		for(var i = 0 ; i < MAP_SIZE ; i++) {
+			for(var j = 0 ; j < MAP_SIZE ; j++) {
+				//MMAP[i][j] = 
+			}
 		}
 	}
 
@@ -153,10 +194,40 @@ canvas {
 			return;
 		}
 
-		context.globalAlpha = 0.5; // Transparence
+		context.globalAlpha = 0.5; // Transparence 
 		c = map.toRealCoord([x, y]);
 		paintTileOnGrid(context, selectedTile, c[0] - 29, c[1] + 15); // FIXME Il faut sortir ça dans une méthode 
 		context.globalAlpha = 1; // On la remet à sa valeur par défaut pour les copains 
+	}
+	
+	function get(c) {
+		return MMAP[c.i][c.j];
+	}
+	
+	function set(c, v) {
+		MMAP[c.i][c.j] = v;
+	}
+	
+	function isBuildable(c) {
+		var object = get(c);
+		if(!!object.buildable && false == object.buildable) {
+			return false;
+		}
+		return true;
+	}
+	
+	function isDestructible(c) {
+		var object = MMAP[c.i][c.j];
+		if(!!object.destructible && true == object.destructible) {
+			return true;
+		}
+		return false;
+	}
+	
+	function destroy(c) {
+		if(isDestructible(c)) {
+			set(c, undefined);
+		}		
 	}
 
 	function fillObjectList() {
