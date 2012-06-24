@@ -25,6 +25,8 @@ var Map = function() {
 		this.width = width;
 		this.height = height;
 		this.tiles = [];
+		this.offsetX = 0;
+		this.offsetY = 0;
 		for(var y=0; y<this.height; y++) {
 			this.tiles[y] = [];
 			for(var x=0; x<this.width; x++) {
@@ -38,20 +40,33 @@ var Map = function() {
 	};
 	Class.prototype.toRealCoord = function(coord) {
 		var angle = Math.PI/4;
-
+		// Centrage de la carte sur l'origine des axes
+		coord = [
+			coord[0] - this.width/2,
+			coord[1] - this.height/2
+		]
+		// Rotation pour orienter la carte dans le bon sens
+		// TODO: Prendre en comte la direction N/E/S/W
 		var transform = Matrix.Rotation(angle);
 		coord = $M([[coord[0]], [coord[1]]]);
 		coord = transform.multiply(coord);
-		var r = [
-			Math.round(coord.elements[0][0] / Math.sqrt(2) * 58),
-			Math.round(coord.elements[1][0] / Math.sqrt(2) * 30)
+		
+		// Etirement de la carte pour s'adapter à la taille des images 
+		coord = [
+			coord.elements[0][0] / Math.sqrt(2) * SQUARE_WIDTH,
+			coord.elements[1][0] / Math.sqrt(2) * SQUARE_HEIGHT
 		];
-
-		r = [
-			r[0] + SQUARE_WIDTH*this.width/2,
-			r[1]
+		// Déplacement de la carte pour la centrer correctement
+		coord = [
+			coord[0] + this.canvas.width/2,
+			coord[1] + this.canvas.height/2
 		];
-		return r;
+		// Optim pour faire référence a des pixels entier
+		coord = [
+			Math.round(coord[0]),
+			Math.round(coord[1])
+		];
+		return coord;
 	}
 
 	Class.prototype.fromRealCoord = function(coord) {
