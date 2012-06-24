@@ -41,49 +41,45 @@ var Map = function() {
 	Class.prototype.toRealCoord = function(coord) {
 		var angle = Math.PI/4;
 		// Centrage de la carte sur l'origine des axes
-		coord = [
-			coord[0] - this.width/2,
-			coord[1] - this.height/2
-		]
+		var x = coord[0] - this.width/2;
+		var y = coord[1] - this.height/2;
 		// Rotation pour orienter la carte dans le bon sens
 		// TODO: Prendre en comte la direction N/E/S/W
 		var transform = Matrix.Rotation(angle);
-		coord = $M([[coord[0]], [coord[1]]]);
+		coord = $M([[x], [y]]);
 		coord = transform.multiply(coord);
-		
 		// Etirement de la carte pour s'adapter à la taille des images 
-		coord = [
-			coord.elements[0][0] / Math.sqrt(2) * SQUARE_WIDTH,
-			coord.elements[1][0] / Math.sqrt(2) * SQUARE_HEIGHT
-		];
+		x = coord.elements[0][0] / Math.sqrt(2) * SQUARE_WIDTH;
+		y = coord.elements[1][0] / Math.sqrt(2) * SQUARE_HEIGHT;
 		// Déplacement de la carte pour la centrer correctement
-		coord = [
-			coord[0] + this.canvas.width/2,
-			coord[1] + this.canvas.height/2
-		];
+		x = x + this.canvas.width/2;
+		y = y + this.canvas.height/2;
 		// Optim pour faire référence a des pixels entier
-		coord = [
-			Math.round(coord[0]),
-			Math.round(coord[1])
-		];
-		return coord;
+		x = Math.round(x);
+		y = Math.round(y);
+		return [x, y];
 	}
 
 	Class.prototype.fromRealCoord = function(coord) {
 		var angle = -Math.PI/4;
-
-		coord = [
-			coord[0] - SQUARE_WIDTH*this.width/2,
-			coord[1]
-		];
-		
-		coord = $M([[coord[0] / 58 * Math.sqrt(2)], [coord[1] / 30 * Math.sqrt(2)]]);
+		// Déplacement de la carte pour la centrer correctement
+		var x = coord[0] - this.canvas.width/2;
+		var y = coord[1] - this.canvas.height/2;
+		// Etirement de la ccarte pour s'adapter à la taille des images
+		x = x / SQUARE_WIDTH  * Math.sqrt(2);
+		y = y / SQUARE_HEIGHT * Math.sqrt(2);
+		// Rotation pour orienter la carte dans le bon sens
+		// TODO: Prendre en comte la direction N/E/S/W
 		var transform = Matrix.Rotation(angle);
+		coord = $M([[x], [y]]);
 		coord = transform.multiply(coord);
+		// Centrage de la carte sur l'origine des axes
+		var x = coord.elements[0][0] + this.width/2;
+		var y = coord.elements[1][0] + this.height/2;
 	
 		return [
-			Math.floor(coord.elements[0][0]),
-			Math.floor(coord.elements[1][0])
+			Math.floor(x),
+			Math.floor(y)
 		];
 	}
 	Class.prototype.paint = function() {
