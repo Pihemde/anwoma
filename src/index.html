@@ -119,7 +119,7 @@ canvas {
 			return;
 		}
 		
-		var c = fromRealCoord([mousePosition.x, mousePosition.y]);
+		var c = map.fromRealCoord([mousePosition.x, mousePosition.y]);
 		var x = c[0];
 		var y = c[1];
 		
@@ -128,15 +128,15 @@ canvas {
 		}
 
 		context.beginPath();
-		c = toRealCoord([x, y]);
+		c = map.toRealCoord([x, y]);
 		context.moveTo(c[0], c[1]);
-		c = toRealCoord([x + 1, y]);
+		c = map.toRealCoord([x + 1, y]);
 		context.lineTo(c[0], c[1]);
-		c = toRealCoord([x + 1, y + 1]); 
+		c = map.toRealCoord([x + 1, y + 1]); 
 		context.lineTo(c[0], c[1]);
-		c = toRealCoord([x, y + 1]);
+		c = map.toRealCoord([x, y + 1]);
 		context.lineTo(c[0], c[1]);
-		c = toRealCoord([x, y]);
+		c = map.toRealCoord([x, y]);
 		context.lineTo(c[0], c[1]);
 		context.closePath();
 		context.fillStyle = "red";
@@ -146,7 +146,7 @@ canvas {
 	}
 
 	function paintSelectedTile(context) {
-		var c = fromRealCoord([mousePosition.x, mousePosition.y]);
+		var c = map.fromRealCoord([mousePosition.x, mousePosition.y]);
 		var x = c[0];
 		var y = c[1];
 		
@@ -155,7 +155,7 @@ canvas {
 		}
 
 		context.globalAlpha = 0.5; // Transparence
-		c = toRealCoord([x, y]);
+		c = map.toRealCoord([x, y]);
 		paintTileOnGrid(context, selectedTile, c[0] - 29, c[1] + 15); // FIXME Il faut sortir ça dans une méthode 
 		context.globalAlpha = 1; // On la remet à sa valeur par défaut pour les copains 
 	}

@@ -36,6 +36,41 @@ var Map = function() {
 			}
 		}
 	};
+	Class.prototype.toRealCoord = function(coord) {
+		var angle = Math.PI/4;
+
+		var transform = Matrix.Rotation(angle);
+		coord = $M([[coord[0]], [coord[1]]]);
+		coord = transform.multiply(coord);
+		var r = [
+			Math.round(coord.elements[0][0] / Math.sqrt(2) * 58),
+			Math.round(coord.elements[1][0] / Math.sqrt(2) * 30)
+		];
+
+		r = [
+			r[0] + SQUARE_WIDTH*this.width/2,
+			r[1]
+		];
+		return r;
+	}
+
+	Class.prototype.fromRealCoord = function(coord) {
+		var angle = -Math.PI/4;
+
+		coord = [
+			coord[0] - SQUARE_WIDTH*this.width/2,
+			coord[1]
+		];
+		
+		coord = $M([[coord[0] / 58 * Math.sqrt(2)], [coord[1] / 30 * Math.sqrt(2)]]);
+		var transform = Matrix.Rotation(angle);
+		coord = transform.multiply(coord);
+	
+		return [
+			Math.floor(coord.elements[0][0]),
+			Math.floor(coord.elements[1][0])
+		];
+	}
 	Class.prototype.paint = function() {
 		paintLand(this);
 		paintGrid(this);
@@ -46,7 +81,7 @@ var Map = function() {
 		// Now, we can draw the map
 		for(var y=0; y<map.height; y++) {
 			for(var x=0; x<map.width; x++) {
-				map.tiles[y][x].paint(map.context, x, y);
+				map.tiles[y][x].paint(map, x, y);
 			}
 		}
 	}
@@ -57,17 +92,17 @@ var Map = function() {
 		map.context.strokeStyle = "#ff0000";
 		for ( var i = 0; i <= map.width; i++) {
 			map.context.beginPath();
-			c = toRealCoord([i, 0]);
+			c = map.toRealCoord([i, 0]);
 			map.context.moveTo(c[0], c[1]);
-			c = toRealCoord([i, map.height]);
+			c = map.toRealCoord([i, map.height]);
 			map.context.lineTo(c[0], c[1]);
 			map.context.stroke();
 		}
 		for ( var i = 0; i <= map.height; i++) {
 			map.context.beginPath();
-			c = toRealCoord([0, i]);
+			c = map.toRealCoord([0, i]);
 			map.context.moveTo(c[0], c[1]);
-			c = toRealCoord([map.width, i]);
+			c = map.toRealCoord([map.width, i]);
 			map.context.lineTo(c[0], c[1]);
 			map.context.stroke();
 		}
