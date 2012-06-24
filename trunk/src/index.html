@@ -16,7 +16,7 @@ canvas {
 	border: solid 1px black;
 }
 </style>
-<script type="text/javascript" src="sylvester.src.js"></script>
+<script type="text/javascript" src="sylvester.js"></script>
 <script type="text/javascript" src="repere.js"></script>
 <script type="text/javascript" src="tiles.js"></script>
 <script type="text/javascript" src="map.js"></script>
@@ -41,7 +41,7 @@ canvas {
 	const
 	MAP_SIZE = MAP.length;
 
-	var canvas = undefined;
+	var map = undefined;
 	var mousePosition = {
 			x : 0,
 			y : 0
@@ -49,8 +49,6 @@ canvas {
 	var selectedTile = undefined;
 
 	window.onload = function() {
-		canvas = document.getElementById("canvas");
-
 		/*
 		 * On commence par précharger les images 
 		 */
@@ -69,10 +67,12 @@ canvas {
 	function preloadImages(folder, callback) {
 		var loadedImages = 0;
 		var imageCount = 0;
-		for ( var i in TERRAINS) {
+		var toPreload = [ TERRAINS, BUILDINGS ];
+		for(var p in toPreload)
+		for ( var i in toPreload[p]) {
 			imageCount++;
-			var image = TERRAINS[i];
-			object = new Image();
+			var image = toPreload[p][i];
+			var object = new Image();
 			object.onload = function() {
 				if (++loadedImages >= imageCount) {
 					callback();
@@ -89,6 +89,8 @@ canvas {
 		 */
 		fillObjectList();
 
+		var canvas = document.getElementById("canvas");
+		map = new Map(canvas, MAP_SIZE, MAP_SIZE, MAP);
 		/*
 		 * On dessine
 		 */
@@ -96,59 +98,19 @@ canvas {
 	}
 
 	function paint() {
-		var context = canvas.getContext("2d");
-		clear(context, canvas);
-		paintLand(context);
-		paintGrid(context);
-		paintMousePosition(context);
-		paintSelectedTile(context);
+		map.paint();
+		paintMousePosition(map.context);
+		paintSelectedTile(map.context);
 
 		setTimeout(paint, REPAINT_DELAI);
-	}
-
-	function clear(context, canvas) {
-		context.clearRect(0, 0, canvas.width, canvas.height);
 	}
 
 	function paintLand(context) {
 		for ( var y = 0; y < MAP_SIZE; y++) {
 			for ( var x = 0; x < MAP_SIZE; x++) {
-				var image = MAP[y][x];
-				if (!!image) {
-					var coord = toRealCoord([x, y]);
-					var posx = coord[0] - 29;// FIXME Il faut sortir ça dans une méthode 
-					var posy = coord[1] + 15;// FIXME Il faut sortir ça dans une méthode 
-					paintTileOnGrid(context, image, posx, posy);
-				}
+				var tile = MAP[y][x];
+				Tile.draw(tile, context, x, y);
 			}
-		}
-	}
-
-	function paintTileOnGrid(context, image, x, y) {
-		x += (SQUARE_WIDTH - image.object.width) * 0.5;
-		y -= image.object.height * 0.5 + (image.object.height - SQUARE_HEIGHT)
-				* 0.5;
-		context.drawImage(image.object, x, y);
-	}
-
-	function paintGrid(context) {
-		var c;
-		context.lineWidth = 0.5;
-		context.strokeStyle = "#ff0000";
-		for ( var i = 0; i <= MAP_SIZE; i++) {
-			context.beginPath();
-			c = toRealCoord([i, 0]);
-			context.moveTo(c[0], c[1]);
-			c = toRealCoord([i, MAP_SIZE]);
-			context.lineTo(c[0], c[1]);
-			context.stroke();
-
-			context.beginPath();
-			c = toRealCoord([0, i]);
-			context.moveTo(c[0], c[1]);
-			c = toRealCoord([MAP_SIZE, i]);
-			context.lineTo(c[0], c[1]);
-			context.stroke();
 		}
 	}
 
