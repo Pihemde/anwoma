@@ -18,6 +18,11 @@ var Map = function() {
 					tileDescr = mapDescr[y][x];
 				}
 				this.tiles[y][x] = new Tile(tileDescr);
+//				if (x  == 5 && y == 13) {
+//					this.tiles[y][x] = new Granary(this, this.context, {i:x,j:y});
+//				} else {
+//					this.tiles[y][x] = new Grass(this, this.context, {i:x,j:y});	
+//				}
 			}
 		}
 		var map = this;
@@ -46,7 +51,7 @@ var Map = function() {
 		x = Math.round(x);
 		y = Math.round(y);
 		return [x, y];
-	}
+	};
 
 	Class.prototype.fromRealCoord = function(coord) {
 		var angle = -Math.PI/4;
@@ -69,7 +74,17 @@ var Map = function() {
 			Math.floor(x),
 			Math.floor(y)
 		];
-	}
+	};
+	
+	Class.prototype.toPixels = function(c) {
+		var p = this.toRealCoord([c.i, c.j]);
+		return {x:p[0], y:p[1]};
+	};
+	
+	Class.prototype.fromPixels = function(coord) {
+		var p = this.fromRealCoord([c.x, c.y]);
+		return {i:p[0], j:p[1]};		
+	};
 
 	Class.prototype.paint = function() {
 		paintLand(this);
@@ -82,14 +97,14 @@ var Map = function() {
 			map.paint();
 		}
 		setTimeout(repaint, REPAINT_DELAI);
-	}
+	};
 
 	Class.prototype.onmousemove = function(event) {
 		this.mousePosition.x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
 		this.mousePosition.y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
 		//console.log(this.mousePosition.x, this.mousePosition.y);
 		//console.log(fromRealCoord([mousePosition.x, mousePosition.y]));
-	}
+	};
 
 	Class.prototype.onclick = function(event) {
 		this.mousePosition.x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
@@ -100,7 +115,7 @@ var Map = function() {
 		
 		// 2ème cas, l'utilisateur a selectionné un objet dans la liste des terrains/batiments/... 
 		
-	}
+	};
 	
 	Class.prototype.onmousewheel = function(event) {
 		if(event.shiftKey) {
@@ -111,7 +126,7 @@ var Map = function() {
 			}
 			event.stopPropagation();
 		}
-	}
+	};
 	
 	
 	function paintLand(map) {
@@ -120,7 +135,8 @@ var Map = function() {
 		// Now, we can draw the map
 		for(var y=0; y<map.height; y++) {
 			for(var x=0; x<map.width; x++) {
-				map.tiles[y][x].paint(map, x, y);
+				//map.tiles[y][x].paint(map, x, y);
+				map.tiles[y][x].paint();
 			}
 		}
 	}
