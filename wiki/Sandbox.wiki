@@ -1,0 +1,37 @@
+sol = {
+	class: "Sol"
+	destructible: false
+}
+
+herbe = {
+	ref: sol,
+	src: "...",
+}
+desert = {
+	ref: sol,
+	src: "...",
+}
+arbre = {
+	class: "Arbre"
+	src: "...",
+	parentRef: herbe
+}
+
+granary = {
+	class: "Granary",
+	src="...",
+	remplissage: 0
+}
+_____________________________________________________________________________________
+
+arbreDansUnDesert = {
+	ref: arbre,
+	parentRef: desert
+}
+
+arbreSurHerbe = {
+	ref: arbre
+}
+
+[ [c11, c12]
+  [c21, c22] ]
