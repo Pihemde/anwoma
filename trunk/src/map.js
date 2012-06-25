@@ -76,21 +76,18 @@ var Map = function() {
 		paintGrid(this);
 		paintMousePosition(this);
 		paintSelectedTile(this);
-/*
-		this.context.scale(this.zoom, this.zoom);
-		this.zoom = 1;
-*/
+
+		var map = this;
 		function repaint() {
 			map.paint();
 		}
-		
-		//setTimeout(repaint, REPAINT_DELAI);
+		setTimeout(repaint, REPAINT_DELAI);
 	}
 
 	Class.prototype.onmousemove = function(event) {
 		this.mousePosition.x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
 		this.mousePosition.y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
-		console.log(this.mousePosition.x, this.mousePosition.y);
+		//console.log(this.mousePosition.x, this.mousePosition.y);
 		//console.log(fromRealCoord([mousePosition.x, mousePosition.y]));
 	}
 
@@ -117,7 +114,7 @@ var Map = function() {
 	}
 	
 	
-	function paintLand() {
+	function paintLand(map) {
 		// Clear all the map
 		map.context.clearRect(0, 0, map.canvas.width, map.canvas.height); // FIXME Ne devrait pas être ici, ce n'est pas seulement pour le décors qu'on nettoye le canvas  
 		// Now, we can draw the map
@@ -158,7 +155,6 @@ var Map = function() {
 		var c = map.fromRealCoord([map.mousePosition.x, map.mousePosition.y]);
 		var x = c[0];
 		var y = c[1];
-		
 		//if(x < 0 || x > MAP_SIZE - 1 || y < 0 || y > MAP_SIZE - 1) {
 		//	return;
 		//}
