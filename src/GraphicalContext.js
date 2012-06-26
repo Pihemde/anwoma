@@ -124,18 +124,22 @@ var GraphicalContext = function() {
 		return {x:p[0], y:p[1]};
 	};
 	
-	Class.prototype.fromPixels = function(coord) {
+	Class.prototype.fromPixels = function(c) {
 		var p = this.fromRealCoord([c.x, c.y]);
 		return {i:p[0], j:p[1]};		
 	};
 
 	Class.prototype.onmousemove = function(event) {
 		var evt = event || window.event;
-		this.mousePosition.x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
-		this.mousePosition.y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
-		var c = this.fromRealCoord([this.mousePosition.x, this.mousePosition.y]);
+		var x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
+		var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
 
-		this.fireEvent("move", {position: this.fromRealCoord([this.mousePosition.x, this.mousePosition.y])});
+		var c = this.fromPixels({x: x, y: y});
+		if(!this.mousePosition || this.mousePosition.i != c.i || this.mousePosition.j != c.j) {
+			this.mousePosition = c;
+			this.fireEvent("move", {position: this.mousePosition});
+		}
+
 
 		if(!!this.moveMap) {
 			this.offset.x += evt.clientX - this.moveMap.x;
@@ -145,9 +149,9 @@ var GraphicalContext = function() {
 	};
 
 	Class.prototype.onclick = function(event) {
-		this.mousePosition.x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
-		this.mousePosition.y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
-		var c = this.fromRealCoord([this.mousePosition.x, this.mousePosition.y]);
+		var x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
+		var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
+		var c = this.fromPixels({x: x, y: y});
 
 		this.fireEvent("click", {position: c});
 	};
