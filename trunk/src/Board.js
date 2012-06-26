@@ -3,6 +3,9 @@ var Board = function() {
 
 	var Class = function(canvas, width, height, orientation) {
 		this.gcontext = new GraphicalContext(canvas, width, height, orientation);
+		this.gcontext.addEventListener("move", function(e) {
+			console.log(e);
+		});
 		console.log(this.gcontext);
 		this.width = width;
 		this.height = height;
