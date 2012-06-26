@@ -1,7 +1,7 @@
 /**
- * Grass 
+ * Mountain 
  */
-var Grass = function() { // FIXME Comment on fait pour hériter ?
+var Mountain = function() { // FIXME Comment on fait pour hériter ?
 	/**
 	 * Constructor
 	 * @param gcontext the graphical context
@@ -16,7 +16,7 @@ var Grass = function() { // FIXME Comment on fait pour hériter ?
 	 * Draw object on canvas
 	 */
 	Class.prototype.paint = function() {
-		this.gcontext.drawImage(GRASS1, this.position);
+		this.gcontext.drawImage(MOUNTAIN1, this.position);
 	};
 		
 	return Class;

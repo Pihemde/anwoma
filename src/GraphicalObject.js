@@ -9,9 +9,9 @@ var GraphicalObject = function() {
 	 * @param tile object description. Include image to paint, size, flags (buildable, destructible, ...), lifecycle rules.
 	 * @param position absolute position object instance on the game board (first : 0,0 ; second 1,0 ; ...)
 	 */
-	var Class = function(map, context, tile, position) {
+	var Class = function(gcontext, position) {
 		this.map = map;
-		this.context = context;
+		this.gcontext = gcontext;
 		this.tile = tile;
 		this.position = position;
 	};
@@ -25,27 +25,13 @@ var GraphicalObject = function() {
 		
 		if(t.src instanceof Array) {
 			for(var layer = 0 ; layer < t.src.lenght ; layer++) {
-				this.context.drawImage(t.src[layer], c.x, c.y);
+				this.gcontext.drawImage(t.src[layer], c.x, c.y);
 			}
 		} else {
 			// Only one image to draw
-			this.context.drawImage(t.src, c.x, c.y);
+			this.gcontext.drawImage(t.src, c.x, c.y);
 		}
 
-	};
-	
-	/**
-	 * Return position of object in map in pixel unit
-	 */
-	Class.prototype.getRealPosition = function() {
-		return map.toRealCoord(this.position);
-	};
-	
-	/**
-	 * Return position of object in game board
-	 */
-	Class.prototype.getBoardPosition = function() {
-		return this.position;
 	};
 	
 	/**

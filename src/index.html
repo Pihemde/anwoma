@@ -37,30 +37,22 @@ canvas {
 <script type="text/javascript" src="../lib/sylvester.src.js"></script>
 <script type="text/javascript" src="images.js"></script>
 <script type="text/javascript" src="gobjects/Grass.js"></script>
+<script type="text/javascript" src="gobjects/Sign.js"></script>
 <script type="text/javascript" src="gobjects/Granary.js"></script>
+<script type="text/javascript" src="gobjects/Mountain.js"></script>
 <script type="text/javascript" src="tiles.js"></script>
 <script type="text/javascript" src="../maps/map_test.js"></script>
-<script type="text/javascript" src="map.js"></script>
+<script type="text/javascript" src="GraphicalContext.js"></script>
+<script type="text/javascript" src="Board.js"></script>
 <script>
-	const
-	IMAGE_FOLDER = '../images/';
-	
-	const
-	REPAINT_DELAI = 50;
-
-	/*
-	 * xxx_WIDTH, xxx_HEIGHT => nombre de pixels
-	 */
-	const
-	SQUARE_WIDTH = 58;
-	const
-	SQUARE_HEIGHT = 30;
-
 	/*
 	 * xxx_SIZE => nombre de cases
 	 */
-	const
-	MAP_SIZE = MAP.length;
+	const MAP_SIZE = MAP.length;
+	const N = 0;
+	const E = 1;
+	const S = 2;
+	const W = 3;
 
 	var map = undefined;
 
@@ -68,14 +60,16 @@ canvas {
 		/*
 		 * On commence par précharger les images 
 		 */
-		preloadImages(IMAGE_FOLDER, main);
+		//preloadImages(IMAGE_FOLDER, main);
 		
 		/*
 		 * On instancie les objets
 		 */
 		//loadingMap();
-	};
 
+		main();
+	};
+/*
 	function preloadImages(folder, callback) {
 		var loadedImages = 0;
 		var imageCount = 0;
@@ -94,21 +88,22 @@ canvas {
 			image.object = object;
 		}
 	}
-
+*/
 	function main() {
 		/*
 		 * On rempli la liste de droite avec les images (terrains, batiments) dispos.
 		 */
-		fillObjectList();
+		//fillObjectList();
 
 		var canvas = document.getElementById("canvas");
-		map = new Map(canvas, MAP_SIZE, MAP_SIZE, MAP);
+		board = new Board(canvas, MAP_SIZE, MAP_SIZE, MAP, N);
 		/*
 		 * On dessine
 		 */
-		map.paint();
+		board.paint();
 	}
 
+/*
 	function paint() {
 	}
 	
@@ -170,6 +165,7 @@ canvas {
 			td.appendChild(image);
 		}
 	}
+*/
 </script>
 </head>
 <body>

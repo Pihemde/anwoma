@@ -1,15 +1,12 @@
 var Board = function() {
-	var Class = function(canvas, width, height, boardDescr) {
-		this.canvas = canvas;
-		this.context = canvas.getContext("2d");
+	const REPAINT_DELAI = 50;
+
+	var Class = function(canvas, width, height, boardDescr, orientation) {
+		this.gcontext = new GraphicalContext(canvas, width, height, orientation);
+		console.log(this.gcontext);
 		this.width = width;
 		this.height = height;
 		this.tiles = [];
-		this.offsetX = 100;
-		this.offsetY = 50;
-		this.zoom = 1;
-		this.mousePosition = {x : 0,y : 0};
-		this.selectedTile = undefined;
 		for(var y=0; y<this.height; y++) {
 			this.tiles[y] = [];
 			for(var x=0; x<this.width; x++) {
@@ -20,10 +17,15 @@ var Board = function() {
 				}
 				this.tiles[y][x] = new Tile(tileDescr);
 */
-				if (x  == 5 && y == 13) {
-					this.tiles[y][x] = new Granary(this, this.context, {i:x,j:y});
+				if (x == 5 && y == 13) {
+					this.tiles[y][x] = new Granary(this.gcontext, {i:x,j:y});
+				} else if (x == 2 && y == 2) {
+					this.tiles[y][x] = new Sign(this.gcontext, {i:x,j:y});
+					this.tiles[y][x].orientation = W;
+				} else if (x == 13 && y == 5) {
+					this.tiles[y][x] = new Mountain(this.gcontext, {i:x,j:y});
 				} else {
-					this.tiles[y][x] = new Grass(this, this.context, {i:x,j:y});	
+					this.tiles[y][x] = new Grass(this.gcontext, {i:x,j:y});	
 				}
 			}
 		}
@@ -31,10 +33,11 @@ var Board = function() {
 	};
 
 	Class.prototype.paint = function() {
+		clear(this);
 		paintLand(this);
-		paintGrid(this);
-		paintMousePosition(this);
-		paintSelectedTile(this);
+		//paintGrid(this);
+		//paintMousePosition(this);
+		//paintSelectedTile(this);
 
 		var board = this;
 		function repaint() {
@@ -44,9 +47,13 @@ var Board = function() {
 	};
 	
 	
-	function paintLand(board) {
+	function clear(board) {
 		// Clear all the board
-		board.context.clearRect(0, 0, board.canvas.width, board.canvas.height); // FIXME Ne devrait pas être ici, ce n'est pas seulement pour le décors qu'on nettoye le canvas  
+		board.gcontext.clear();
+	}
+	
+	
+	function paintLand(board) {
 		// Now, we can draw the board
 		for(var y=0; y<board.height; y++) {
 			for(var x=0; x<board.width; x++) {
