@@ -6,31 +6,44 @@ var Board = function() {
 		this.gcontext.addEventListener("move", function(e) {
 			console.log(e.position.i, e.position.j);
 		});
-		console.log(this.gcontext);
 		this.width = width;
 		this.height = height;
-		this.tiles = [];
-		for(var y=0; y<this.height; y++) {
-			this.tiles[y] = [];
-			for(var x=0; x<this.width; x++) {
-				if (x == 5 && y == 13) {
-					this.tiles[y][x] = new Granary(this.gcontext, {i:x,j:y});
-				} else if (x == 2 && y == 2) {
-					this.tiles[y][x] = new Sign(this.gcontext, {i:x,j:y});
-					this.tiles[y][x].orientation = W;
-				} else if (x == 13 && y == 5) {
-					this.tiles[y][x] = new Mountain(this.gcontext, {i:x,j:y});
+		this.gobjects = [];
+		var board = this;
+		this.orientation = orientation;
+		loadGObject(board);
+	};
+	
+	Class.prototype.changeOrientation = function(orientation) {
+		this.orientation = orientation;
+		this.gcontext.changeOrientation(orientation);
+	};
+	
+	function loadGObject(board) {
+		for(var j=0; j<board.height; j++) {
+			board.gobjects[j] = [];
+			for(var i=0; i<board.width; i++) {
+				if (i == 5 && j == 13) {
+					board.gobjects[j][i] = new Granary(board.gcontext);
+					board.gobjects[j][i].unserialize({position:{i:i,j:j}});
+				} else if (i == 2 && j == 2) {
+					board.gobjects[j][i] = new Sign(board.gcontext);
+					board.gobjects[j][i].unserialize({position:{i:i,j:j}, orientation:S});
+				} else if (i == 13 && j == 5) {
+					board.gobjects[j][i] = new Mountain(board.gcontext);
+					board.gobjects[j][i].unserialize({position:{i:i,j:j}});
 				} else {
-					this.tiles[y][x] = new Grass(this.gcontext, {i:x,j:y});	
+					board.gobjects[j][i] = new Grass(board.gcontext);
+					board.gobjects[j][i].unserialize({position:{i:i,j:j}});
 				}
 			}
 		}
-		var board = this;
-	};
-
+	}
+		
+		
 	Class.prototype.paint = function() {
 		clear(this);
-		paintLand(this);
+		paintGObjects(this);
 		//paintGrid(this);
 		//paintMousePosition(this);
 		//paintSelectedTile(this);
@@ -49,34 +62,60 @@ var Board = function() {
 	}
 	
 	
-	function paintLand(board) {
+	function paintGObjects(board) {
 		// Now, we can draw the board
-		for(var y=0; y<board.height; y++) {
-			for(var x=0; x<board.width; x++) {
-				board.tiles[y][x].paint();
-			}
+		switch(board.orientation) {
+			case N :
+				for(var j = 0 ; j < board.height; j++) {
+					for(var i = 0 ; i < board.width; i++) {
+						board.gobjects[j][i].paint();
+					}
+				}
+				break;
+			case E :
+				// WARNING j and i is interverted !
+				for(var i = 0 ; i < board.width; i++) {
+					for(var j = board.height -1  ; j >= 0 ; j--) {
+						board.gobjects[j][i].paint();
+					}
+				}
+				break;
+			case S :
+				for(var j = board.height -1 ; j >= 0; j--) {
+					for(var i = board.width -1 ; i >= 0; i--) {
+						board.gobjects[j][i].paint();
+					}
+				}
+				break;
+			case W :
+				for(var j = 0 ; j < board.height; j++) {
+					for(var i = board.width -1 ; i >= 0 ; i--) {
+						board.gobjects[j][i].paint();
+					}
+				}
+				break;
 		}
 	}
 
 	function paintGrid(board) {
 		var c = undefined;
-		board.context.lineWidth = 0.5;
-		board.context.strokeStyle = "#ff0000";
+		board.gcontext.context.lineWidth = 0.5;
+		board.gcontext.context.strokeStyle = "#ff0000";
 		for ( var i = 0; i <= board.width; i++) {
-			board.context.beginPath();
+			board.gcontext.context.beginPath();
 			c = board.toRealCoord([i, 0]);
-			board.context.moveTo(c[0], c[1]);
-			c = board.toRealCoord([i, board.height]);
-			board.context.lineTo(c[0], c[1]);
-			board.context.stroke();
+			board.gcontext.context.moveTo(c[0], c[1]);
+			c = board.gcontext.toRealCoord([i, board.height]);
+			board.gcontext.context.lineTo(c[0], c[1]);
+			board.gcontext.context.stroke();
 		}
 		for ( var i = 0; i <= board.height; i++) {
-			board.context.beginPath();
-			c = board.toRealCoord([0, i]);
-			board.context.moveTo(c[0], c[1]);
-			c = board.toRealCoord([board.width, i]);
-			board.context.lineTo(c[0], c[1]);
-			board.context.stroke();
+			board.gcontext.context.beginPath();
+			c = board.gcontext.toRealCoord([0, i]);
+			board.gcontext.context.moveTo(c[0], c[1]);
+			c = board.gcontext.toRealCoord([board.width, i]);
+			board.gcontext.context.lineTo(c[0], c[1]);
+			board.gcontext.context.stroke();
 		}
 	}
 
@@ -92,22 +131,22 @@ var Board = function() {
 			return;
 		}
 
-		board.context.beginPath();
-		c = board.toRealCoord([x, y]);
-		board.context.moveTo(c[0], c[1]);
-		c = board.toRealCoord([x + 1, y]);
-		board.context.lineTo(c[0], c[1]);
-		c = board.toRealCoord([x + 1, y + 1]); 
-		board.context.lineTo(c[0], c[1]);
-		c = board.toRealCoord([x, y + 1]);
-		board.context.lineTo(c[0], c[1]);
-		c = board.toRealCoord([x, y]);
-		board.context.lineTo(c[0], c[1]);
-		board.context.closePath();
-		board.context.fillStyle = "red";
-		board.context.globalAlpha = 0.5; // Transparence 
-		board.context.fill(); // On remplit 
-		board.context.globalAlpha = 1; // On la reset pour les copains 
+		board.gcontext.context.beginPath();
+		c = board.gcontext.toRealCoord([x, y]);
+		board.gcontext.context.moveTo(c[0], c[1]);
+		c = board.gcontext.toRealCoord([x + 1, y]);
+		board.gcontext.context.lineTo(c[0], c[1]);
+		c = board.gcontext.toRealCoord([x + 1, y + 1]); 
+		board.gcontext.context.lineTo(c[0], c[1]);
+		c = board.gcontext.toRealCoord([x, y + 1]);
+		board.gcontext.context.lineTo(c[0], c[1]);
+		c = board.gcontext.toRealCoord([x, y]);
+		board.gcontext.context.lineTo(c[0], c[1]);
+		board.gcontext.context.closePath();
+		board.gcontext.context.fillStyle = "red";
+		board.gcontext.context.globalAlpha = 0.5; // Transparence 
+		board.gcontext.context.fill(); // On remplit 
+		board.gcontext.context.globalAlpha = 1; // On la reset pour les copains 
 	}
 
 	function paintSelectedTile(board) {
@@ -119,10 +158,10 @@ var Board = function() {
 			return;
 		}
 
-		board.context.globalAlpha = 0.5; // Transparence 
-		c = board.toRealCoord([x, y]);
-		paintTileOnGrid(board.context, board.selectedTile, c[0], c[1]); 
-		board.context.globalAlpha = 1; // On la reset pour les copains 
+		board.gcontext.context.globalAlpha = 0.5; // Transparence 
+		c = board.gcontext.toRealCoord([x, y]);
+		paintTileOnGrid(board.gcontext.context, board.selectedTile, c[0], c[1]); 
+		board.gcontext.context.globalAlpha = 1; // On la reset pour les copains 
 	}
 
 	return Class;

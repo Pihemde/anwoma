@@ -10,6 +10,7 @@
 <!-- Libs -->
 <script type="text/javascript" src="Environnement.js"></script>
 <script type="text/javascript" src="GraphicalContext.js"></script>
+<script type="text/javascript" src="GraphicalObject.js"></script>
 <script type="text/javascript" src="Board.js"></script>
 <script type="text/javascript" src="gobjects/Grass.js"></script>
 <script type="text/javascript" src="gobjects/Sign.js"></script>
@@ -18,7 +19,7 @@
 <!-- Map definition -->
 <!-- <script type="text/javascript" src="maps/map_test.js"></script> -->
 <script>
-	var map = undefined;
+	var board = undefined;
 
 	window.onload = function() {
 		loadImages(main);
@@ -31,11 +32,22 @@
 		//fillObjectList();
 
 		var canvas = document.getElementById("canvas");
-		board = new Board(canvas, MAP_SIZE, MAP_SIZE, N);
+		board = new Board(canvas, MAP_SIZE, MAP_SIZE, E);
 		/*
 		 * On dessine
 		 */
 		board.paint();
+	}
+	
+	function rotate(direction) {
+		var orientation = board.orientation + direction;
+		if(orientation < 0) {
+			orientation = 3;
+		}
+		if(orientation > 3) {
+			orientation = 0;
+		}
+		board.changeOrientation(orientation);
 	}
 /*
 	function fillObjectList() {
@@ -70,6 +82,10 @@
 </script>
 </head>
 <body>
+	<div id="rotate">
+		<img id="rotate-left" src="../images/ui/paneling_00092.png" onclick="javascript:rotate(-1)" />
+		<img id="rotate-right" src="../images/ui/paneling_00095.png" onclick="javascript:rotate(1)" />
+	</div>
 	<canvas id="canvas" width="986" height="768"></canvas>
 	<table id="objectList"></table>
 </body>

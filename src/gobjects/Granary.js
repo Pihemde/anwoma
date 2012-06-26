@@ -7,11 +7,8 @@ var Granary = function() { // FIXME Comment on fait pour hériter ?
 	 * @param gcontext the graphical context
 	 * @param position absolute position object instance on the game board (first : 0,0 ; second 1,0 ; ...)
 	 */
-	var Class = function(gcontext, position) {
+	var Class = function(gcontext) {
 		this.gcontext = gcontext;
-		this.position = position;
-		
-		this.stock = 0; // Quantity of goods
 	};
 	
 	/**
@@ -41,6 +38,24 @@ var Granary = function() { // FIXME Comment on fait pour hériter ?
 			this.gcontext.drawImage(IMAGES.GRANARY_STOCK3, this.position, {x:?, y:?});
 		}
 */
+	};
+	
+	/*
+	 * Retrieve a JSON string to save object state
+	 */
+	Class.prototype.serialize = function() {
+		return {
+			position: this.position,
+			stock: this.stock
+		};
+	};
+	
+	/*
+	 * Set attributes from json object
+	 */
+	Class.prototype.unserialize = function(datas) {
+		this.position = datas.position;
+		this.stock = setData(datas.stock, 0);
 	};
 		
 	return Class;
