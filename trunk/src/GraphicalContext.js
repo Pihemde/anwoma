@@ -17,7 +17,6 @@ var GraphicalContext = function() {
 		this.angle = orientation*Math.PI/2 + Math.PI/4;
 		this.zoom = 1;
 		this.offset = {x: 0, y: 0};
-		this.totoEnSlip = 666;
 		this.mousePosition = {x : 0,y : 0};
 		this.selectedTile = undefined;
 		this.listeners = {};
@@ -27,6 +26,10 @@ var GraphicalContext = function() {
 		canvas.addEventListener("mousewheel", function(event) {gcontext.onmousewheel(event);});
 		canvas.addEventListener("mouseup", function(event) {gcontext.onmouseup(event);});
 		canvas.addEventListener("mousedown", function(event) {gcontext.onmousedown(event);});
+	};
+	
+	Class.prototype.changeOrientation = function(orientation) {
+		this.angle = orientation*Math.PI/2 + Math.PI/4;
 	};
 	
 	/**
@@ -83,8 +86,8 @@ var GraphicalContext = function() {
 		// Rotation pour orienter la carte dans le bon sens
 		// TODO: Prendre en comte la direction N/E/S/W
 		var transform = Matrix.Rotation(this.angle);
-		coord = $M([[x], [y]]);
-		coord = transform.multiply(coord);
+		coord = $M([[x], [y]]); // FIXME The parameter coord should not be assigned
+		coord = transform.multiply(coord); // FIXME The parameter coord should not be assigned
 		// Etirement de la carte pour s'adapter à la taille des images 
 		x = coord.elements[0][0] / Math.sqrt(2) * SQUARE_WIDTH  * this.zoom;
 		y = coord.elements[1][0] / Math.sqrt(2) * SQUARE_HEIGHT * this.zoom;
@@ -107,8 +110,8 @@ var GraphicalContext = function() {
 		// Rotation pour orienter la carte dans le bon sens
 		// TODO: Prendre en comte la direction N/E/S/W
 		var transform = Matrix.Rotation(-this.angle);
-		coord = $M([[x], [y]]);
-		coord = transform.multiply(coord);
+		coord = $M([[x], [y]]); // FIXME The parameter coord should not be assigned
+		coord = transform.multiply(coord); // FIXME The parameter coord should not be assigned
 		// Centrage de la carte sur l'origine des axes
 		var x = coord.elements[0][0] + this.width/2;
 		var y = coord.elements[1][0] + this.height/2;
@@ -119,12 +122,12 @@ var GraphicalContext = function() {
 		];
 	};
 	
-	Class.prototype.toPixels = function(c) {
+	Class.prototype.toPixels = function(c) { // FIXME à merger avec toRealCoord
 		var p = this.toRealCoord([c.i, c.j]);
 		return {x:p[0], y:p[1]};
 	};
 	
-	Class.prototype.fromPixels = function(c) {
+	Class.prototype.fromPixels = function(c) { // FIXME à merger avec fromRealCoord
 		var p = this.fromRealCoord([c.x, c.y]);
 		return {i:p[0], j:p[1]};		
 	};
@@ -157,7 +160,7 @@ var GraphicalContext = function() {
 	};
 	
 	Class.prototype.onmousewheel = function(event) {
-		if(event.shiftKey) {
+		if(event.shiftKey) { // FIXME Et les autres navigateurs ?
 			if(event.wheelDelta>0) {
 				this.zoom *= 1.5;
 			} else {

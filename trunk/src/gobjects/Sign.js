@@ -7,10 +7,8 @@ var Sign = function() { // FIXME Comment on fait pour hériter ?
 	 * @param gcontext the graphical context
 	 * @param position absolute position object instance on the game board (first : 0,0 ; second 1,0 ; ...)
 	 */
-	var Class = function(gcontext, position) {
+	var Class = function(gcontext) {
 		this.gcontext = gcontext;
-		this.position = position;
-		this.orientation = N;
 	};
 	
 	/**
@@ -19,18 +17,36 @@ var Sign = function() { // FIXME Comment on fait pour hériter ?
 	Class.prototype.paint = function() {
 		switch(this.orientation) {
 			case N :
-				this.gcontext.drawImage(IMAGES.INDICATORN, this.position);
+				this.gcontext.drawImage(IMAGES.SIGN_BLUE_N, this.position);
 				break;
 			case E :
-				this.gcontext.drawImage(IMAGES.INDICATORE, this.position);
+				this.gcontext.drawImage(IMAGES.SIGN_BLUE_E, this.position);
 				break;
 			case S :
-				this.gcontext.drawImage(IMAGES.INDICATORS, this.position);
+				this.gcontext.drawImage(IMAGES.SIGN_BLUE_S, this.position);
 				break;
 			case W :
-				this.gcontext.drawImage(IMAGES.INDICATORW, this.position);
+				this.gcontext.drawImage(IMAGES.SIGN_BLUE_W, this.position);
 				break;
 		}
+	};
+	
+	/*
+	 * Retrieve a JSON string to save object state
+	 */
+	Class.prototype.serialize = function() {
+		return {
+			position: this.position,
+			orientation: this.orientation
+		};
+	};
+	
+	/*
+	 * Set attributes from json object
+	 */
+	Class.prototype.unserialize = function(datas) {
+		this.position = datas.position;
+		this.orientation = setData(datas.orientation, N);
 	};
 		
 	return Class;
