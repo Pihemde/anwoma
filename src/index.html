@@ -1,94 +1,29 @@
-<!--
-TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
-
- - Il serait bon d'utiliser un objet anonyme pour les coordonnées, du style 
-  {
-   x: 256,
-   y: 154 
-  }
- - Parallèlement, il serait intéressant d'utiliser également un objet anonyme pour les positions dans la board
-  {
-   i: 1,
-   j: 5
-  }
-  Le nom des variables serait VOLONTAIREMENT différent afin d'éviter les erreurs. 
-
-TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
--->
-
 <!DOCTYPE HTML>
 <html>
 <head>
-<style type="text/css">
-canvas {
-	border: solid 1px black;
-	float: left;
-}
-
-#objectList {
-	border: solid 1px black;
-	float: left;
-}
-
-.object {
-	border: solid 1px black;
-}
-</style>
+<link rel="stylesheet" href="style.css" type="text/css">
+<script type="text/javascript" src="constants.js"></script>
+<!-- 3rd party libs -->
 <script type="text/javascript" src="../lib/sylvester.src.js"></script>
-<script type="text/javascript" src="images.js"></script>
+<!-- Environnement  -->
+<script type="text/javascript" src="env/roman.js"></script>
+<!-- Libs -->
+<script type="text/javascript" src="Environnement.js"></script>
+<script type="text/javascript" src="GraphicalContext.js"></script>
+<script type="text/javascript" src="Board.js"></script>
 <script type="text/javascript" src="gobjects/Grass.js"></script>
 <script type="text/javascript" src="gobjects/Sign.js"></script>
 <script type="text/javascript" src="gobjects/Granary.js"></script>
 <script type="text/javascript" src="gobjects/Mountain.js"></script>
-<script type="text/javascript" src="tiles.js"></script>
-<script type="text/javascript" src="../maps/map_test.js"></script>
-<script type="text/javascript" src="GraphicalContext.js"></script>
-<script type="text/javascript" src="Board.js"></script>
+<!-- Map definition -->
+<!-- <script type="text/javascript" src="maps/map_test.js"></script> -->
 <script>
-	/*
-	 * xxx_SIZE => nombre de cases
-	 */
-	const MAP_SIZE = MAP.length;
-	const N = 0;
-	const E = 1;
-	const S = 2;
-	const W = 3;
-
 	var map = undefined;
 
 	window.onload = function() {
-		/*
-		 * On commence par précharger les images 
-		 */
-		//preloadImages(IMAGE_FOLDER, main);
-		
-		/*
-		 * On instancie les objets
-		 */
-		//loadingMap();
-
-		main();
+		loadImages(main);
 	};
-/*
-	function preloadImages(folder, callback) {
-		var loadedImages = 0;
-		var imageCount = 0;
-		var toPreload = [ TERRAINS, BUILDINGS ];
-		for(var p in toPreload)
-		for ( var i in toPreload[p]) {
-			imageCount++;
-			var image = toPreload[p][i];
-			var object = new Image();
-			object.onload = function() {
-				if (++loadedImages >= imageCount) {
-					callback();
-				}
-			}
-			object.src = folder + image.src;
-			image.object = object;
-		}
-	}
-*/
+
 	function main() {
 		/*
 		 * On rempli la liste de droite avec les images (terrains, batiments) dispos.
@@ -96,47 +31,13 @@ canvas {
 		//fillObjectList();
 
 		var canvas = document.getElementById("canvas");
-		board = new Board(canvas, MAP_SIZE, MAP_SIZE, MAP, N);
+		board = new Board(canvas, MAP_SIZE, MAP_SIZE, N);
 		/*
 		 * On dessine
 		 */
 		board.paint();
 	}
-
 /*
-	function paint() {
-	}
-	
-	function get(c) {
-		return MMAP[c.i][c.j];
-	}
-	
-	function set(c, v) {
-		MMAP[c.i][c.j] = v;
-	}
-	
-	function isBuildable(c) {
-		var object = get(c);
-		if(!!object.buildable && false == object.buildable) {
-			return false;
-		}
-		return true;
-	}
-	
-	function isDestructible(c) {
-		var object = MMAP[c.i][c.j];
-		if(!!object.destructible && true == object.destructible) {
-			return true;
-		}
-		return false;
-	}
-	
-	function destroy(c) {
-		if(isDestructible(c)) {
-			set(c, undefined);
-		}		
-	}
-
 	function fillObjectList() {
 		var table = document.getElementById("objectList");
 		for ( var i in TERRAINS) {

@@ -21,24 +21,24 @@ var Granary = function() { // FIXME Comment on fait pour hériter ?
 		/*
 		 * Draw base images
 		 */
-		this.gcontext.drawImage(GRANARY_BASE0, this.position);
-		this.gcontext.drawImage(GRANARY_BASE1, this.position, {x:1, y:-17});
+		this.gcontext.drawImage(IMAGES.GRANARY_BASE0, this.position);
+		this.gcontext.drawImage(IMAGES.GRANARY_BASE1, this.position, {x:1, y:-17});
 		
 		/*
 		 * Draw goods * stock
 		 */
 /*
 		if(stock > 0) {
-			this.gcontext.drawImage(GRANARY_STOCK0, this.position, {x:?, y:?});
+			this.gcontext.drawImage(IMAGES.GRANARY_STOCK0, this.position, {x:?, y:?});
 		}
 		if(stock > 1) {
-			this.gcontext.drawImage(GRANARY_STOCK1, this.position, {x:?, y:?});
+			this.gcontext.drawImage(IMAGES.GRANARY_STOCK1, this.position, {x:?, y:?});
 		}
 		if(stock > 2) {
-			this.gcontext.drawImage(GRANARY_STOCK2, this.position, {x:?, y:?});
+			this.gcontext.drawImage(IMAGES.GRANARY_STOCK2, this.position, {x:?, y:?});
 		}
 		if(stock > 3) {
-			this.gcontext.drawImage(GRANARY_STOCK3, this.position, {x:?, y:?});
+			this.gcontext.drawImage(IMAGES.GRANARY_STOCK3, this.position, {x:?, y:?});
 		}
 */
 	};

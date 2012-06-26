@@ -1,0 +1,13 @@
+canvas {
+	border: solid 1px black;
+	float: left;
+}
+
+#objectList {
+	border: solid 1px black;
+	float: left;
+}
+
+.object {
+	border: solid 1px black;
+}

@@ -16,7 +16,7 @@ var Grass = function() { // FIXME Comment on fait pour hériter ?
 	 * Draw object on canvas
 	 */
 	Class.prototype.paint = function() {
-		this.gcontext.drawImage(GRASS1, this.position);
+		this.gcontext.drawImage(IMAGES.GRASS1, this.position);
 	};
 		
 	return Class;
