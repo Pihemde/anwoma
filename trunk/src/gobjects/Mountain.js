@@ -16,7 +16,7 @@ var Mountain = function() { // FIXME Comment on fait pour hériter ?
 	 * Draw object on canvas
 	 */
 	Class.prototype.paint = function() {
-		this.gcontext.drawImage(MOUNTAIN1, this.position);
+		this.gcontext.drawImage(IMAGES.MOUNTAIN1, this.position);
 	};
 		
 	return Class;

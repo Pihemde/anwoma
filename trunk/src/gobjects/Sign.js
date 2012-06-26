@@ -19,16 +19,16 @@ var Sign = function() { // FIXME Comment on fait pour hériter ?
 	Class.prototype.paint = function() {
 		switch(this.orientation) {
 			case N :
-				this.gcontext.drawImage(INDICATORN, this.position);
+				this.gcontext.drawImage(IMAGES.INDICATORN, this.position);
 				break;
 			case E :
-				this.gcontext.drawImage(INDICATORE, this.position);
+				this.gcontext.drawImage(IMAGES.INDICATORE, this.position);
 				break;
 			case S :
-				this.gcontext.drawImage(INDICATORS, this.position);
+				this.gcontext.drawImage(IMAGES.INDICATORS, this.position);
 				break;
 			case W :
-				this.gcontext.drawImage(INDICATORW, this.position);
+				this.gcontext.drawImage(IMAGES.INDICATORW, this.position);
 				break;
 		}
 	};
