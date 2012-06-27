@@ -1,19 +1,38 @@
+var grass = {
+	clazz: 'grass',
+	data: {}
+};
+
+var granary = {
+	clazz: 'granary',
+	data: {
+		stock: 0
+	}
+};
+
+var sign = {
+	clazz: 'sign',
+	data: {
+		orientation: ORIENTATION.N
+	}
+};
+
 const MAP = [
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, undefined,                 {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe2}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}],
-	[{ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1}, {ground: TERRAINS.herbe1, building: BUILDINGS.rocher1}],
+	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
+	[grass, granary, undefined, undefined, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
+	[grass, undefined, grass, undefined, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
+	[grass, undefined, undefined, undefined, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
+	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
+	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
+	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
+	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
+	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
+	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
+	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
+	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
+	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
+	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
+	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
+	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
+	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
 ];
