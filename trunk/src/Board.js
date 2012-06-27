@@ -28,7 +28,7 @@ var Board = function() {
 					board.gobjects[j][i].unserialize({position:{i:i,j:j}});
 				} else if (i == 2 && j == 2) {
 					board.gobjects[j][i] = new Sign(board.gcontext);
-					board.gobjects[j][i].unserialize({position:{i:i,j:j}, orientation:S});
+					board.gobjects[j][i].unserialize({position:{i:i,j:j}, orientation:ORIENTATION.S});
 				} else if (i == 13 && j == 5) {
 					board.gobjects[j][i] = new Mountain(board.gcontext);
 					board.gobjects[j][i].unserialize({position:{i:i,j:j}});
@@ -65,14 +65,14 @@ var Board = function() {
 	function paintGObjects(board) {
 		// Now, we can draw the board
 		switch(board.orientation) {
-			case N :
+			case ORIENTATION.N :
 				for(var j = 0 ; j < board.height; j++) {
 					for(var i = 0 ; i < board.width; i++) {
 						board.gobjects[j][i].paint();
 					}
 				}
 				break;
-			case E :
+			case ORIENTATION.E :
 				// WARNING j and i is interverted !
 				for(var i = 0 ; i < board.width; i++) {
 					for(var j = board.height -1  ; j >= 0 ; j--) {
@@ -80,14 +80,14 @@ var Board = function() {
 					}
 				}
 				break;
-			case S :
+			case ORIENTATION.S :
 				for(var j = board.height -1 ; j >= 0; j--) {
 					for(var i = board.width -1 ; i >= 0; i--) {
 						board.gobjects[j][i].paint();
 					}
 				}
 				break;
-			case W :
+			case ORIENTATION.W :
 				for(var j = 0 ; j < board.height; j++) {
 					for(var i = board.width -1 ; i >= 0 ; i--) {
 						board.gobjects[j][i].paint();
