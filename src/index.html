@@ -35,7 +35,7 @@
 	}
 	
 	function rotate(direction) {
-		var orientation = (board.orientation + direction)%4;
+		var orientation = (4 + board.orientation + direction) % 4;
 		board.changeOrientation(orientation);
 	}
 </script>
