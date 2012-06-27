@@ -52,7 +52,7 @@ var GraphicalContext = function() {
 		i -= Math.floor(((this.orientation+0)%4)/2) * (size.width -1);
 		j -= Math.floor(((this.orientation+1)%4)/2) * (size.height-1);
 
-		var c = this.toPixels({i:i,j:j});
+		var c = this.toRealCoord({i:i,j:j});
 		var x = c.x - SQUARE_WIDTH / 2 * this.zoom;
 		var y = c.y + SQUARE_HEIGHT / 2;
 
@@ -90,8 +90,8 @@ var GraphicalContext = function() {
 
 	Class.prototype.toRealCoord = function(coord) {
 		// Centrage de la carte sur l'origine des axes
-		var x = coord[0] - this.width /2;
-		var y = coord[1] - this.height/2;
+		var x = coord.i - this.width /2;
+		var y = coord.j - this.height/2;
 		// Rotation pour orienter la carte dans le bon sens
 		// TODO: Prendre en comte la direction N/E/S/W
 		var transform = Matrix.Rotation(this.angle);
@@ -106,13 +106,13 @@ var GraphicalContext = function() {
 		// Optim pour faire référence a des pixels entier
 		x = Math.round(x);
 		y = Math.round(y);
-		return [x, y];
+		return {x: x, y: y};
 	};
 
 	Class.prototype.fromRealCoord = function(coord) {
 		// Déplacement de la carte pour la centrer correctement
-		var x = coord[0] - this.offset.x - this.canvas.width/2;
-		var y = coord[1] - this.offset.y - this.canvas.height/2;
+		var x = coord.x - this.offset.x - this.canvas.width/2;
+		var y = coord.y - this.offset.y - this.canvas.height/2;
 		// Etirement de la ccarte pour s'adapter à la taille des images
 		x = x / SQUARE_WIDTH  * Math.sqrt(2) / this.zoom;
 		y = y / SQUARE_HEIGHT * Math.sqrt(2) / this.zoom;
@@ -129,20 +129,10 @@ var GraphicalContext = function() {
 		x += Math.floor(((this.orientation+0)%4)/2);
 		y += Math.floor(((this.orientation+1)%4)/2);
 
-		return [
-			Math.floor(x),
-			Math.floor(y)
-		];
-	};
-	
-	Class.prototype.toPixels = function(c) { // FIXME à merger avec toRealCoord
-		var p = this.toRealCoord([c.i, c.j]);
-		return {x:p[0], y:p[1]};
-	};
-	
-	Class.prototype.fromPixels = function(c) { // FIXME à merger avec fromRealCoord
-		var p = this.fromRealCoord([c.x, c.y]);
-		return {i:p[0], j:p[1]};		
+		return {
+			i: Math.floor(x),
+			j: Math.floor(y)
+		};
 	};
 
 	Class.prototype.onmousemove = function(event) {
@@ -150,7 +140,7 @@ var GraphicalContext = function() {
 		var x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
 		var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
 
-		var c = this.fromPixels({x: x, y: y});
+		var c = this.fromRealCoord({x: x, y: y});
 		if(!this.mousePosition || this.mousePosition.i != c.i || this.mousePosition.j != c.j) {
 			this.mousePosition = c;
 			this.fireEvent("move", {position: this.mousePosition});
@@ -167,7 +157,7 @@ var GraphicalContext = function() {
 	Class.prototype.onclick = function(event) {
 		var x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
 		var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
-		var c = this.fromPixels({x: x, y: y});
+		var c = this.fromRealCoord({x: x, y: y});
 
 		this.fireEvent("click", {position: c});
 	};
