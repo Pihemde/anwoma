@@ -14,7 +14,8 @@ var GraphicalContext = function() {
 		this.context = canvas.getContext("2d");
 		this.width = width;
 		this.height = height;
-		this.angle = orientation*Math.PI/2 + Math.PI/4;
+		this.orientation = orientation;
+		this.angle = orientation*Math.PI/2 + Math.PI/4
 		this.zoom = 1;
 		this.offset = {x: 0, y: 0};
 		this.mousePosition = {x : 0, y : 0};
@@ -29,7 +30,9 @@ var GraphicalContext = function() {
 	};
 	
 	Class.prototype.changeOrientation = function(orientation) {
-		this.angle = orientation*Math.PI/2 + Math.PI/4;
+	console.log(orientation);
+		this.orientation = orientation;
+		this.angle = orientation*Math.PI/2 + Math.PI/4
 		this.fireEvent("rotate", {orientation: orientation});
 	};
 	
@@ -44,7 +47,12 @@ var GraphicalContext = function() {
 		var width = image.width * this.zoom;
 		var height = image.height * this.zoom;
 
-		var c = this.toPixels(position);
+		var i = position.i;
+		var j = position.j;
+		i -= Math.floor(((this.orientation+0)%4)/2) * (size.width -1);
+		j -= Math.floor(((this.orientation+1)%4)/2) * (size.height-1);
+
+		var c = this.toPixels({i:i,j:j});
 		var x = c.x - SQUARE_WIDTH / 2 * this.zoom;
 		var y = c.y + SQUARE_HEIGHT / 2;
 
@@ -116,7 +124,11 @@ var GraphicalContext = function() {
 		// Centrage de la carte sur l'origine des axes
 		var x = coord.elements[0][0] + this.width/2;
 		var y = coord.elements[1][0] + this.height/2;
-	
+
+		// Hack for adjusting values
+		x += Math.floor(((this.orientation+0)%4)/2);
+		y += Math.floor(((this.orientation+1)%4)/2);
+
 		return [
 			Math.floor(x),
 			Math.floor(y)

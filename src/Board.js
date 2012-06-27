@@ -24,11 +24,11 @@ var Board = function() {
 			board.gobjects[j] = [];
 			for(var i=0; i<board.width; i++) {
 				if (i == 5 && j == 13) {
-					board.gobjects[j][i] = new Granary(board.gcontext);
-					board.gobjects[j][i].unserialize({position:{i:i,j:j}});
-				} else if (i == 2 && j == 2) {
 					board.gobjects[j][i] = new Sign(board.gcontext);
 					board.gobjects[j][i].unserialize({position:{i:i,j:j}, orientation:ORIENTATION.S});
+				} else if (i == 2 && j == 2) {
+					board.gobjects[j][i] = new Granary(board.gcontext);
+					board.gobjects[j][i].unserialize({position:{i:i,j:j}});
 				} else if (i == 13 && j == 5) {
 					board.gobjects[j][i] = new Mountain(board.gcontext);
 					board.gobjects[j][i].unserialize({position:{i:i,j:j}});
