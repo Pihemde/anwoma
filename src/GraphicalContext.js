@@ -23,9 +23,9 @@ var GraphicalContext = function() {
 		var gcontext = this;
 		canvas.addEventListener('mousemove', function(event) {gcontext.onmousemove(event);}, false);
 		canvas.addEventListener('click', function(event) {gcontext.onclick(event);}, false);
-		canvas.addEventListener("mousewheel", function(event) {gcontext.onmousewheel(event);});
-		canvas.addEventListener("mouseup", function(event) {gcontext.onmouseup(event);});
-		canvas.addEventListener("mousedown", function(event) {gcontext.onmousedown(event);});
+		canvas.addEventListener("mousewheel", function(event) {gcontext.onmousewheel(event);}, false);
+		canvas.addEventListener("mouseup", function(event) {gcontext.onmouseup(event);}, false);
+		canvas.addEventListener("mousedown", function(event) {gcontext.onmousedown(event);}, false);
 	};
 	
 	Class.prototype.changeOrientation = function(orientation) {
@@ -161,10 +161,11 @@ var GraphicalContext = function() {
 	
 	Class.prototype.onmousewheel = function(event) {
 		if(event.shiftKey) { // FIXME Et les autres navigateurs ?
+			var step = 1.1;
 			if(event.wheelDelta>0) {
-				this.zoom *= 1.5;
+				this.zoom *= step;
 			} else {
-				this.zoom /= 1.5;
+				this.zoom /= step;
 			}
 			event.stopPropagation();
 		}

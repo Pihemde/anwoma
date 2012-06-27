@@ -16,16 +16,16 @@ var Sign = function() { // FIXME Comment on fait pour hériter ?
 	 */
 	Class.prototype.paint = function() {
 		switch(this.orientation) {
-			case N :
+			case ORIENTATION.N :
 				this.gcontext.drawImage(IMAGES.SIGN_BLUE_N, this.position);
 				break;
-			case E :
+			case ORIENTATION.E :
 				this.gcontext.drawImage(IMAGES.SIGN_BLUE_E, this.position);
 				break;
-			case S :
+			case ORIENTATION.S :
 				this.gcontext.drawImage(IMAGES.SIGN_BLUE_S, this.position);
 				break;
-			case W :
+			case ORIENTATION.W :
 				this.gcontext.drawImage(IMAGES.SIGN_BLUE_W, this.position);
 				break;
 		}
@@ -46,7 +46,7 @@ var Sign = function() { // FIXME Comment on fait pour hériter ?
 	 */
 	Class.prototype.unserialize = function(datas) {
 		this.position = datas.position;
-		this.orientation = setData(datas.orientation, N);
+		this.orientation = setData(datas.orientation, ORIENTATION.N);
 	};
 		
 	return Class;
