@@ -24,18 +24,19 @@ var Board = function() {
 		for(var j=0; j<board.height; j++) {
 			board.gobjects[j] = [];
 			for(var i=0; i<board.width; i++) {
-				if (i == 5 && j == 13) {
-					board.gobjects[j][i] = new Sign(board.gcontext);
-					board.gobjects[j][i].unserialize({position:{i:i,j:j}, orientation:ORIENTATION.S});
-				} else if (i == 2 && j == 2) {
-					board.gobjects[j][i] = new Granary(board.gcontext);
-					board.gobjects[j][i].unserialize({position:{i:i,j:j}});
-				} else if (i == 13 && j == 5) {
-					board.gobjects[j][i] = new Mountain(board.gcontext);
-					board.gobjects[j][i].unserialize({position:{i:i,j:j}});
-				} else {
-					board.gobjects[j][i] = new Grass(board.gcontext);
-					board.gobjects[j][i].unserialize({position:{i:i,j:j}});
+				var s = MAP[j][i];
+				if(s != undefined) {
+					s.data.position = {i:i, j:j};
+					if (s.clazz == 'sign') {
+						board.gobjects[j][i] = new Sign(board.gcontext);
+					} else if (s.clazz == 'granary') {
+						board.gobjects[j][i] = new Granary(board.gcontext);
+					} else if (s.clazz == 'mountain') {
+						board.gobjects[j][i] = new Mountain(board.gcontext);
+					} else if(s.clazz == 'grass') {
+						board.gobjects[j][i] = new Grass(board.gcontext);
+					}
+					board.gobjects[j][i].unserialize(s.data);
 				}
 			}
 		}
@@ -69,7 +70,7 @@ var Board = function() {
 			case ORIENTATION.N :
 				for(var j = 0 ; j < board.height; j++) {
 					for(var i = 0 ; i < board.width; i++) {
-						board.gobjects[j][i].paint();
+						paintGObject(board.gobjects[j][i]);
 					}
 				}
 				break;
@@ -77,24 +78,30 @@ var Board = function() {
 				// WARNING j and i is interverted !
 				for(var i = 0 ; i < board.width; i++) {
 				for(var j = 0  ; j < board.height ; j++) {
-						board.gobjects[j][i].paint();
+					paintGObject(board.gobjects[j][i]);
 					}
 				}
 				break;
 			case ORIENTATION.S :
 				for(var j = board.height -1 ; j >= 0; j--) {
 					for(var i = board.width -1 ; i >= 0; i--) {
-						board.gobjects[j][i].paint();
+						paintGObject(board.gobjects[j][i]);
 					}
 				}
 				break;
 			case ORIENTATION.W :
 				for(var j = 0 ; j < board.height; j++) {
 					for(var i = board.width -1 ; i >= 0 ; i--) {
-						board.gobjects[j][i].paint();
+						paintGObject(board.gobjects[j][i]);
 					}
 				}
 				break;
+		}
+	}
+	
+	function paintGObject(object) {
+		if(undefined != object) {
+			object.paint();
 		}
 	}
 
