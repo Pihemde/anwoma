@@ -2,6 +2,8 @@
  * Grass 
  */
 var Grass = function() { // FIXME Comment on fait pour hériter ?
+	const SIZE = {width: 1, height: 1};
+
 	/**
 	 * Constructor
 	 * @param gcontext the graphical context
@@ -15,7 +17,7 @@ var Grass = function() { // FIXME Comment on fait pour hériter ?
 	 * Draw object on canvas
 	 */
 	Class.prototype.paint = function() {
-		this.gcontext.drawImage(IMAGES.GRASS1, this.position);
+		this.gcontext.drawImage(IMAGES.GRASS1, SIZE, this.position);
 	};
 	
 	/*

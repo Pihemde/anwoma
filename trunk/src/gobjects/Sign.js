@@ -2,6 +2,9 @@
  * Sign 
  */
 var Sign = function() { // FIXME Comment on fait pour hériter ?
+	const SIZE = {width: 1, height: 1};
+	var SIGNS;
+
 	/**
 	 * Constructor
 	 * @param gcontext the graphical context
@@ -9,27 +12,21 @@ var Sign = function() { // FIXME Comment on fait pour hériter ?
 	 */
 	var Class = function(gcontext) {
 		this.gcontext = gcontext;
-		this.gcontext.addEventListener("turn", this.onturn, this);
+		this.gcontext.addEventListener("rotate", this.onrotate, this);
+		if (SIGNS == undefined) {
+			SIGNS = [];
+			SIGNS[ORIENTATION.N] = IMAGES.SIGN_BLUE_N;
+			SIGNS[ORIENTATION.E] = IMAGES.SIGN_BLUE_E;
+			SIGNS[ORIENTATION.S] = IMAGES.SIGN_BLUE_S;
+			SIGNS[ORIENTATION.W] = IMAGES.SIGN_BLUE_W;
+		}
 	};
 	
 	/**
 	 * Draw object on canvas
 	 */
 	Class.prototype.paint = function() {
-		switch(this.orientation) {
-			case ORIENTATION.N :
-				this.gcontext.drawImage(IMAGES.SIGN_BLUE_N, this.position);
-				break;
-			case ORIENTATION.E :
-				this.gcontext.drawImage(IMAGES.SIGN_BLUE_E, this.position);
-				break;
-			case ORIENTATION.S :
-				this.gcontext.drawImage(IMAGES.SIGN_BLUE_S, this.position);
-				break;
-			case ORIENTATION.W :
-				this.gcontext.drawImage(IMAGES.SIGN_BLUE_W, this.position);
-				break;
-		}
+		this.gcontext.drawImage(SIGNS[this.orientation], SIZE, this.position);
 	};
 	
 	/*
@@ -50,7 +47,7 @@ var Sign = function() { // FIXME Comment on fait pour hériter ?
 		this.orientation = setData(datas.orientation, ORIENTATION.N);
 	};
 	
-	Class.prototype.onturn = function(event) {
+	Class.prototype.onrotate = function(event) {
 		this.orientation = event.orientation;
 	};
 

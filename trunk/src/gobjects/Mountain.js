@@ -2,6 +2,8 @@
  * Mountain 
  */
 var Mountain = function() { // FIXME Comment on fait pour hériter ?
+	const SIZE = {width: 3, height: 3};
+
 	/**
 	 * Constructor
 	 * @param gcontext the graphical context
@@ -15,7 +17,7 @@ var Mountain = function() { // FIXME Comment on fait pour hériter ?
 	 * Draw object on canvas
 	 */
 	Class.prototype.paint = function() {
-		this.gcontext.drawImage(IMAGES.MOUNTAIN1, this.position);
+		this.gcontext.drawImage(IMAGES.MOUNTAIN1, SIZE, this.position);
 	};
 	
 	/*

@@ -17,7 +17,7 @@ var GraphicalContext = function() {
 		this.angle = orientation*Math.PI/2 + Math.PI/4;
 		this.zoom = 1;
 		this.offset = {x: 0, y: 0};
-		this.mousePosition = {x : 0,y : 0};
+		this.mousePosition = {x : 0, y : 0};
 		this.selectedTile = undefined;
 		this.listeners = {};
 		var gcontext = this;
@@ -30,7 +30,7 @@ var GraphicalContext = function() {
 	
 	Class.prototype.changeOrientation = function(orientation) {
 		this.angle = orientation*Math.PI/2 + Math.PI/4;
-		this.fireEvent("turn", {orientation: orientation});
+		this.fireEvent("rotate", {orientation: orientation});
 	};
 	
 	/**
@@ -40,7 +40,7 @@ var GraphicalContext = function() {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	};
 	
-	Class.prototype.drawImage = function(image, position, offset) {
+	Class.prototype.drawImage = function(image, size, position, offset) {
 		var width = image.width * this.zoom;
 		var height = image.height * this.zoom;
 

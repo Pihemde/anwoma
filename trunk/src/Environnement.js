@@ -1,22 +1,29 @@
-var list = [];
-var index = 0;
-var callback = undefined;
-var loadImage = function () {
-	if(index == list.length) {
-		return callback();
-	}
-	var id = list[index++];
-	var path = IMAGES[id];
-	IMAGES[id] = new Image();
-	IMAGES[id].onload = loadImage;
-	IMAGES[id].src = path;
-}
 
-function loadImages(cb) {
-	callback = cb;
-	var i = 0;
-	for(var id in IMAGES) {
-		list[i++] = id;
+
+
+var Environnement = function() {
+	var toLoad = [];
+	var _callback = undefined;
+
+	var Class = function(images, callback) {
+		_callback = callback;
+		for(var id in IMAGES) {
+			toLoad.push(id);
+		}
+		loadImage();
 	}
-	loadImage();
-}
+
+	function loadImage() {
+		if(0 == toLoad.length) {
+			return _callback();
+		}
+		var id = toLoad.pop();
+		var path = IMAGES[id];
+		IMAGES[id] = new Image();
+		IMAGES[id].onload = loadImage;
+		IMAGES[id].src = path;
+	}
+
+	return Class;
+}();
+
