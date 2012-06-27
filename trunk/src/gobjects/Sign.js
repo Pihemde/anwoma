@@ -9,6 +9,7 @@ var Sign = function() { // FIXME Comment on fait pour hériter ?
 	 */
 	var Class = function(gcontext) {
 		this.gcontext = gcontext;
+		this.gcontext.addEventListener("turn", this.onturn, this);
 	};
 	
 	/**
@@ -48,6 +49,10 @@ var Sign = function() { // FIXME Comment on fait pour hériter ?
 		this.position = datas.position;
 		this.orientation = setData(datas.orientation, ORIENTATION.N);
 	};
-		
+	
+	Class.prototype.onturn = function(event) {
+		this.orientation = event.orientation;
+	};
+
 	return Class;
 }();
