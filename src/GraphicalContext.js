@@ -30,6 +30,7 @@ var GraphicalContext = function() {
 	
 	Class.prototype.changeOrientation = function(orientation) {
 		this.angle = orientation*Math.PI/2 + Math.PI/4;
+		this.fireEvent("turn", {orientation: orientation});
 	};
 	
 	/**
