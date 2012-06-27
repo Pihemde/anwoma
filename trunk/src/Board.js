@@ -12,6 +12,7 @@ var Board = function() {
 		var board = this;
 		this.orientation = orientation;
 		loadGObject(board);
+		this.cursor = new Cursor(this.gcontext);
 	};
 	
 	Class.prototype.changeOrientation = function(orientation) {
@@ -44,8 +45,8 @@ var Board = function() {
 	Class.prototype.paint = function() {
 		clear(this);
 		paintGObjects(this);
+		this.cursor.paint();
 		//paintGrid(this);
-		//paintMousePosition(this);
 		//paintSelectedTile(this);
 
 		var board = this;
@@ -75,7 +76,7 @@ var Board = function() {
 			case ORIENTATION.E :
 				// WARNING j and i is interverted !
 				for(var i = 0 ; i < board.width; i++) {
-					for(var j = board.height -1  ; j >= 0 ; j--) {
+				for(var j = 0  ; j < board.height ; j++) {
 						board.gobjects[j][i].paint();
 					}
 				}
@@ -117,36 +118,6 @@ var Board = function() {
 			board.gcontext.context.lineTo(c[0], c[1]);
 			board.gcontext.context.stroke();
 		}
-	}
-
-	function paintMousePosition(board) {
-		if (board.mousePosition.x == 0 && board.mousePosition.y == 0) {
-			return;
-		}
-		
-		var c = board.fromRealCoord([board.mousePosition.x, board.mousePosition.y]);
-		var x = c[0];
-		var y = c[1];
-		if(x < 0 || x > MAP_SIZE - 1 || y < 0 || y > MAP_SIZE - 1) {
-			return;
-		}
-
-		board.gcontext.context.beginPath();
-		c = board.gcontext.toRealCoord([x, y]);
-		board.gcontext.context.moveTo(c[0], c[1]);
-		c = board.gcontext.toRealCoord([x + 1, y]);
-		board.gcontext.context.lineTo(c[0], c[1]);
-		c = board.gcontext.toRealCoord([x + 1, y + 1]); 
-		board.gcontext.context.lineTo(c[0], c[1]);
-		c = board.gcontext.toRealCoord([x, y + 1]);
-		board.gcontext.context.lineTo(c[0], c[1]);
-		c = board.gcontext.toRealCoord([x, y]);
-		board.gcontext.context.lineTo(c[0], c[1]);
-		board.gcontext.context.closePath();
-		board.gcontext.context.fillStyle = "red";
-		board.gcontext.context.globalAlpha = 0.5; // Transparence 
-		board.gcontext.context.fill(); // On remplit 
-		board.gcontext.context.globalAlpha = 1; // On la reset pour les copains 
 	}
 
 	function paintSelectedTile(board) {
