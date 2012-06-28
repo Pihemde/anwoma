@@ -52,7 +52,7 @@ var Sign = function() { // FIXME Comment on fait pour hériter ?
 	};
 	
 	Class.prototype.onrotate = function(event) {
-		this.orientation += event.orientation;
+		this.orientation = event.orientation;
 	};
 
 	return Class;

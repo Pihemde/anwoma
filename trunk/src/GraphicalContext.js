@@ -29,6 +29,7 @@ var GraphicalContext = function() {
 		canvas.addEventListener('mousemove', function(event) {gcontext.onmousemove(event);}, false);
 		canvas.addEventListener('click', function(event) {gcontext.onclick(event);}, false);
 		canvas.addEventListener("mousewheel", function(event) {gcontext.onmousewheel(event);}, false);
+		canvas.addEventListener("DOMMouseScroll", function(event) {gcontext.onmousewheelff(event);}, false);
 		canvas.addEventListener("mouseup", function(event) {gcontext.onmouseup(event);}, false);
 		canvas.addEventListener("mousedown", function(event) {gcontext.onmousedown(event);}, false);
 	};
@@ -172,13 +173,26 @@ var GraphicalContext = function() {
 	};
 	
 	Class.prototype.onmousewheel = function(event) {
-		if(event.shiftKey) { // FIXME Et les autres navigateurs ?
+		if(event.shiftKey) {
 			var step = 1.1;
 			if(event.wheelDelta>0) {
 				this.zoom *= step;
 			} else {
 				this.zoom /= step;
 			}
+			event.stopPropagation();
+		}
+	};
+	
+	Class.prototype.onmousewheelff = function(event) {
+		if(event.altKey) {
+			var step = 1.1;
+			if (event.wheelDelta <= 0 || event.detail > 0 ) {
+				this.zoom *= step;
+			} else {
+				this.zoom /= step;
+			}
+			event.preventDefault();
 			event.stopPropagation();
 		}
 	};

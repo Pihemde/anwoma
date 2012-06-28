@@ -1,13 +1,18 @@
 canvas {
 	border: solid 1px black;
 	float: left;
+	/*
+	 width: 986px;
+	 height: 768px;
+	 */
 }
 
-#objectList {
+#menu {
 	border: solid 1px black;
-	float: left;
-}
-
-.object {
-	border: solid 1px black;
+	position:absolute;
+	width: 200px;
+	height: 768px;
+	top: 8px;
+	left: 1000px;
+	text-align: center;
 }
