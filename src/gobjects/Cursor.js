@@ -31,22 +31,22 @@ var Cursor = function() {
 			return;
 		}
 
-		this.gcontext.context.beginPath();
+		this.gcontext.preRenderContext.beginPath();
 		c = this.gcontext.position2Coord({i:x, j:y});
-		this.gcontext.context.moveTo(c.x, c.y);
+		this.gcontext.preRenderContext.moveTo(c.x, c.y);
 		c = this.gcontext.position2Coord({i:x+1, j:y});
-		this.gcontext.context.lineTo(c.x, c.y);
+		this.gcontext.preRenderContext.lineTo(c.x, c.y);
 		c = this.gcontext.position2Coord({i:x+1, j:y+1}); 
-		this.gcontext.context.lineTo(c.x, c.y);
+		this.gcontext.preRenderContext.lineTo(c.x, c.y);
 		c = this.gcontext.position2Coord({i:x, j:y+1});
-		this.gcontext.context.lineTo(c.x, c.y);
+		this.gcontext.preRenderContext.lineTo(c.x, c.y);
 		c = this.gcontext.position2Coord({i:x, j:y});
-		this.gcontext.context.lineTo(c.x, c.y);
-		this.gcontext.context.closePath();
-		this.gcontext.context.fillStyle = "red";
-		this.gcontext.context.globalAlpha = 0.5; // Transparence 
-		this.gcontext.context.fill(); // On remplit 
-		this.gcontext.context.globalAlpha = 1; // On la reset pour les copains 
+		this.gcontext.preRenderContext.lineTo(c.x, c.y);
+		this.gcontext.preRenderContext.closePath();
+		this.gcontext.preRenderContext.fillStyle = "red";
+		this.gcontext.preRenderContext.globalAlpha = 0.5; // Transparence 
+		this.gcontext.preRenderContext.fill(); // On remplit 
+		this.gcontext.preRenderContext.globalAlpha = 1; // On la reset pour les copains 
 	};
 	
 	Class.prototype.onmove = function(e) {

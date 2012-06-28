@@ -11,6 +11,8 @@ var Mountain = function() { // FIXME Comment on fait pour hériter ?
 	 */
 	var Class = function(gcontext) {
 		this.gcontext = gcontext;
+		this.width = 3;
+		this.height = 3;
 	};
 	
 	/**
@@ -32,8 +34,8 @@ var Mountain = function() { // FIXME Comment on fait pour hériter ?
 	/*
 	 * Set attributes from json object
 	 */
-	Class.prototype.unserialize = function(datas) {
-		this.position = datas.position;
+	Class.prototype.unserialize = function(description) {
+		this.position = description.position;
 	};
 		
 	return Class;

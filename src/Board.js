@@ -14,7 +14,7 @@ var Board = function() {
 		this.gobjects = [];
 		var board = this;
 		this.orientation = orientation;
-		loadGObject(board);
+		loadGObjects(board);
 		this.cursor = new Cursor(this.gcontext);
 	};
 	
@@ -23,28 +23,43 @@ var Board = function() {
 		this.gcontext.changeOrientation(orientation);
 	};
 	
-	function loadGObject(board) {
-		for(var j=0; j<board.height; j++) {
-			board.gobjects[j] = [];
-			for(var i=0; i<board.width; i++) {
-				var s = MAP[j][i];
-				if(s != undefined) {
-					s.data.position = {i:i, j:j};
-					if (s.clazz == 'sign') {
-						board.gobjects[j][i] = new Sign(board.gcontext);
-					} else if (s.clazz == 'granary') {
-						board.gobjects[j][i] = new Granary(board.gcontext);
-					} else if (s.clazz == 'mountain') {
-						board.gobjects[j][i] = new Mountain(board.gcontext);
-					} else if(s.clazz == 'grass') {
-						board.gobjects[j][i] = new Grass(board.gcontext);
-					}
-					board.gobjects[j][i].unserialize(s.data);
-				}
+	function loadGObjects(board) {
+		for(var i = 0 ; i < MAP.length ; i++) {
+			var description = MAP[i];
+			if(description.id == undefined) {
+				description.id = 'obj'-i;
 			}
+			loadGObject(board, description);
 		}
 	}
-		
+	
+	function loadGObject(board, description) {
+		var object;
+		switch(description.clazz) {
+		case 'granary' :
+			object = new Granary(board.gcontext);
+			break;
+		case 'mountain' :
+			object = new Moutain(board.gcontext);
+			break;
+		case 'sign' :
+			object = new Sign(board.gcontext);
+			break;
+		case 'grass' :
+			default:
+				object = new Grass(board.gcontext);
+		}
+		object.unserialize(description);
+		var p = description.position;
+		for(var i = p.i ; i < p.i + object.width ; i++) {
+			for(var j = p.j ; j < p.j + object.height ; j++) {
+				if(board.gobjects[j] == undefined) {
+					board.gobjects[j] = [];
+				}
+				board.gobjects[j][i] = object;
+			}
+		}
+	}		
 		
 	Class.prototype.paint = function() {
 		clear(this);
@@ -53,6 +68,8 @@ var Board = function() {
 		//paintGrid(this);
 		//paintSelectedTile(this);
 
+		this.gcontext.render();
+		
 		var board = this;
 		function repaint() {
 			board.paint();
@@ -69,42 +86,42 @@ var Board = function() {
 	
 	function paintGObjects(board) {
 		// Now, we can draw the board
-		switch(board.orientation) {
-			case ORIENTATION.N :
-				for(var j = 0 ; j < board.height; j++) {
-					for(var i = 0 ; i < board.width; i++) {
-						paintGObject(board.gobjects[j][i]);
-					}
+		switch (board.orientation) {
+		case ORIENTATION.N:
+			for ( var j = 0; j < board.height; j++) {
+				for ( var i = 0; i < board.width; i++) {
+					paintGObject(board.gobjects, i, j);
 				}
-				break;
-			case ORIENTATION.E :
-				// WARNING j and i is interverted !
-				for(var i = 0 ; i < board.width; i++) {
-				for(var j = 0  ; j < board.height ; j++) {
-					paintGObject(board.gobjects[j][i]);
-					}
+			}
+			break;
+		case ORIENTATION.E:
+			// WARNING j and i is interverted !
+			for ( var i = 0; i < board.width; i++) {
+				for ( var j = board.height - 1; j >= 0; j--) {
+					paintGObject(board.gobjects, i, j);
 				}
-				break;
-			case ORIENTATION.S :
-				for(var j = board.height -1 ; j >= 0; j--) {
-					for(var i = board.width -1 ; i >= 0; i--) {
-						paintGObject(board.gobjects[j][i]);
-					}
+			}
+			break;
+		case ORIENTATION.S:
+			for ( var j = board.height - 1; j >= 0; j--) {
+				for ( var i = board.width - 1; i >= 0; i--) {
+					paintGObject(board.gobjects, i, j);
 				}
-				break;
-			case ORIENTATION.W :
-				for(var j = 0 ; j < board.height; j++) {
-					for(var i = board.width -1 ; i >= 0 ; i--) {
-						paintGObject(board.gobjects[j][i]);
-					}
+			}
+			break;
+		case ORIENTATION.W:
+			for ( var j = 0; j < board.height; j++) {
+				for ( var i = board.width - 1; i >= 0; i--) {
+					paintGObject(board.gobjects, i, j);
 				}
-				break;
+			}
+			break;
 		}
 	}
 	
-	function paintGObject(object) {
-		if(undefined != object) {
-			object.paint();
+	function paintGObject(objects, i, j) {
+		if(!!objects[j] && !!objects[j][i]) {
+			objects[j][i].paint();
 		}
 	}
 

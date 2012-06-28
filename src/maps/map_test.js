@@ -1,38 +1,14 @@
-var grass = {
-	clazz: 'grass',
-	data: {}
-};
+/*
+ * Map description
+ */
+var MAP = [];
 
-var granary = {
-	clazz: 'granary',
-	data: {
-		stock: 0
+// Put some grass in whole map 
+for(var i = 0 ; i < 17 ; i++) {
+	for(var j = 0 ; j < 17 ; j++) {
+		MAP.push({clazz: 'grass', position: {i:i, j:j}});
 	}
-};
+}
 
-var sign = {
-	clazz: 'sign',
-	data: {
-		orientation: ORIENTATION.N
-	}
-};
-
-const MAP = [
-	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-	[grass, granary, undefined, undefined, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-	[grass, undefined, grass, undefined, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-	[grass, undefined, undefined, undefined, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-	[grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass, grass],
-];
+MAP.push({clazz: 'granary', position: {i:2, j:2}, stock: 0});
+MAP.push({clazz: 'sign', position: {i:15, j:1}, orientation: ORIENTATION.N});

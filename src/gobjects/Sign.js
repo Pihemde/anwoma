@@ -12,6 +12,8 @@ var Sign = function() { // FIXME Comment on fait pour hériter ?
 	 */
 	var Class = function(gcontext) {
 		this.gcontext = gcontext;
+		this.width = 1;
+		this.height = 1;
 		this.gcontext.addEventListener("rotate", this.onrotate, this);
 		if (SIGNS == undefined) {
 			SIGNS = [];
@@ -42,9 +44,9 @@ var Sign = function() { // FIXME Comment on fait pour hériter ?
 	/*
 	 * Set attributes from json object
 	 */
-	Class.prototype.unserialize = function(datas) {
-		this.position = datas.position;
-		this.orientation = setData(datas.orientation, ORIENTATION.N);
+	Class.prototype.unserialize = function(description) {
+		this.position = description.position;
+		this.orientation = setData(description.orientation, ORIENTATION.N);
 	};
 	
 	Class.prototype.onrotate = function(event) {
