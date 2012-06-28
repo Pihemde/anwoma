@@ -4,8 +4,8 @@
 var MAP = [];
 
 // Put some grass in whole map 
-for(var i = 0 ; i < 17 ; i++) {
-	for(var j = 0 ; j < 17 ; j++) {
+for(var i = 0 ; i < MAP_SIZE ; i++) {
+	for(var j = 0 ; j < MAP_SIZE ; j++) {
 		MAP.push({clazz: 'grass', position: {i:i, j:j}});
 	}
 }

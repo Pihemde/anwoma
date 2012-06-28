@@ -8,4 +8,4 @@ const ORIENTATION = {
 
 var SETS = {};
 
-const MAP_SIZE = 17;//MAP.length;
+const MAP_SIZE = 50;//MAP.length;
