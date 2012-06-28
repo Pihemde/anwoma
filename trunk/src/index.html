@@ -2,12 +2,11 @@
 <html>
 <head>
 <link rel="stylesheet" href="style.css" type="text/css">
-<script type="text/javascript" src="constants.js"></script>
 <!-- 3rd party libs -->
 <script type="text/javascript" src="../lib/sylvester.src.js"></script>
-<!-- Environnement  -->
+<!-- Anwoma -->
+<script type="text/javascript" src="constants.js"></script>
 <script type="text/javascript" src="env/roman.js"></script>
-<!-- Libs -->
 <script type="text/javascript" src="Environnement.js"></script>
 <script type="text/javascript" src="GraphicalContext.js"></script>
 <script type="text/javascript" src="GraphicalObject.js"></script>
@@ -20,10 +19,12 @@
 <!-- Map definition -->
 <script type="text/javascript" src="maps/map_test.js"></script>
 <script>
+	var environnement = undefined;
 	var board = undefined;
 
 	window.onload = function() {
-		new Environnement(IMAGES, main);
+		environnement = new Environnement('roman');
+		environnement.loadSet(main);
 	};
 
 	function main() {

@@ -2,7 +2,6 @@
  * Cursor
  */
 var Cursor = function() {
-	const SIZE = {width: 3, height: 3};
 
 	/**
 	 * Constructor
@@ -11,6 +10,7 @@ var Cursor = function() {
 	var Class = function(gcontext) {
 		this.gcontext = gcontext;
 		this.gcontext.addEventListener("move", this.onmove, this);
+		this.size = {width: 1, height: 1};
 	};
 	
 	/**
