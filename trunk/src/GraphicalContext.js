@@ -49,8 +49,8 @@ var GraphicalContext = function() {
 
 		var i = position.i;
 		var j = position.j;
-		i -= Math.floor(((this.orientation+0)%4)/2) * (size.width -1);
-		j -= Math.floor(((this.orientation+1)%4)/2) * (size.height-1);
+		i += Math.floor(((this.orientation+2)%4)/2) * (size.width -1);
+		j += Math.floor(((this.orientation+3)%4)/2) * (size.height-1);
 
 		var c = this.position2Coord({i:i,j:j});
 		var x = c.x - SQUARE_WIDTH / 2 * this.zoom;
