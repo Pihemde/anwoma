@@ -11,6 +11,8 @@ var Granary = function() { // FIXME Comment on fait pour hériter ?
 	 */
 	var Class = function(gcontext) {
 		this.gcontext = gcontext;
+		this.width = 3;
+		this.height = 3;
 	};
 	
 	/**
@@ -55,9 +57,9 @@ var Granary = function() { // FIXME Comment on fait pour hériter ?
 	/*
 	 * Set attributes from json object
 	 */
-	Class.prototype.unserialize = function(datas) {
-		this.position = datas.position;
-		this.stock = setData(datas.stock, 0);
+	Class.prototype.unserialize = function(description) {
+		this.position = description.position;
+		this.stock = setData(description.stock, 0);
 	};
 		
 	return Class;

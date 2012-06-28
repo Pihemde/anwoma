@@ -12,6 +12,10 @@ var GraphicalContext = function() {
 	var Class = function(canvas, width, height, orientation) {
 		this.canvas = canvas;
 		this.context = canvas.getContext("2d");
+		this.preRenderCanvas = document.createElement("canvas");
+		this.preRenderCanvas.width = canvas.width;
+		this.preRenderCanvas.height = canvas.height;
+		this.preRenderContext = this.preRenderCanvas.getContext("2d");
 		this.width = width;
 		this.height = height;
 		this.orientation = orientation;
@@ -29,8 +33,13 @@ var GraphicalContext = function() {
 		canvas.addEventListener("mousedown", function(event) {gcontext.onmousedown(event);}, false);
 	};
 	
+	Class.prototype.render = function() {
+		this.context.clearRect(0, 0, this.preRenderCanvas.width, this.preRenderCanvas.height);
+		this.context.drawImage(this.preRenderCanvas, 0, 0);
+	}
+	
 	Class.prototype.changeOrientation = function(orientation) {
-	console.log(orientation);
+		console.log(orientation);
 		this.orientation = orientation;
 		this.angle = orientation*Math.PI/2 + Math.PI/4
 		this.fireEvent("rotate", {orientation: orientation});
@@ -40,7 +49,7 @@ var GraphicalContext = function() {
 	 * Clear canvas
 	 */
 	Class.prototype.clear = function() {
-		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.preRenderContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	};
 	
 	Class.prototype.drawImage = function(image, size, position, offset) {
@@ -62,7 +71,7 @@ var GraphicalContext = function() {
 			x += offset.x * this.zoom;
 			y += offset.y * this.zoom;
 		}
-		this.context.drawImage(image, x, y, width, height);
+		this.preRenderContext.drawImage(image, x, y, width, height);
 	};
 
 	Class.prototype.addEventListener = function(eventType, callback, object) {
@@ -126,8 +135,8 @@ var GraphicalContext = function() {
 		var y = coord.elements[1][0] + this.height/2;
 
 		// Hack for adjusting values
-//		x += Math.floor(((this.orientation+0)%4)/2);
-//		y += Math.floor(((this.orientation+1)%4)/2);
+//		x -= Math.floor(((this.orientation+2)%4)/2);
+//		y -= Math.floor(((this.orientation+3)%4)/2);
 
 		return {
 			i: Math.floor(x),
