@@ -52,7 +52,7 @@ var GraphicalContext = function() {
 		i -= Math.floor(((this.orientation+0)%4)/2) * (size.width -1);
 		j -= Math.floor(((this.orientation+1)%4)/2) * (size.height-1);
 
-		var c = this.toRealCoord({i:i,j:j});
+		var c = this.position2Coord({i:i,j:j});
 		var x = c.x - SQUARE_WIDTH / 2 * this.zoom;
 		var y = c.y + SQUARE_HEIGHT / 2;
 
@@ -88,7 +88,7 @@ var GraphicalContext = function() {
 		}
 	}
 
-	Class.prototype.toRealCoord = function(coord) {
+	Class.prototype.position2Coord = function(coord) {
 		// Centrage de la carte sur l'origine des axes
 		var x = coord.i - this.width /2;
 		var y = coord.j - this.height/2;
@@ -109,7 +109,7 @@ var GraphicalContext = function() {
 		return {x: x, y: y};
 	};
 
-	Class.prototype.fromRealCoord = function(coord) {
+	Class.prototype.coord2Position = function(coord) {
 		// Déplacement de la carte pour la centrer correctement
 		var x = coord.x - this.offset.x - this.canvas.width/2;
 		var y = coord.y - this.offset.y - this.canvas.height/2;
@@ -126,8 +126,8 @@ var GraphicalContext = function() {
 		var y = coord.elements[1][0] + this.height/2;
 
 		// Hack for adjusting values
-		x += Math.floor(((this.orientation+0)%4)/2);
-		y += Math.floor(((this.orientation+1)%4)/2);
+//		x += Math.floor(((this.orientation+0)%4)/2);
+//		y += Math.floor(((this.orientation+1)%4)/2);
 
 		return {
 			i: Math.floor(x),
@@ -140,7 +140,7 @@ var GraphicalContext = function() {
 		var x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
 		var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
 
-		var c = this.fromRealCoord({x: x, y: y});
+		var c = this.coord2Position({x: x, y: y});
 		if(!this.mousePosition || this.mousePosition.i != c.i || this.mousePosition.j != c.j) {
 			this.mousePosition = c;
 			this.fireEvent("move", {position: this.mousePosition});
@@ -157,7 +157,7 @@ var GraphicalContext = function() {
 	Class.prototype.onclick = function(event) {
 		var x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
 		var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
-		var c = this.fromRealCoord({x: x, y: y});
+		var c = this.coord2Position({x: x, y: y});
 
 		this.fireEvent("click", {position: c});
 	};
