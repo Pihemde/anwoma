@@ -51,8 +51,8 @@ var Board = function() {
 		}
 		object.unserialize(description);
 		var p = description.position;
-		for(var i = p.i ; i < p.i + object.width ; i++) {
-			for(var j = p.j ; j < p.j + object.height ; j++) {
+		for(var i = p.i ; i < p.i + object.size.width ; i++) {
+			for(var j = p.j ; j < p.j + object.size.height ; j++) {
 				if(board.gobjects[j] == undefined) {
 					board.gobjects[j] = [];
 				}

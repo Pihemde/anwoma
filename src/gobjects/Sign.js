@@ -2,8 +2,8 @@
  * Sign 
  */
 var Sign = function() { // FIXME Comment on fait pour hériter ?
-	const SIZE = {width: 1, height: 1};
-	var SIGNS;
+	const SET = SETS['roman'];
+	var SIGNS = [];
 
 	/**
 	 * Constructor
@@ -12,23 +12,25 @@ var Sign = function() { // FIXME Comment on fait pour hériter ?
 	 */
 	var Class = function(gcontext) {
 		this.gcontext = gcontext;
-		this.width = 1;
-		this.height = 1;
+		this.size = {width: 1, height: 1};
 		this.gcontext.addEventListener("rotate", this.onrotate, this);
-		if (SIGNS == undefined) {
-			SIGNS = [];
-			SIGNS[ORIENTATION.N] = IMAGES.SIGN_BLUE_N;
-			SIGNS[ORIENTATION.E] = IMAGES.SIGN_BLUE_E;
-			SIGNS[ORIENTATION.S] = IMAGES.SIGN_BLUE_S;
-			SIGNS[ORIENTATION.W] = IMAGES.SIGN_BLUE_W;
-		}
+		this.init();
 	};
+	
+	Class.prototype.init = function() {
+		if (SIGNS.length == 0) {
+			SIGNS[ORIENTATION.N] = SET.SIGN_BLUE_N;
+			SIGNS[ORIENTATION.E] = SET.SIGN_BLUE_E;
+			SIGNS[ORIENTATION.S] = SET.SIGN_BLUE_S;
+			SIGNS[ORIENTATION.W] = SET.SIGN_BLUE_W;
+		}
+	}
 	
 	/**
 	 * Draw object on canvas
 	 */
 	Class.prototype.paint = function() {
-		this.gcontext.drawImage(SIGNS[this.orientation], SIZE, this.position);
+		this.gcontext.drawImage(SIGNS[this.orientation], this.size, this.position);
 	};
 	
 	/*
@@ -50,7 +52,7 @@ var Sign = function() { // FIXME Comment on fait pour hériter ?
 	};
 	
 	Class.prototype.onrotate = function(event) {
-		this.orientation = event.orientation;
+		this.orientation += event.orientation;
 	};
 
 	return Class;
