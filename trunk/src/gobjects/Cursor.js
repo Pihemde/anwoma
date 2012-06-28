@@ -32,15 +32,15 @@ var Cursor = function() {
 		}
 
 		this.gcontext.context.beginPath();
-		c = this.gcontext.toRealCoord({i:x, j:y});
+		c = this.gcontext.position2Coord({i:x, j:y});
 		this.gcontext.context.moveTo(c.x, c.y);
-		c = this.gcontext.toRealCoord({i:x+1, j:y});
+		c = this.gcontext.position2Coord({i:x+1, j:y});
 		this.gcontext.context.lineTo(c.x, c.y);
-		c = this.gcontext.toRealCoord({i:x+1, j:y+1}); 
+		c = this.gcontext.position2Coord({i:x+1, j:y+1}); 
 		this.gcontext.context.lineTo(c.x, c.y);
-		c = this.gcontext.toRealCoord({i:x, j:y+1});
+		c = this.gcontext.position2Coord({i:x, j:y+1});
 		this.gcontext.context.lineTo(c.x, c.y);
-		c = this.gcontext.toRealCoord({i:x, j:y});
+		c = this.gcontext.position2Coord({i:x, j:y});
 		this.gcontext.context.lineTo(c.x, c.y);
 		this.gcontext.context.closePath();
 		this.gcontext.context.fillStyle = "red";

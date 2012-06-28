@@ -4,8 +4,11 @@ var Board = function() {
 	var Class = function(canvas, width, height, orientation) {
 		this.gcontext = new GraphicalContext(canvas, width, height, orientation);
 		this.gcontext.addEventListener("move", function(e) {
-			console.log(e.position.i, e.position.j);
-		});
+			var pos = e.position;
+			var real = this.gcontext.position2Coord(pos);
+			var pos2 = this.gcontext.coord2Position(real);
+			console.log(pos.i, pos.j, real, this.gcontext.coord2Position(real), pos2.i, pos2.j);
+		}, this);
 		this.width = width;
 		this.height = height;
 		this.gobjects = [];
@@ -111,24 +114,24 @@ var Board = function() {
 		board.gcontext.context.strokeStyle = "#ff0000";
 		for ( var i = 0; i <= board.width; i++) {
 			board.gcontext.context.beginPath();
-			c = board.toRealCoord([i, 0]);
+			c = board.position2Coord([i, 0]);
 			board.gcontext.context.moveTo(c[0], c[1]);
-			c = board.gcontext.toRealCoord([i, board.height]);
+			c = board.gcontext.position2Coord([i, board.height]);
 			board.gcontext.context.lineTo(c[0], c[1]);
 			board.gcontext.context.stroke();
 		}
 		for ( var i = 0; i <= board.height; i++) {
 			board.gcontext.context.beginPath();
-			c = board.gcontext.toRealCoord([0, i]);
+			c = board.gcontext.position2Coord([0, i]);
 			board.gcontext.context.moveTo(c[0], c[1]);
-			c = board.gcontext.toRealCoord([board.width, i]);
+			c = board.gcontext.position2Coord([board.width, i]);
 			board.gcontext.context.lineTo(c[0], c[1]);
 			board.gcontext.context.stroke();
 		}
 	}
 
 	function paintSelectedTile(board) {
-		var c = board.fromRealCoord([board.mousePosition.x, board.mousePosition.y]);
+		var c = board.coord2Position([board.mousePosition.x, board.mousePosition.y]);
 		var x = c[0];
 		var y = c[1];
 		
@@ -137,7 +140,7 @@ var Board = function() {
 		}
 
 		board.gcontext.context.globalAlpha = 0.5; // Transparence 
-		c = board.gcontext.toRealCoord([x, y]);
+		c = board.gcontext.position2Coord([x, y]);
 		paintTileOnGrid(board.gcontext.context, board.selectedTile, c[0], c[1]); 
 		board.gcontext.context.globalAlpha = 1; // On la reset pour les copains 
 	}
