@@ -18,6 +18,11 @@ var Granary = function() { // FIXME Comment on fait pour hériter ?
 	 * Draw object on canvas
 	 */
 	Class.prototype.paint = function() {
+		if(!!this.fake) {
+			this.gcontext.drawImage(SET.GRANARY_FULL, this.size, this.position);
+			return;
+		}		
+		
 		/*
 		 * Draw base images
 		 */
@@ -27,20 +32,19 @@ var Granary = function() { // FIXME Comment on fait pour hériter ?
 		/*
 		 * Draw goods * stock
 		 */
-/*
-		if(stock > 0) {
-			this.gcontext.drawImage(SET.GRANARY_STOCK0, this.size, this.position, {x:?, y:?});
+
+		if(this.good.quantity > 0) {
+			this.gcontext.drawImage(SET.GRANARY_STOCK0, this.size, this.position, {x:-40, y:-63});
 		}
-		if(stock > 1) {
-			this.gcontext.drawImage(SET.GRANARY_STOCK1, this.size, this.position, {x:?, y:?});
+		if(this.good.quantity > 1) {
+			this.gcontext.drawImage(SET.GRANARY_STOCK1, this.size, this.position, {x:-15, y:-58});
 		}
-		if(stock > 2) {
-			this.gcontext.drawImage(SET.GRANARY_STOCK2, this.size, this.position, {x:?, y:?});
+		if(this.good.quantity > 2) {
+			this.gcontext.drawImage(SET.GRANARY_STOCK2, this.size, this.position, {x:20, y:-58});
 		}
-		if(stock > 3) {
-			this.gcontext.drawImage(SET.GRANARY_STOCK3, this.size, this.position, {x:?, y:?});
+		if(this.good.quantity > 3) {
+			this.gcontext.drawImage(SET.GRANARY_STOCK3, this.size, this.position, {x:45, y:-65});
 		}
-*/
 	};
 	
 	/*
@@ -49,7 +53,7 @@ var Granary = function() { // FIXME Comment on fait pour hériter ?
 	Class.prototype.serialize = function() {
 		return {
 			position: this.position,
-			stock: this.stock
+			good: this.good
 		};
 	};
 	
@@ -58,7 +62,8 @@ var Granary = function() { // FIXME Comment on fait pour hériter ?
 	 */
 	Class.prototype.unserialize = function(description) {
 		this.position = description.position;
-		this.stock = setData(description.stock, 0);
+		this.good = setData(description.good, {type: GOOD_TYPE.WHEAT, quantity: 0});
+		this.fake = setData(description.fake, undefined);
 	};
 		
 	return Class;
