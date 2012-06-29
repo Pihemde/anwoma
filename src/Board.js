@@ -52,6 +52,9 @@ var Board = function() {
 		case 'granary' :
 			object = new Granary(this.gcontext);
 			break;
+		case 'farm' :
+			object = new Farm(this.gcontext);
+			break;
 		case 'warehouse' :
 			object = new Warehouse(this.gcontext);
 			break;
