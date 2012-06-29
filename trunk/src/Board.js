@@ -152,7 +152,7 @@ var Board = function() {
 		var x = c[0];
 		var y = c[1];
 		
-		if(!board.selectedTile || x < 0 || x > MAP_SIZE - 1 || y < 0 || y > MAP_SIZE - 1) {
+		if(!board.selectedTile || x < 0 || x > MAP_SIZE.width - 1 || y < 0 || y > MAP_SIZE.height - 1) {
 			return;
 		}
 
