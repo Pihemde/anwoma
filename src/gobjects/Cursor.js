@@ -27,7 +27,7 @@ var Cursor = function() {
 		var c = this.position;
 		var x = c.i;
 		var y = c.j;
-		if(x < 0 || x > MAP_SIZE - 1 || y < 0 || y > MAP_SIZE - 1) {
+		if(x < 0 || x > MAP_SIZE.width - 1 || y < 0 || y > MAP_SIZE.height - 1) {
 			return;
 		}
 
