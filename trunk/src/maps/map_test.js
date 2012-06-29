@@ -26,6 +26,6 @@ MAP.push({
 MAP.push({
 	clazz: 'farm', 
 	position: {i:10, j:15},
-	good: {type: GOOD_TYPE.WHEAT, quantity: 4},
+	good: {type: GOOD_TYPE.MEAT, quantity: 1},
 });
 MAP.push({clazz: 'sign', position: {i:15, j:1}, orientation: ORIENTATION.N});
