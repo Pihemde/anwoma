@@ -26,24 +26,24 @@ var Granary = function() { // FIXME Comment on fait pour hériter ?
 		/*
 		 * Draw base images
 		 */
-		this.gcontext.drawImage(SET.GRANARY_BASE0, this.size, this.position);
-		this.gcontext.drawImage(SET.GRANARY_BASE1, this.size, this.position, {x:1, y:-17});
+		this.gcontext.drawImage(SET.GRANARY_BASE_0, this.size, this.position);
+		this.gcontext.drawImage(SET.GRANARY_BASE_1, this.size, this.position, {x:1, y:-17});
 		
 		/*
 		 * Draw goods * stock
 		 */
 
 		if(this.good.quantity > 0) {
-			this.gcontext.drawImage(SET.GRANARY_STOCK0, this.size, this.position, {x:-40, y:-63});
+			this.gcontext.drawImage(SET.GRANARY_STOCK_0, this.size, this.position, {x:-40, y:-63});
 		}
 		if(this.good.quantity > 1) {
-			this.gcontext.drawImage(SET.GRANARY_STOCK1, this.size, this.position, {x:-15, y:-58});
+			this.gcontext.drawImage(SET.GRANARY_STOCK_1, this.size, this.position, {x:-15, y:-58});
 		}
 		if(this.good.quantity > 2) {
-			this.gcontext.drawImage(SET.GRANARY_STOCK2, this.size, this.position, {x:20, y:-58});
+			this.gcontext.drawImage(SET.GRANARY_STOCK_2, this.size, this.position, {x:20, y:-58});
 		}
 		if(this.good.quantity > 3) {
-			this.gcontext.drawImage(SET.GRANARY_STOCK3, this.size, this.position, {x:45, y:-65});
+			this.gcontext.drawImage(SET.GRANARY_STOCK_3, this.size, this.position, {x:45, y:-65});
 		}
 	};
 	
