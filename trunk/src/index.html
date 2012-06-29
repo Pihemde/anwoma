@@ -29,7 +29,8 @@
 
 	function main() {
 		var canvas = document.getElementById("canvas");
-		board = new Board(canvas, MAP_SIZE.width, MAP_SIZE.height, ORIENTATION.E);
+		board = new Board(canvas, MAP, MAP_SIZE.width, MAP_SIZE.height, ORIENTATION.E);
+		board.load();
 		/*
 		 * On dessine
 		 */

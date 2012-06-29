@@ -24,7 +24,7 @@ var Environnement = function() {
 	/*
 	 *  
 	 */
-	var loadImage = function () {
+	function loadImage() {
 		if(0 == _environnement.ids.length) {
 			return _environnement.callback();
 		}

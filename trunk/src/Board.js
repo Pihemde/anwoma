@@ -1,75 +1,91 @@
+/**
+ * Board
+ */
 var Board = function() {
 	const REPAINT_DELAI = 50;
 
-	var Class = function(canvas, width, height, orientation) {
+	/**
+	 * Constructor
+	 */
+	var Class = function(canvas, map, width, height, orientation) {
 		this.gcontext = new GraphicalContext(canvas, width, height, orientation);
+		this.map = map;
+		this.width = width;
+		this.height = height;
+		this.gobjects = [];
+		this.orientation = orientation;
+		this.cursor = new Cursor(this.gcontext);
 		this.gcontext.addEventListener("move", function(e) {
 			var pos = e.position;
 			var real = this.gcontext.position2Coord(pos);
 			var pos2 = this.gcontext.coord2Position(real);
 			console.log(pos.i, pos.j, real, this.gcontext.coord2Position(real), pos2.i, pos2.j);
 		}, this);
-		this.width = width;
-		this.height = height;
-		this.gobjects = [];
-		var board = this;
-		this.orientation = orientation;
-		loadGObjects(board);
-		this.cursor = new Cursor(this.gcontext);
 	};
 	
-	Class.prototype.changeOrientation = function(orientation) {
-		this.orientation = orientation;
-		this.gcontext.changeOrientation(orientation);
-	};
+	/**
+	 * Load all elements needs to paint the board
+	 */
+	Class.prototype.load = function() {
+		this.loadGObjects();		
+	}
 	
-	function loadGObjects(board) {
+	/**
+	 * Load objects
+	 */
+	Class.prototype.loadGObjects = function() {
 		for(var i = 0 ; i < MAP.length ; i++) {
 			var description = MAP[i];
 			if(description.id == undefined) {
 				description.id = 'obj'-i;
 			}
-			loadGObject(board, description);
+			this.loadGObject(description);
 		}
 	}
 	
-	function loadGObject(board, description) {
+	/**
+	 * Load an object
+	 */
+	Class.prototype.loadGObject = function(description) {
 		var object;
 		switch(description.clazz) {
 		case 'granary' :
-			object = new Granary(board.gcontext);
+			object = new Granary(this.gcontext);
 			break;
 		case 'mountain' :
-			object = new Moutain(board.gcontext);
+			object = new Moutain(this.gcontext);
 			break;
 		case 'sign' :
-			object = new Sign(board.gcontext);
+			object = new Sign(this.gcontext);
 			break;
 		case 'grass' :
 			default:
-				object = new Grass(board.gcontext);
+				object = new Grass(this.gcontext);
 		}
 		object.unserialize(description);
 		var p = description.position;
 		for(var i = p.i ; i < p.i + object.size.width ; i++) {
 			for(var j = p.j ; j < p.j + object.size.height ; j++) {
-				if(board.gobjects[j] == undefined) {
-					board.gobjects[j] = [];
+				if(this.gobjects[j] == undefined) {
+					this.gobjects[j] = [];
 				}
-				board.gobjects[j][i] = object;
+				this.gobjects[j][i] = object;
 			}
 		}
 	}		
-		
+	
+	/**
+	 * Paint the board
+	 */
 	Class.prototype.paint = function() {
-		clear(this);
-		paintGObjects(this);
+		this.clear();
+		this.paintGObjects();
 		this.cursor.paint();
-		//paintGrid(this);
-		//paintSelectedTile(this);
-
 		this.gcontext.render();
-		
+
+		/*
+		 * Repainting
+		 */
 		var board = this;
 		function repaint() {
 			board.paint();
@@ -77,54 +93,68 @@ var Board = function() {
 		setTimeout(repaint, REPAINT_DELAI);
 	};
 	
-	
-	function clear(board) {
-		// Clear all the board
-		board.gcontext.clear();
+	/**
+	 * Clear the board
+	 */
+	Class.prototype.clear = function(board) {
+		this.gcontext.clear();
 	}
 	
-	
-	function paintGObjects(board) {
-		// Now, we can draw the board
-		switch (board.orientation) {
+	/**
+	 * Paint objects on the board. Objects painting order depending on orientation.
+	 */
+	Class.prototype.paintGObjects = function() {
+		switch (this.orientation) {
 		case ORIENTATION.N:
-			for ( var j = 0; j < board.height; j++) {
-				for ( var i = 0; i < board.width; i++) {
-					paintGObject(board.gobjects, i, j);
+			for ( var j = 0; j < this.height; j++) {
+				for ( var i = 0; i < this.width; i++) {
+					this.paintGObject(this.gobjects, i, j);
 				}
 			}
 			break;
 		case ORIENTATION.E:
-			// WARNING j and i is interverted !
-			for ( var i = 0; i < board.width; i++) {
-				for ( var j = board.height - 1; j >= 0; j--) {
-					paintGObject(board.gobjects, i, j);
+			for ( var i = 0; i < this.width; i++) {
+				for ( var j = this.height - 1; j >= 0; j--) {
+					this.paintGObject(this.gobjects, i, j);
 				}
 			}
 			break;
 		case ORIENTATION.S:
-			for ( var j = board.height - 1; j >= 0; j--) {
-				for ( var i = board.width - 1; i >= 0; i--) {
-					paintGObject(board.gobjects, i, j);
+			for ( var j = this.height - 1; j >= 0; j--) {
+				for ( var i = this.width - 1; i >= 0; i--) {
+					this.paintGObject(this.gobjects, i, j);
 				}
 			}
 			break;
 		case ORIENTATION.W:
-			for ( var j = 0; j < board.height; j++) {
-				for ( var i = board.width - 1; i >= 0; i--) {
-					paintGObject(board.gobjects, i, j);
+			for ( var j = 0; j < this.height; j++) {
+				for ( var i = this.width - 1; i >= 0; i--) {
+					this.paintGObject(this.gobjects, i, j);
 				}
 			}
 			break;
 		}
 	}
 	
-	function paintGObject(objects, i, j) {
+	/**
+	 * Paint an object on the board.
+	 */
+	Class.prototype.paintGObject = function(objects, i, j) {
 		if(!!objects[j] && !!objects[j][i]) {
 			objects[j][i].paint();
 		}
 	}
+	
+	
+	Class.prototype.changeOrientation = function(orientation) {
+		this.orientation = orientation;
+		this.gcontext.changeOrientation(orientation);
+	};
 
+	/**
+	 * Paint a grid corresponding to square on board
+	 * @deprecated
+	 */
 	function paintGrid(board) {
 		var c = undefined;
 		board.gcontext.context.lineWidth = 0.5;
@@ -147,6 +177,10 @@ var Board = function() {
 		}
 	}
 
+	/**
+	 * Paint selected object
+	 * @deprecated
+	 */
 	function paintSelectedTile(board) {
 		var c = board.coord2Position([board.mousePosition.x, board.mousePosition.y]);
 		var x = c[0];
@@ -164,4 +198,3 @@ var Board = function() {
 
 	return Class;
 }();
-
