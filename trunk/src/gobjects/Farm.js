@@ -1,22 +1,19 @@
 /**
- * Warehouse
+ * Farm
  */
-var Warehouse = function() { // FIXME Comment on fait pour hériter ?
+var Farm = function() { // FIXME Comment on fait pour hériter ?
 	const SET = SETS['roman'];
 	/*
-	 * offsets
+	 * Offsets
 	 */
 	const OFFSETS = [
-		{x : 29, y : -45}, // 1,0
 		{x : 58, y : -30}, // 2,0
-		{x : -29, y : -45}, // 0,1
-		{x : 0, y : -30}, // 1,1
 		{x : 29, y : -15}, // 1,2
 		{x : -58, y : -30}, // 0,0
 		{x : -29, y : -15}, // 1,0
 		{x : 0, y : 0} // 2,0
 	];
-	
+
 	/**
 	 * Constructor
 	 * 
@@ -41,23 +38,18 @@ var Warehouse = function() { // FIXME Comment on fait pour hériter ?
 		/*
 		 * Draw base images
 		 */
-		this.gcontext.drawImage(SET.WAREHOUSE_BASE, this.size, this.position, {x : 0,y : -60}); // 0,0
-		this.gcontext.drawImage(SET.WAREHOUSE_ROOF, this.size, this.position, {x : 0,y : -70});
+		this.gcontext.drawImage(SET.FARM_BASE, this.size, this.position, {x:0, y:-30}); // 0,0
 
 		/*
 		 * Draw goods * stock
 		 */
-		for ( var i = 0; i < 8; i++) { // Only 8 squares
-			this.paintSquare(this.goods[i], OFFSETS[i]);
+		var image = SET['FARM_' + this.good.type + '_0'];
+		if (!!this.good && this.good.quantity > 0) {
+			image = SET['FARM_' + this.good.type + '_' + this.good.quantity];
 		}
-	};
-
-	Class.prototype.paintSquare = function(good, offset) {
-		var image = SET.WAREHOUSE_BASE;
-		if (!!good && good.quantity > 0) {
-			image = SET['WAREHOUSE_' + good.type + '_' + good.quantity];
+		for ( var i = 0; i < 5; i++) { // Only 5 squares
+			this.gcontext.drawImage(image, this.size, this.position, OFFSETS[i]);
 		}
-		this.gcontext.drawImage(image, this.size, this.position, offset);
 	}
 
 	/*
@@ -74,7 +66,7 @@ var Warehouse = function() { // FIXME Comment on fait pour hériter ?
 	 */
 	Class.prototype.unserialize = function(description) {
 		this.position = description.position;
-		this.goods = description.goods;
+		this.good = description.good;
 	};
 
 	return Class;

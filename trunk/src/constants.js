@@ -1,4 +1,9 @@
 /**
+ * Images sets
+ */
+var SETS = {};
+
+/**
  * Board or object orientation
  */
 const ORIENTATION = {
@@ -12,25 +17,20 @@ const ORIENTATION = {
  * Type of goods
  */
 const GOOD_TYPE = {
-	WHEAT: 1,
-	FISH: 2,
-	MEAT: 3,
-	FRUIT: 4,
-	VEGETABLE: 5,
-	OLIVE: 6,
-	OIL: 7,
-	GRAPE: 8,
-	WINE: 9,
-	TIMBER: 10,
-	FURNITURE: 11,
-	CLAY: 12,
-	POTTERY: 13,
-	IRON: 14,
-	WEAPON: 15,
-	MARBLE: 16
+	WHEAT: 'WHEAT',
+	FISH: 'FISH',
+	MEAT: 'MEAT',
+	FRUIT: 'FRUIT',
+	VEGETABLE: 'VEGETABLE',
+	OLIVE: 'OLIVE',
+	OIL: 'OIL',
+	GRAPE: 'GRAPE',
+	WINE: 'WINE',
+	TIMBER: 'TIMBER',
+	FURNITURE: 'FURNITURE',
+	CLAY: 'CLAY',
+	POTTERY: 'POTTERY',
+	IRON: 'IRON',
+	WEAPON: 'WEAPON',
+	MARBLE: 'MARBLE'
 };
-
-/**
- * Images sets
- */
-var SETS = {};
