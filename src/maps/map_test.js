@@ -11,7 +11,50 @@ for(var i = 0 ; i < MAP_SIZE.width ; i++) {
 	}
 }
 
+
+MAP.push({
+	clazz: 'farm', 
+	position: {i:7, j:2},
+	good: {type: GOOD_TYPE.OLIVE, quantity: 3},
+});
+MAP.push({
+	clazz: 'warehouse', 
+	position: {i:10, j:2},
+	goods: [
+	        {type: GOOD_TYPE.MEAT, quantity: 4},
+	        {type: GOOD_TYPE.WEAPON, quantity: 3},
+	        {type: GOOD_TYPE.OLIVE, quantity: 4},
+	        {type: GOOD_TYPE.IRON, quantity: 1},
+	        {type: GOOD_TYPE.VEGETABLE, quantity: 3}
+    ]
+});
+MAP.push({
+	clazz: 'farm', 
+	position: {i:13, j:2},
+	good: {type: GOOD_TYPE.VEGETABLE, quantity: 2},
+});
+
+
+//MAP.push({clazz: 'granary', position: {i:7, j:5}, good: {type: GOOD_TYPE.WHEAT, quantity: 4}});
+
+
+MAP.push({clazz: 'sign', position: {i:10, j:9}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:11, j:9}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:12, j:9}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:9, j:10}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:9, j:11}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:9, j:12}, orientation: ORIENTATION.N});
 MAP.push({clazz: 'granary', position: {i:10, j:10}, good: {type: GOOD_TYPE.WHEAT, quantity: 2}});
+MAP.push({clazz: 'sign', position: {i:10, j:13}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:11, j:13}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:12, j:13}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:13, j:10}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:13, j:11}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:13, j:12}, orientation: ORIENTATION.N});
+
+
+
+
 MAP.push({
 	clazz: 'warehouse', 
 	position: {i:15, j:15},
