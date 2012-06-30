@@ -72,3 +72,19 @@ MAP.push({
 	good: {type: GOOD_TYPE.MEAT, quantity: 1},
 });
 MAP.push({clazz: 'sign', position: {i:1, j:1}, orientation: ORIENTATION.N});
+
+
+
+MAP.push({clazz: 'sign', position: {i:3, j:19}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:4, j:19}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:2, j:19}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:2, j:20}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:2, j:21}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:2, j:22}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'library', position: {i:3, j:20}});
+MAP.push({clazz: 'sign', position: {i:3, j:22}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:4, j:22}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:5, j:19}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:5, j:20}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:5, j:21}, orientation: ORIENTATION.N});
+MAP.push({clazz: 'sign', position: {i:5, j:22}, orientation: ORIENTATION.N});
