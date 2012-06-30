@@ -15,7 +15,8 @@ var GraphicalContext = function() {
 		this.preRenderCanvas = document.createElement("canvas");
 		this.preRenderCanvas.width = canvas.width;
 		this.preRenderCanvas.height = canvas.height;
-		this.preRenderContext = this.preRenderCanvas.getContext("2d");
+		//this.preRenderContext = this.preRenderCanvas.getContext("2d");
+		this.preRenderContext = canvas.getContext("2d");
 		this.width = width;
 		this.height = height;
 		this.orientation = orientation;
@@ -35,8 +36,8 @@ var GraphicalContext = function() {
 	};
 	
 	Class.prototype.render = function() {
-		this.context.clearRect(0, 0, this.preRenderCanvas.width, this.preRenderCanvas.height);
-		this.context.drawImage(this.preRenderCanvas, 0, 0);
+		//this.context.clearRect(0, 0, this.preRenderCanvas.width, this.preRenderCanvas.height);
+		//this.context.drawImage(this.preRenderCanvas, 0, 0);
 	}
 	
 	Class.prototype.changeOrientation = function(orientation) {

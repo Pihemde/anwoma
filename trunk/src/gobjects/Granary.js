@@ -18,11 +18,6 @@ var Granary = function() { // FIXME Comment on fait pour hériter ?
 	 * Draw object on canvas
 	 */
 	Class.prototype.paint = function() {
-		if(!!this.fake) {
-			this.gcontext.drawImage(SET.GRANARY_FULL, this.size, this.position);
-			return;
-		}		
-		
 		/*
 		 * Draw base images
 		 */

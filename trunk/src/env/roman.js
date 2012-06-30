@@ -214,7 +214,10 @@ SETS['roman'].WAREHOUSE_FISH_1 = ROMAN_IMAGES_PATH + 'warehouse/fish_1.png';
 SETS['roman'].WAREHOUSE_FISH_2 = ROMAN_IMAGES_PATH + 'warehouse/fish_2.png';
 SETS['roman'].WAREHOUSE_FISH_3 = ROMAN_IMAGES_PATH + 'warehouse/fish_3.png';
 SETS['roman'].WAREHOUSE_FISH_4 = ROMAN_IMAGES_PATH + 'warehouse/fish_4.png';
-
+/*
+ * Granary
+ */
+SETS['roman'].LIBRARY = ROMAN_IMAGES_PATH + 'library.png';
 // --------------------------------------------------------------------------------------------------------------
 
 SETS['roman'].GRASS1 = ROMAN_IMAGES_PATH + 'terrains/Land1a_00002.png';
