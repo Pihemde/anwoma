@@ -17,9 +17,7 @@ var Board = function() {
 		this.cursor = new Cursor(this.gcontext);
 		this.gcontext.addEventListener("move", function(e) {
 			var pos = e.position;
-			var real = this.gcontext.position2Coord(pos);
-			var pos2 = this.gcontext.coord2Position(real);
-			console.log(pos.i, pos.j, real, this.gcontext.coord2Position(real), pos2.i, pos2.j);
+			console.log(pos.i, pos.j);
 		}, this);
 	};
 	
