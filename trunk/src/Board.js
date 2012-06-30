@@ -117,8 +117,8 @@ var Board = function() {
 			}
 			break;
 		case ORIENTATION.E:
-			for ( var i = 0; i < this.width; i++) {
-				for ( var j = this.height - 1; j >= 0; j--) {
+			for ( var j = this.height - 1; j >= 0; j--) {
+				for ( var i = 0; i < this.width; i++) {
 					this.paintGObject(this.gobjects, i, j);
 				}
 			}
