@@ -40,9 +40,8 @@ var GraphicalContext = function() {
 	}
 	
 	Class.prototype.changeOrientation = function(orientation) {
-		console.log(orientation);
 		this.orientation = orientation;
-		this.angle = orientation*Math.PI/2 + Math.PI/4
+		this.angle = orientation*Math.PI/2 + Math.PI/4;
 		this.fireEvent("rotate", {orientation: orientation});
 	};
 	
@@ -53,18 +52,47 @@ var GraphicalContext = function() {
 		this.preRenderContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	};
 	
+	Class.prototype.drawSquare = function(position, size, data) {
+		var x = position.i;
+		var y = position.j;
+		this.preRenderContext.beginPath();
+		c = this.position2Coord({i:x, j:y});
+		this.preRenderContext.moveTo(c.x, c.y);
+		c = this.position2Coord({i:x+size.width, j:y});
+		this.preRenderContext.lineTo(c.x, c.y);
+		c = this.position2Coord({i:x+size.width, j:y+size.height}); 
+		this.preRenderContext.lineTo(c.x, c.y);
+		c = this.position2Coord({i:x, j:y+size.height});
+		this.preRenderContext.lineTo(c.x, c.y);
+		c = this.position2Coord({i:x, j:y});
+		this.preRenderContext.lineTo(c.x, c.y);
+		this.preRenderContext.closePath();
+		if(!data) {
+			this.preRenderContext.fill(); // On remplit 
+		} else {
+			if(!!data.color) this.preRenderContext.fillStyle = data.color;
+			if(!!data.alpha) this.preRenderContext.globalAlpha = data.alpha; // Transparence 
+			this.preRenderContext.fill(); // On remplit 
+			if(!!data.alpha) this.preRenderContext.globalAlpha = 1; // On la reset pour les copains 
+		}
+	}
+
 	Class.prototype.drawImage = function(image, size, position, offset) {
+//		this.drawSquare(position, size, {color:"green"});
+//		return;
 		var width = image.width * this.zoom;
 		var height = image.height * this.zoom;
 
 		var i = position.i;
 		var j = position.j;
-		i += Math.floor(((this.orientation+2)%4)/2) * (size.width -1);
-		j += Math.floor(((this.orientation+3)%4)/2) * (size.height-1);
+
+		i += Math.floor(((this.orientation+2)%4)/2) * (size.width - 2) + 1;
+		j += Math.floor(((this.orientation+3)%4)/2) * (size.height - 2) + 1;
 
 		var c = this.position2Coord({i:i,j:j});
+		
 		var x = c.x - SQUARE_WIDTH / 2 * this.zoom;
-		var y = c.y + SQUARE_HEIGHT / 2;
+		var y = c.y + SQUARE_HEIGHT / 2 * this.zoom;
 
 		x += (SQUARE_WIDTH - image.width) * 0.5 * this.zoom;
 		y -= image.height * 0.5 * this.zoom + (image.height - SQUARE_HEIGHT) * 0.5 * this.zoom;
@@ -99,49 +127,69 @@ var GraphicalContext = function() {
 	}
 
 	Class.prototype.position2Coord = function(coord) {
+		var x = coord.i;
+		var y = coord.j;
+
+		// Hack for adjusting values
+		//x -= Math.floor(((this.orientation+0)%4)/2);
+		//y -= Math.floor(((this.orientation+1)%4)/2);
+
 		// Centrage de la carte sur l'origine des axes
-		var x = coord.i - this.width /2;
-		var y = coord.j - this.height/2;
+		x -= this.width /2;
+		y -= this.height/2;
 		// Rotation pour orienter la carte dans le bon sens
 		// TODO: Prendre en comte la direction N/E/S/W
 		var transform = Matrix.Rotation(this.angle);
-		coord = $M([[x], [y]]); // FIXME The parameter coord should not be assigned
-		coord = transform.multiply(coord); // FIXME The parameter coord should not be assigned
+		var matrix = $M([[x], [y]]);
+		matrix = transform.multiply(matrix);
 		// Etirement de la carte pour s'adapter à la taille des images 
-		x = coord.elements[0][0] / Math.sqrt(2) * SQUARE_WIDTH  * this.zoom;
-		y = coord.elements[1][0] / Math.sqrt(2) * SQUARE_HEIGHT * this.zoom;
+		x = matrix.elements[0][0] / Math.sqrt(2) * SQUARE_WIDTH  * this.zoom;
+		y = matrix.elements[1][0] / Math.sqrt(2) * SQUARE_HEIGHT * this.zoom;
 		// Déplacement de la carte pour la centrer correctement
-		x = x + this.canvas.width /2 + this.offset.x;
-		y = y + this.canvas.height/2 + this.offset.y;
+		x += this.canvas.width /2;
+		y += this.canvas.height/2;
+		x += this.offset.x;
+		y += this.offset.y;
 		// Optim pour faire référence a des pixels entier
-		x = Math.round(x);
-		y = Math.round(y);
+	//	x = Math.round(x);
+	//	y = Math.round(y);
 		return {x: x, y: y};
 	};
 
 	Class.prototype.coord2Position = function(coord) {
+		var x = coord.x
+		var y = coord.y;
 		// Déplacement de la carte pour la centrer correctement
-		var x = coord.x - this.offset.x - this.canvas.width/2;
-		var y = coord.y - this.offset.y - this.canvas.height/2;
-		// Etirement de la ccarte pour s'adapter à la taille des images
+		x -= this.offset.x;
+		y -= this.offset.y
+
+		x -= this.canvas.width/2;
+		y -= this.canvas.height/2;
+
+		// Etirement de la carte pour s'adapter à la taille des images
 		x = x / SQUARE_WIDTH  * Math.sqrt(2) / this.zoom;
 		y = y / SQUARE_HEIGHT * Math.sqrt(2) / this.zoom;
 		// Rotation pour orienter la carte dans le bon sens
 		// TODO: Prendre en comte la direction N/E/S/W
 		var transform = Matrix.Rotation(-this.angle);
-		coord = $M([[x], [y]]); // FIXME The parameter coord should not be assigned
-		coord = transform.multiply(coord); // FIXME The parameter coord should not be assigned
+		var matrix = $M([[x], [y]]);
+		matrix = transform.multiply(matrix);
+		x = matrix.elements[0][0];
+		y = matrix.elements[1][0];
 		// Centrage de la carte sur l'origine des axes
-		var x = coord.elements[0][0] + this.width/2;
-		var y = coord.elements[1][0] + this.height/2;
-
+		x += this.width/2;
+		y += this.height/2;
 		// Hack for adjusting values
-//		x -= Math.floor(((this.orientation+2)%4)/2);
-//		y -= Math.floor(((this.orientation+3)%4)/2);
+/*
+		x += Math.floor(((this.orientation+0)%4)/2);
+		y += Math.floor(((this.orientation+1)%4)/2);
+*/
 
+		x = Math.floor(x);
+		y = Math.floor(y);
 		return {
-			i: Math.floor(x),
-			j: Math.floor(y)
+			i: x,
+			j: y
 		};
 	};
 
@@ -174,37 +222,36 @@ var GraphicalContext = function() {
 	
 	Class.prototype.onmousewheel = function(event) {
 		if(event.shiftKey) {
-			var step = 1.1;
-			if(event.wheelDelta>0) {
-				this.zoom *= step;
-			} else {
-				this.zoom /= step;
-			}
+			this.onzoom(event.wheelDelta>0);
 			event.stopPropagation();
 		}
 	};
 	
 	Class.prototype.onmousewheelff = function(event) {
 		if(event.altKey) {
+			this.onZoom(event.wheelDelta <= 0 || event.detail > 0 );
+			event.preventDefault();
+			event.stopPropagation();
+		}
+	};
+	
+	Class.prototype.onzoom = function(isZoomIn) {
 			var step = 1.1;
-			if (event.wheelDelta <= 0 || event.detail > 0 ) {
+			if (isZoomIn) {
 				this.zoom *= step;
 			} else {
 				this.zoom /= step;
 			}
-			event.preventDefault();
-			event.stopPropagation();
-		}
 	};
 
 	Class.prototype.onmousedown = function(event) {
 		var evt = event || window.event;
 		this.moveMap = {x: evt.clientX, y: evt.clientY};
-	}
+	};
 
 	Class.prototype.onmouseup = function(event) {
 		this.moveMap = undefined;
-	}
+	};
 		
 	return Class;
 }();
