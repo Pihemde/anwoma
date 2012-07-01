@@ -149,8 +149,8 @@ var GraphicalContext = function() {
 		// Déplacement de la carte pour la centrer correctement
 		x += this.canvas.width /2;
 		y += this.canvas.height/2;
-		x += this.offset.x;
-		y += this.offset.y;
+		x += this.offset.x * this.zoom;
+		y += this.offset.y * this.zoom;
 		// Optim pour faire référence a des pixels entier
 	//	x = Math.round(x);
 	//	y = Math.round(y);
@@ -161,8 +161,8 @@ var GraphicalContext = function() {
 		var x = coord.x
 		var y = coord.y;
 		// Déplacement de la carte pour la centrer correctement
-		x -= this.offset.x;
-		y -= this.offset.y
+		x -= this.offset.x * this.zoom;
+		y -= this.offset.y * this.zoom;
 
 		x -= this.canvas.width/2;
 		y -= this.canvas.height/2;
@@ -207,8 +207,8 @@ var GraphicalContext = function() {
 
 
 		if(!!this.moveMap) {
-			this.offset.x += evt.clientX - this.moveMap.x;
-			this.offset.y += evt.clientY - this.moveMap.y;
+			this.offset.x += (evt.clientX - this.moveMap.x) / this.zoom;
+			this.offset.y += (evt.clientY - this.moveMap.y) / this.zoom;
 			this.moveMap = {x: evt.clientX, y: evt.clientY};
 		}
 	};
@@ -224,13 +224,14 @@ var GraphicalContext = function() {
 	Class.prototype.onmousewheel = function(event) {
 		if(event.shiftKey) {
 			this.onzoom(event.wheelDelta>0);
+			event.preventDefault();
 			event.stopPropagation();
 		}
 	};
 	
 	Class.prototype.onmousewheelff = function(event) {
 		if(event.altKey) {
-			this.onZoom(event.wheelDelta <= 0 || event.detail > 0 );
+			this.onzoom(event.wheelDelta <= 0 || event.detail > 0 );
 			event.preventDefault();
 			event.stopPropagation();
 		}
@@ -243,6 +244,8 @@ var GraphicalContext = function() {
 			} else {
 				this.zoom /= step;
 			}
+			if(this.zoom < 0.1) this.zoom = 0.1;
+			else if(this.zoom > 10) this.zoom = 10;
 	};
 
 	Class.prototype.onmousedown = function(event) {
