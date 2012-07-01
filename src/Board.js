@@ -62,6 +62,9 @@ var Board = function() {
 		case 'sign' :
 			object = new Sign(this.gcontext);
 			break;
+		case 'library' :
+			object = new Library(this.gcontext);
+			break;
 		case 'grass' :
 			default:
 				object = new Grass(this.gcontext);
@@ -110,9 +113,11 @@ var Board = function() {
 	Class.prototype.paintGObjects = function() {
 		switch (this.orientation) {
 		case ORIENTATION.N:
-			for ( var j = 0; j < this.height; j++) {
-				for ( var i = 0; i < this.width; i++) {
-					this.paintGObject(this.gobjects, i, j);
+			// V mode, out->in
+			for ( var m = 0; m < this.height; m++) {
+				for ( var n = 0; n <= m; n++) {
+					this.paintGObject(this.gobjects, m, n);
+					this.paintGObject(this.gobjects, n, m);
 				}
 			}
 			break;
