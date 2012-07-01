@@ -18,6 +18,7 @@ var Granary = function() { // FIXME Comment on fait pour hériter ?
 	 * Draw object on canvas
 	 */
 	Class.prototype.paint = function() {
+		
 		/*
 		 * Draw base images
 		 */
