@@ -96,37 +96,49 @@ var Board = function() {
 	Class.prototype.paintGObjects = function() {
 		switch (this.orientation) {
 		case ORIENTATION.N:
-			// V mode, out->in
-//			for ( var m = 0; m < this.height; m++) {
-//				for ( var n = 0; n <= m; n++) {
-//					this.paintGObject(this.gobjects, m, n);
-//					this.paintGObject(this.gobjects, n, m);
-//				}
-//			}
-			
-			for(var m = 0 ; m < this.width * 2 ; m++) {
-				for(var i = 0, j = m ; j >=0 ; i++, j--) {
+			for(var m = 0 ; m < this.width ; m++) {
+				for(var i = 0, j = m ; i < m ; i++, j--) {
+					this.paintGObject(this.gobjects, i, j);
+				}
+			}
+			for(var m = 1 ; m < this.height ; m++) {
+				for(var i = m, j = (this.height - 1) ; j > m ; i++, j--) {
 					this.paintGObject(this.gobjects, i, j);
 				}
 			}
 			break;
 		case ORIENTATION.E:
-			for ( var j = this.height - 1; j >= 0; j--) {
-				for ( var i = 0; i < this.width; i++) {
+			for(var m = 0 ; m < this.width ; m++) {
+				for(var i = m, j = (this.height - 1) ; i >= 0 ; i--, j--) {
+					this.paintGObject(this.gobjects, i, j);
+				}
+			}
+			for(var m = 1 ; m < this.height ; m++) {
+				for(var i = (this.width - 1), j = (this.height - m - 1) ; j >= 0 ; i--, j--) {
 					this.paintGObject(this.gobjects, i, j);
 				}
 			}
 			break;
 		case ORIENTATION.S:
-			for ( var j = this.height - 1; j >= 0; j--) {
-				for ( var i = this.width - 1; i >= 0; i--) {
+			for(var m = (this.width - 1) ; m >= 0 ; m--) {
+				for(var i = (this.width - 1), j = m ; j < this.height ; i--, j++) {
+					this.paintGObject(this.gobjects, i, j);
+				}
+			}
+			for(var m = (this.width - 1) ; m >= 0 ; m--) {
+				for(var i = m, j = 0 ; i >= 0 ; i--, j++) {
 					this.paintGObject(this.gobjects, i, j);
 				}
 			}
 			break;
 		case ORIENTATION.W:
-			for ( var j = 0; j < this.height; j++) {
-				for ( var i = this.width - 1; i >= 0; i--) {
+			for(var m = 0 ; m < this.width ; m++) {
+				for(var i = (this.width - m - 1), j = 0 ; i < this.width ; i++, j++) {
+					this.paintGObject(this.gobjects, i, j);
+				}
+			}
+			for(var m = 1 ; m < this.height ; m++) {
+				for(var i = 0, j = m ; j < this.height ; i++, j++) {
 					this.paintGObject(this.gobjects, i, j);
 				}
 			}
