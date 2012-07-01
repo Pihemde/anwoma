@@ -2,7 +2,6 @@
  * Board
  */
 var Board = function() {
-	const REPAINT_DELAI = 50;
 
 	/**
 	 * Constructor
@@ -58,6 +57,9 @@ var Board = function() {
 			for(var j = p.j ; j < p.j + object.size.height ; j++) {
 				if(this.gobjects[j] == undefined) {
 					this.gobjects[j] = [];
+				}
+				if(!!this.gobjects[j][i]) {
+					object.parent = this.gobjects[j][i]; 
 				}
 				this.gobjects[j][i] = object;
 			}

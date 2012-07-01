@@ -218,6 +218,20 @@ SETS['roman'].WAREHOUSE_FISH_4 = ROMAN_IMAGES_PATH + 'warehouse/fish_4.png';
  * Granary
  */
 SETS['roman'].LIBRARY = ROMAN_IMAGES_PATH + 'library.png';
+/*
+ * Prefecture
+ */
+SETS['roman'].PREFECTURE_BASE = ROMAN_IMAGES_PATH + 'prefecture/base.png';
+SETS['roman'].PREFECTURE_ANIMATION_0 = ROMAN_IMAGES_PATH + 'prefecture/animation_0.png';
+SETS['roman'].PREFECTURE_ANIMATION_1 = ROMAN_IMAGES_PATH + 'prefecture/animation_1.png';
+SETS['roman'].PREFECTURE_ANIMATION_2 = ROMAN_IMAGES_PATH + 'prefecture/animation_2.png';
+SETS['roman'].PREFECTURE_ANIMATION_3 = ROMAN_IMAGES_PATH + 'prefecture/animation_3.png';
+SETS['roman'].PREFECTURE_ANIMATION_4 = ROMAN_IMAGES_PATH + 'prefecture/animation_4.png';
+SETS['roman'].PREFECTURE_ANIMATION_5 = ROMAN_IMAGES_PATH + 'prefecture/animation_5.png';
+SETS['roman'].PREFECTURE_ANIMATION_6 = ROMAN_IMAGES_PATH + 'prefecture/animation_6.png';
+SETS['roman'].PREFECTURE_ANIMATION_7 = ROMAN_IMAGES_PATH + 'prefecture/animation_7.png';
+SETS['roman'].PREFECTURE_ANIMATION_8 = ROMAN_IMAGES_PATH + 'prefecture/animation_8.png';
+SETS['roman'].PREFECTURE_ANIMATION_9 = ROMAN_IMAGES_PATH + 'prefecture/animation_9.png';
 // --------------------------------------------------------------------------------------------------------------
 
 SETS['roman'].GRASS1 = ROMAN_IMAGES_PATH + 'terrains/Land1a_00002.png';

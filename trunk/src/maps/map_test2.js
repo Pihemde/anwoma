@@ -21,6 +21,9 @@ function circleWithSigns(i, j, m) {
 	}
 }
 
+MAP.push({clazz: 'Prefecture', position: {i:8, j:8}});
+
+
 
 MAP.push({
 	clazz: 'Farm', 

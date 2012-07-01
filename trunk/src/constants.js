@@ -3,6 +3,8 @@
  */
 var SETS = {};
 
+const REPAINT_DELAI = 50;
+
 /**
  * Board or object orientation
  */
