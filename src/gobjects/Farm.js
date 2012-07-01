@@ -34,21 +34,23 @@ var Farm = function() { // FIXME Comment on fait pour hériter ?
 	/**
 	 * Draw object on canvas
 	 */
-	Class.prototype.paint = function() {
-		/*
-		 * Draw base images
-		 */
-		this.gcontext.drawImage(SET.FARM_BASE, this.size, this.position, {x:0, y:-30}); // 0,0
-
-		/*
-		 * Draw goods * stock
-		 */
-		var image = SET['FARM_' + this.good.type + '_0'];
-		if (!!this.good && this.good.quantity > 0) {
-			image = SET['FARM_' + this.good.type + '_' + this.good.quantity];
-		}
-		for ( var i = 0; i < 5; i++) { // Only 5 squares
-			this.gcontext.drawImage(image, this.size, this.position, OFFSETS[i]);
+	Class.prototype.paint = function(p) {
+		if(this.position.i + 1 == p.i && this.position.j + 1 == p.j) {
+			/*
+			 * Draw base images
+			 */
+			this.gcontext.drawImage(SET.FARM_BASE, this.size, this.position, {x:0, y:-30}); // 0,0
+	
+			/*
+			 * Draw goods * stock
+			 */
+			var image = SET['FARM_' + this.good.type + '_0'];
+			if (!!this.good && this.good.quantity > 0) {
+				image = SET['FARM_' + this.good.type + '_' + this.good.quantity];
+			}
+			for ( var i = 0; i < 5; i++) { // Only 5 squares
+				this.gcontext.drawImage(image, this.size, this.position, OFFSETS[i]);
+			}
 		}
 	}
 
