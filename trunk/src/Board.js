@@ -97,12 +97,12 @@ var Board = function() {
 		switch (this.orientation) {
 		case ORIENTATION.N:
 			for(var m = 0 ; m < this.width ; m++) {
-				for(var i = 0, j = m ; i < m ; i++, j--) {
+				for(var i = 0, j = m ; j >= 0 ; i++, j--) {
 					this.paintGObject(this.gobjects, i, j);
 				}
 			}
 			for(var m = 1 ; m < this.height ; m++) {
-				for(var i = m, j = (this.height - 1) ; j > m ; i++, j--) {
+				for(var i = m, j = (this.height - 1) ; i < this.width ; i++, j--) {
 					this.paintGObject(this.gobjects, i, j);
 				}
 			}
