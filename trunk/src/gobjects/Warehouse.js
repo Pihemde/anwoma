@@ -37,18 +37,20 @@ var Warehouse = function() { // FIXME Comment on fait pour hériter ?
 	/**
 	 * Draw object on canvas
 	 */
-	Class.prototype.paint = function() {
-		/*
-		 * Draw base images
-		 */
-		this.gcontext.drawImage(SET.WAREHOUSE_BASE, this.size, this.position, {x : 0,y : -60}); // 0,0
-		this.gcontext.drawImage(SET.WAREHOUSE_ROOF, this.size, this.position, {x : 0,y : -70});
-
-		/*
-		 * Draw goods * stock
-		 */
-		for ( var i = 0; i < 8; i++) { // Only 8 squares
-			this.paintSquare(this.goods[i], OFFSETS[i]);
+	Class.prototype.paint = function(p) {
+		if(this.position.i + 1 == p.i && this.position.j + 1 == p.j) {
+			/*
+			 * Draw base images
+			 */
+			this.gcontext.drawImage(SET.WAREHOUSE_BASE, this.size, this.position, {x : 0,y : -60}); // 0,0
+			this.gcontext.drawImage(SET.WAREHOUSE_ROOF, this.size, this.position, {x : 0,y : -70});
+	
+			/*
+			 * Draw goods * stock
+			 */
+			for ( var i = 0; i < 8; i++) { // Only 8 squares
+				this.paintSquare(this.goods[i], OFFSETS[i]);
+			}
 		}
 	};
 

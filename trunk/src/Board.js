@@ -139,7 +139,7 @@ var Board = function() {
 	 */
 	Class.prototype.paintGObject = function(objects, i, j) {
 		if(!!objects[j] && !!objects[j][i]) {
-			objects[j][i].paint();
+			objects[j][i].paint({i:i, j:j});
 		}
 	}
 	
