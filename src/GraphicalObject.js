@@ -16,43 +16,52 @@ var GraphicalObject = function() {
 	 * @param tile object description. Include image to paint, size, flags (buildable, destructible, ...), lifecycle rules.
 	 * @param position absolute position object instance on the game board (first : 0,0 ; second 1,0 ; ...)
 	 */
-	var Class = function(gcontext, position) {
-		this.map = map;
+	var Class = function(gcontext) {
 		this.gcontext = gcontext;
-		this.tile = tile;
-		this.position = position;
-	};
-	
-	/**
-	 * Draw object on canvas
-	 */
-	Class.prototype.paint = function() {
-		var t = this.tile;
-		var c = this.getRealPosition();
-		
-		if(t.src instanceof Array) {
-			for(var layer = 0 ; layer < t.src.lenght ; layer++) {
-				this.gcontext.drawImage(t.src[layer], c.x, c.y);
-			}
-		} else {
-			// Only one image to draw
-			this.gcontext.drawImage(t.src, c.x, c.y);
-		}
-
 	};
 	
 	/**
 	 * Return true if something can be build on it
 	 */
 	Class.prototype.isBuildable = function() {
-		return this.tile.buildable;
+		return this.buildable;
 	};
 	
 	/**
 	 * Return true if it can be destroy
 	 */
 	Class.prototype.isDestructible = function() {
-		return this.tile.destructible;
+		return this.destructible;
+	};
+	
+	/**
+	 * Return true if it can be destroy
+	 */
+	Class.prototype.destroy = function() {
+		if(!this.destructible) {
+			throw "Not destructible !";
+		}
+		if(!!this.parent) {
+			return this.parent;
+		}
+	};
+	
+	/*
+	 * Retrieve a JSON string to save object state
+	 */
+	Class.prototype.serialize = function() {
+		return {
+			position : this.position,
+			// TODO generic
+		};
+	};
+
+	/*
+	 * Set attributes from json object
+	 */
+	Class.prototype.unserialize = function(description) {
+		this.position = description.position;
+		// TODO generic
 	};
 		
 	return Class;
