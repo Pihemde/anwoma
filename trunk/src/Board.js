@@ -47,7 +47,7 @@ var Board = function() {
 	Class.prototype.loadGObject = function(description) {
 		var object;
 		try {
-			var Clazz = eval(description.clazz.charAt(0).toUpperCase() + description.clazz.slice(1));
+			var Clazz = eval(description.clazz);
 			object = new Clazz(this.gcontext);
 		} catch(e) {
 			object = new Grass(this.gcontext);
@@ -97,10 +97,16 @@ var Board = function() {
 		switch (this.orientation) {
 		case ORIENTATION.N:
 			// V mode, out->in
-			for ( var m = 0; m < this.height; m++) {
-				for ( var n = 0; n <= m; n++) {
-					this.paintGObject(this.gobjects, m, n);
-					this.paintGObject(this.gobjects, n, m);
+//			for ( var m = 0; m < this.height; m++) {
+//				for ( var n = 0; n <= m; n++) {
+//					this.paintGObject(this.gobjects, m, n);
+//					this.paintGObject(this.gobjects, n, m);
+//				}
+//			}
+			
+			for(var m = 0 ; m < this.width * 2 ; m++) {
+				for(var i = 0, j = m ; j >=0 ; i++, j--) {
+					this.paintGObject(this.gobjects, i, j);
 				}
 			}
 			break;
