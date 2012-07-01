@@ -46,28 +46,11 @@ var Board = function() {
 	 */
 	Class.prototype.loadGObject = function(description) {
 		var object;
-		switch(description.clazz) {
-		case 'granary' :
-			object = new Granary(this.gcontext);
-			break;
-		case 'farm' :
-			object = new Farm(this.gcontext);
-			break;
-		case 'warehouse' :
-			object = new Warehouse(this.gcontext);
-			break;
-		case 'mountain' :
-			object = new Moutain(this.gcontext);
-			break;
-		case 'sign' :
-			object = new Sign(this.gcontext);
-			break;
-		case 'library' :
-			object = new Library(this.gcontext);
-			break;
-		case 'grass' :
-			default:
-				object = new Grass(this.gcontext);
+		try {
+			var Clazz = eval(description.clazz.charAt(0).toUpperCase() + description.clazz.slice(1));
+			object = new Clazz(this.gcontext);
+		} catch(e) {
+			object = new Grass(this.gcontext);
 		}
 		object.unserialize(description);
 		var p = description.position;
