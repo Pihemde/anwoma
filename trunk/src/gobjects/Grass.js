@@ -12,13 +12,14 @@ var Grass = function() { // FIXME Comment on fait pour hériter ?
 	var Class = function(gcontext) {
 		this.gcontext = gcontext;
 		this.size = {width: 1, height: 1};
+		this.number = Math.floor(Math.random()*58);
 	};
 	
 	/**
 	 * Draw object on canvas
 	 */
 	Class.prototype.paint = function() {
-		this.gcontext.drawImage(SET.GRASS1, this.size, this.position);
+		this.gcontext.drawImage(SET['GRASS_' + this.number], this.size, this.position);
 	};
 	
 	/*

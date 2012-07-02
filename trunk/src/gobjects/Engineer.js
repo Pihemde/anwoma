@@ -1,7 +1,7 @@
 /**
- * Prefecture
+ * Engineer
  */
-var Prefecture = function() { // FIXME Comment on fait pour hériter ?
+var Engineer = function() { // FIXME Comment on fait pour hériter ?
 	const SET = SETS['roman'];
 
 	/**
@@ -19,8 +19,8 @@ var Prefecture = function() { // FIXME Comment on fait pour hériter ?
 	 * Draw object on canvas
 	 */
 	Class.prototype.paint = function() {
-		this.gcontext.drawImage(SET.PREFECTURE_BASE, this.size, this.position, {x:0, y:0});
-		this.gcontext.drawImage(SET['PREFECTURE_ANIMATION_' + this.counter], this.size, this.position, {x:5, y:-27});
+		this.gcontext.drawImage(SET.ENGINEER_BASE, this.size, this.position, {x:0, y:0});
+		this.gcontext.drawImage(SET['ENGINEER_ANIMATION_' + this.counter], this.size, this.position, {x:-5, y:-35});
 		
 		if(this.counter >= 9) {
 			this.counter = 0;

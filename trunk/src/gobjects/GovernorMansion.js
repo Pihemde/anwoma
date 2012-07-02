@@ -1,9 +1,9 @@
 /**
- * Prefecture
+ * GovernorMansion 
  */
-var Prefecture = function() { // FIXME Comment on fait pour hériter ?
+var GovernorMansion = function() { // FIXME Comment on fait pour hériter ?
 	const SET = SETS['roman'];
-
+	
 	/**
 	 * Constructor
 	 * @param gcontext the graphical context
@@ -11,21 +11,19 @@ var Prefecture = function() { // FIXME Comment on fait pour hériter ?
 	 */
 	var Class = function(gcontext) {
 		this.gcontext = gcontext;
-		this.size = {width: 1, height: 1};
-		this.counter = 0;
+		this.size = {width: 4, height: 4};
 	};
 	
 	/**
 	 * Draw object on canvas
 	 */
-	Class.prototype.paint = function() {
-		this.gcontext.drawImage(SET.PREFECTURE_BASE, this.size, this.position, {x:0, y:0});
-		this.gcontext.drawImage(SET['PREFECTURE_ANIMATION_' + this.counter], this.size, this.position, {x:5, y:-27});
-		
-		if(this.counter >= 9) {
-			this.counter = 0;
-		} else {
-			this.counter++;
+	Class.prototype.paint = function(p) {
+		if(this.position.i + 2 == p.i && this.position.j + 2 == p.j) {
+			
+			/*
+			 * Draw base images
+			 */
+			this.gcontext.drawImage(SET.GOVERNOR_MANSION, this.size, this.position);
 		}
 	};
 	
@@ -44,6 +42,6 @@ var Prefecture = function() { // FIXME Comment on fait pour hériter ?
 	Class.prototype.unserialize = function(description) {
 		this.position = description.position;
 	};
-	
+		
 	return Class;
 }();

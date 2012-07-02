@@ -21,8 +21,16 @@ function circleWithSigns(i, j, m) {
 	}
 }
 
-MAP.push({clazz: 'Prefecture', position: {i:8, j:8}});
+MAP.push({clazz: 'Senat', position: {i:2, j:2}});
+circleWithSigns(2, 2, 5);
 
+
+MAP.push({clazz: 'GovernorMansion', position: {i:15, j:2}});
+circleWithSigns(15, 2, 4)
+
+
+MAP.push({clazz: 'Prefecture', position: {i:8, j:8}});
+MAP.push({clazz: 'Engineer', position: {i:10, j:8}});
 
 
 MAP.push({
