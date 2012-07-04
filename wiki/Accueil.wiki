@@ -9,3 +9,7 @@
 
 Réfs :
 http://www.html5canvastutorials.com/
+
+POO en JS:
+http://t-templier.developpez.com/tutoriel/javascript/javascript-poo2/
+http://naholyr.fr/2011/02/le-point-sur-javascript-et-heritage-prototypal/
