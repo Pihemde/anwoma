@@ -36,3 +36,29 @@ const GOOD_TYPE = {
 	WEAPON: 'WEAPON',
 	MARBLE: 'MARBLE'
 };
+
+/**
+ * Type of roads
+ */
+const ROAD_TYPE = {
+		// Dead Ends
+		E: 'E',
+		N: 'N',
+		S: 'S',
+		W: 'W',
+		// Simple roads
+		NS: 'NS',
+		EW: 'EW',
+		// Bend
+		EN: 'EN',
+		ES: 'ES',
+		NW: 'NW',
+		SW: 'SW',
+		// T crossroads
+		NSW: 'NSW',
+		ESW: 'ESW',
+		ENS: 'ENS',
+		ENW: 'ENW',
+		// Full crossroad
+		ENSW: 'ENSW'
+};
