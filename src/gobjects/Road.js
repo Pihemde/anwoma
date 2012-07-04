@@ -34,16 +34,20 @@ var Road = function() { // FIXME Comment on fait pour hériter ?
 	Class.prototype.computeType = function() {
 		var p = this.position;
 		var type = '';
-		if(this.isRoad(p.i + 1, p.j)) {
+		var o = this.gcontext.orientation;
+		if(this.isRoad(p.i + Math.round(Math.cos((0-o)*Math.PI/2)), p.j + Math.round(Math.sin((0-o)*Math.PI/2)))) {
 			type += 'E';
 		}
-		if(this.isRoad(p.i, p.j - 1)) {
+		if(this.isRoad(p.i + Math.round(Math.cos((3-o)*Math.PI/2)), p.j + Math.round(Math.sin((3-o)*Math.PI/2)))) {
 			type += 'N';
 		}
-		if(this.isRoad(p.i, p.j + 1)) {
+		if(this.isRoad(p.i + Math.round(Math.cos((1-o)*Math.PI/2)), p.j + Math.round(Math.sin((1-o)*Math.PI/2)))) {
 			type += 'S';
 		}
-		if(type.length == 0 || this.isRoad(p.i - 1, p.j)) {
+		if(this.isRoad(p.i + Math.round(Math.cos((2-o)*Math.PI/2)), p.j + Math.round(Math.sin((2-o)*Math.PI/2)))) {
+			type += 'W';
+		}
+		if(type.length == 0) {
 			type += 'W';
 		}
 		return type;
