@@ -247,7 +247,26 @@ SETS['roman'].PREFECTURE_ANIMATION_9 = ROMAN_IMAGES_PATH + 'prefecture/animation
 /*
  * Road
  */
+// Dead ends
+SETS['roman'].ROAD_SOIL_E = ROMAN_IMAGES_PATH + 'road/soil/road_e.png';
 SETS['roman'].ROAD_SOIL_N = ROMAN_IMAGES_PATH + 'road/soil/road_n.png';
+SETS['roman'].ROAD_SOIL_S = ROMAN_IMAGES_PATH + 'road/soil/road_s_0.png';
+SETS['roman'].ROAD_SOIL_W = ROMAN_IMAGES_PATH + 'road/soil/road_w.png';
+// Straight lines
+SETS['roman'].ROAD_SOIL_NS = ROMAN_IMAGES_PATH + 'road/soil/road_ns_0.png';
+SETS['roman'].ROAD_SOIL_EW = ROMAN_IMAGES_PATH + 'road/soil/road_ew_0.png';
+// Bend
+SETS['roman'].ROAD_SOIL_EN = ROMAN_IMAGES_PATH + 'road/soil/road_en.png';
+SETS['roman'].ROAD_SOIL_ES = ROMAN_IMAGES_PATH + 'road/soil/road_es.png';
+SETS['roman'].ROAD_SOIL_NW = ROMAN_IMAGES_PATH + 'road/soil/road_nw.png';
+SETS['roman'].ROAD_SOIL_SW = ROMAN_IMAGES_PATH + 'road/soil/road_sw.png';
+// T crossroads
+SETS['roman'].ROAD_SOIL_NSW = ROMAN_IMAGES_PATH + 'road/soil/road_nsw.png';
+SETS['roman'].ROAD_SOIL_ESW = ROMAN_IMAGES_PATH + 'road/soil/road_esw.png';
+SETS['roman'].ROAD_SOIL_ENS = ROMAN_IMAGES_PATH + 'road/soil/road_ens.png';
+SETS['roman'].ROAD_SOIL_ENW = ROMAN_IMAGES_PATH + 'road/soil/road_enw.png';
+// Full crossroad
+SETS['roman'].ROAD_SOIL_ENSW = ROMAN_IMAGES_PATH + 'road/soil/road_ensw.png';
 /*
  * Senat
  */

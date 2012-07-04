@@ -14,15 +14,30 @@ for(var i = 0 ; i < MAP_SIZE.width ; i++) {
 
 function circleWithSigns(i, j, m) {
 	for(var n = 0 ; n < m ; n++) {
-		MAP.push({clazz: 'Sign', position: {i:i+n, j:j-1}, orientation: ORIENTATION.N}); // top
-		MAP.push({clazz: 'Sign', position: {i:i-1, j:j+n}, orientation: ORIENTATION.N}); // left
-		MAP.push({clazz: 'Sign', position: {i:i+m, j:j+n}, orientation: ORIENTATION.N}); // right
-		MAP.push({clazz: 'Sign', position: {i:i+n, j:j+m}, orientation: ORIENTATION.N}); // bottom
+		MAP.push({clazz: 'Sign', position: {i:i+n, j:j-1}, orientation: ORIENTATION.E}); // top
+		MAP.push({clazz: 'Sign', position: {i:i-1, j:j+n}, orientation: ORIENTATION.E}); // left
+		MAP.push({clazz: 'Sign', position: {i:i+m, j:j+n}, orientation: ORIENTATION.E}); // right
+		MAP.push({clazz: 'Sign', position: {i:i+n, j:j+m}, orientation: ORIENTATION.E}); // bottom
 	}
 }
 
 MAP.push({clazz: 'Senat', position: {i:2, j:2}});
 circleWithSigns(2, 2, 5);
+
+MAP.push({clazz: 'Road', position: {i:5, j:20}});
+MAP.push({clazz: 'Road', position: {i:6, j:20}});
+MAP.push({clazz: 'Road', position: {i:7, j:20}});
+MAP.push({clazz: 'Road', position: {i:8, j:20}});
+MAP.push({clazz: 'Road', position: {i:9, j:20}});
+MAP.push({clazz: 'Road', position: {i:9, j:19}});
+MAP.push({clazz: 'Road', position: {i:9, j:18}});
+MAP.push({clazz: 'Road', position: {i:10, j:18}});
+
+
+MAP.push({clazz: 'Road', position: {i:7, j:19}});
+MAP.push({clazz: 'Road', position: {i:7, j:21}});
+MAP.push({clazz: 'Road', position: {i:7, j:22}});
+MAP.push({clazz: 'Road', position: {i:6, j:22}});
 
 
 MAP.push({clazz: 'GovernorMansion', position: {i:15, j:2}});

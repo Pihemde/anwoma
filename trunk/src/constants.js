@@ -46,7 +46,7 @@ const ROAD_TYPE = {
 		N: 'N',
 		S: 'S',
 		W: 'W',
-		// Simple roads
+		// Straight lines
 		NS: 'NS',
 		EW: 'EW',
 		// Bend

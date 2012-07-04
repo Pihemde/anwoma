@@ -11,7 +11,8 @@ var Board = function() {
 		this.map = map;
 		this.width = width;
 		this.height = height;
-		this.gobjects = [];
+		this.objects = [];
+		this.grid = [];
 		this.orientation = orientation;
 		this.cursor = new Cursor(this.gcontext);
 		this.gcontext.addEventListener("move", function(e) {
@@ -49,27 +50,29 @@ var Board = function() {
 			var Clazz = eval(description.clazz);
 			object = new Clazz(this.gcontext);
 		} catch(e) {
-			object = new Grass(this.gcontext);
+			throw "Unknow object class.";
 		}
+		this.objects.push(object);
 		object.unserialize(description);
 		var p = description.position;
 		for(var i = p.i ; i < p.i + object.size.width ; i++) {
 			for(var j = p.j ; j < p.j + object.size.height ; j++) {
-				if(this.gobjects[j] == undefined) {
-					this.gobjects[j] = [];
+				if(this.grid[j] == undefined) {
+					this.grid[j] = [];
 				}
-				if(!!this.gobjects[j][i]) {
-					object.parent = this.gobjects[j][i]; 
+				if(!!this.grid[j][i]) {
+					object.parent = this.grid[j][i]; 
 				}
-				this.gobjects[j][i] = object;
+				this.grid[j][i] = object;
 			}
 		}
-	}		
+	}
 	
 	/**
 	 * Paint the board
 	 */
 	Class.prototype.paint = function() {
+		this.init();
 		this.clear();
 		this.paintGObjects();
 		this.cursor.paint();
@@ -86,6 +89,31 @@ var Board = function() {
 	};
 	
 	/**
+	 * Init
+	 */
+	Class.prototype.init = function() {
+		this.initGObjects();		
+	}
+	
+	/**
+	 * Init objects
+	 */
+	Class.prototype.initGObjects = function() {
+		for(var i = 0 ; i < this.objects.length ; i++) {
+			this.initGObject(this.objects[i]);
+		}
+	}
+	
+	/**
+	 * Init an object
+	 */
+	Class.prototype.initGObject = function(object) {
+		if(object instanceof Road) {
+			object.init(this.grid);
+		}
+	}
+	
+	/**
 	 * Clear the board
 	 */
 	Class.prototype.clear = function(board) {
@@ -100,48 +128,48 @@ var Board = function() {
 		case ORIENTATION.N:
 			for(var m = 0 ; m < this.width ; m++) {
 				for(var i = 0, j = m ; j >= 0 ; i++, j--) {
-					this.paintGObject(this.gobjects, i, j);
+					this.paintGObject(this.grid, i, j);
 				}
 			}
 			for(var m = 1 ; m < this.height ; m++) {
 				for(var i = m, j = (this.height - 1) ; i < this.width ; i++, j--) {
-					this.paintGObject(this.gobjects, i, j);
+					this.paintGObject(this.grid, i, j);
 				}
 			}
 			break;
 		case ORIENTATION.E:
 			for(var m = 0 ; m < this.width ; m++) {
 				for(var i = m, j = (this.height - 1) ; i >= 0 ; i--, j--) {
-					this.paintGObject(this.gobjects, i, j);
+					this.paintGObject(this.grid, i, j);
 				}
 			}
 			for(var m = 1 ; m < this.height ; m++) {
 				for(var i = (this.width - 1), j = (this.height - m - 1) ; j >= 0 ; i--, j--) {
-					this.paintGObject(this.gobjects, i, j);
+					this.paintGObject(this.grid, i, j);
 				}
 			}
 			break;
 		case ORIENTATION.S:
 			for(var m = (this.width - 1) ; m >= 0 ; m--) {
 				for(var i = (this.width - 1), j = m ; j < this.height ; i--, j++) {
-					this.paintGObject(this.gobjects, i, j);
+					this.paintGObject(this.grid, i, j);
 				}
 			}
 			for(var m = (this.width - 1) ; m >= 0 ; m--) {
 				for(var i = m, j = 0 ; i >= 0 ; i--, j++) {
-					this.paintGObject(this.gobjects, i, j);
+					this.paintGObject(this.grid, i, j);
 				}
 			}
 			break;
 		case ORIENTATION.W:
 			for(var m = 0 ; m < this.width ; m++) {
 				for(var i = (this.width - m - 1), j = 0 ; i < this.width ; i++, j++) {
-					this.paintGObject(this.gobjects, i, j);
+					this.paintGObject(this.grid, i, j);
 				}
 			}
 			for(var m = 1 ; m < this.height ; m++) {
 				for(var i = 0, j = m ; j < this.height ; i++, j++) {
-					this.paintGObject(this.gobjects, i, j);
+					this.paintGObject(this.grid, i, j);
 				}
 			}
 			break;
