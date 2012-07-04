@@ -11,16 +11,47 @@ var Road = function() { // FIXME Comment on fait pour hériter ?
 	 */
 	var Class = function(gcontext) {
 		this.gcontext = gcontext;
+		this.clazz = 'Road';
 		this.size = {width: 1, height: 1};
 	};
+	
+	Class.prototype.init = function(grid) {
+		this.grid = grid;
+	}
 	
 	/**
 	 * Draw object on canvas
 	 */
 	Class.prototype.paint = function() {
 		var type = this.computeType();
-		//this.gcontext.drawImage(SET['ROAD_' + this.number], this.size, this.position);
+		var name = 'ROAD_SOIL_' + type;
+		this.gcontext.drawImage(SET[name], this.size, this.position);
 	};
+	
+	/*
+	 * Retrieve a JSON string to save object state
+	 */
+	Class.prototype.computeType = function() {
+		var p = this.position;
+		var type = '';
+		if(this.isRoad(p.i + 1, p.j)) {
+			type += 'E';
+		}
+		if(this.isRoad(p.i, p.j - 1)) {
+			type += 'N';
+		}
+		if(this.isRoad(p.i, p.j + 1)) {
+			type += 'S';
+		}
+		if(type.length == 0 || this.isRoad(p.i - 1, p.j)) {
+			type += 'W';
+		}
+		return type;
+	};
+	
+	Class.prototype.isRoad = function(i, j) {
+		return i >= 0 && j >= 0 && i < MAP_SIZE.width && j < MAP_SIZE.height && !!this.grid[j][i].clazz && this.grid[j][i].clazz == 'Road';
+	}
 	
 	/*
 	 * Retrieve a JSON string to save object state
