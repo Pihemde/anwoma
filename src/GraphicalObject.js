@@ -1,10 +1,3 @@
-function setData(value, defaultValue) {
-	if(undefined == value && undefined != defaultValue) {
-		return defaultValue;
-	}
-	return value;
-}
-
 /**
  * GraphicalObject is parent class of all object that's will be paint.
  */
