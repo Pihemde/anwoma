@@ -111,6 +111,9 @@ var Board = function() {
 		if(object instanceof Road) {
 			object.init(this.grid);
 		}
+		if(object instanceof Sign) {
+			object.init();
+		}
 	}
 	
 	/**

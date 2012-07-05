@@ -13,6 +13,8 @@ var Road = function() { // FIXME Comment on fait pour hériter ?
 		this.gcontext = gcontext;
 		this.clazz = 'Road';
 		this.size = {width: 1, height: 1};
+		this.orientation = ORIENTATION.N; // FIXME fire a 'rotate' event after loading 
+		this.gcontext.addEventListener("rotate", this.onrotate, this);
 	};
 	
 	Class.prototype.init = function(grid) {
@@ -34,7 +36,7 @@ var Road = function() { // FIXME Comment on fait pour hériter ?
 	Class.prototype.computeType = function() {
 		var p = this.position;
 		var type = '';
-		var o = this.gcontext.orientation;
+		var o = this.orientation;
 		if(this.isRoad(p.i + Math.round(Math.cos((0-o)*Math.PI/2)), p.j + Math.round(Math.sin((0-o)*Math.PI/2)))) {
 			type += 'E';
 		}
@@ -71,6 +73,10 @@ var Road = function() { // FIXME Comment on fait pour hériter ?
 	 */
 	Class.prototype.unserialize = function(description) {
 		this.position = description.position;
+	};
+	
+	Class.prototype.onrotate = function(event) {
+		this.orientation = event.orientation;
 	};
 		
 	return Class;
