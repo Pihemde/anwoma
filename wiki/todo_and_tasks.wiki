@@ -1,0 +1,19 @@
+=TODO list & affected tasks=
+
+
+==Todo list==
+ * Don't print visible object
+ * Pathfinding
+ * Adding objects (building, ground)
+ * Adding personnages
+
+
+==Bruno's tasks==
+
+ # task 1
+ # task 2
+
+==PMD's tasks==
+
+ # task 1
+ # task 2
