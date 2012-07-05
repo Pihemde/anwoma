@@ -14,6 +14,18 @@ const ORIENTATION = {
 	S: 2,
 	W: 3
 };
+const ORIENTATION_NAME = ['N', 'E', 'S', 'W'];
+
+/**
+ * Orientation correction for objects with direction.<br>
+ * Example: display_orientation = ORIENTATION_CORRECTION[board_orientation][original_orientation]
+ */
+const ORIENTATION_CORRECTION = [
+	[ORIENTATION.N, ORIENTATION.E, ORIENTATION.S, ORIENTATION.W],
+	[ORIENTATION.E, ORIENTATION.S, ORIENTATION.W, ORIENTATION.N],
+	[ORIENTATION.S, ORIENTATION.W, ORIENTATION.N, ORIENTATION.E],
+	[ORIENTATION.W, ORIENTATION.N, ORIENTATION.E, ORIENTATION.S]
+];
 
 /**
  * Type of goods
