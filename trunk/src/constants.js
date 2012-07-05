@@ -1,4 +1,10 @@
 /**
+ * Map description
+ */
+var MAP = [];
+const MAP_SIZE = {width: 25, height:25};
+
+/**
  * Images sets
  */
 var SETS = {};

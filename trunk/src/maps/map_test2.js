@@ -1,28 +1,8 @@
-/*
- * Map description
- */
-const MAP_SIZE = {width: 25, height:25};
-var MAP = [];
-
 // Put some grass in whole map 
-for(var i = 0 ; i < MAP_SIZE.width ; i++) {
-	for(var j = 0 ; j < MAP_SIZE.height ; j++) {
-		MAP.push({clazz: 'Grass', position: {i:i, j:j}});
-	}
-}
-
-
-function circleWithSigns(i, j, m) {
-	for(var n = 0 ; n < m ; n++) {
-		MAP.push({clazz: 'Sign', position: {i:i+n, j:j-1}, orientation: ORIENTATION.E}); // top
-		MAP.push({clazz: 'Sign', position: {i:i-1, j:j+n}, orientation: ORIENTATION.E}); // left
-		MAP.push({clazz: 'Sign', position: {i:i+m, j:j+n}, orientation: ORIENTATION.E}); // right
-		MAP.push({clazz: 'Sign', position: {i:i+n, j:j+m}, orientation: ORIENTATION.E}); // bottom
-	}
-}
+Map.fillWithGrass();
 
 MAP.push({clazz: 'Senat', position: {i:2, j:2}});
-circleWithSigns(2, 2, 5);
+Map.circleWithSigns(2, 2, 5);
 
 MAP.push({clazz: 'Road', position: {i:5, j:20}});
 MAP.push({clazz: 'Road', position: {i:6, j:20}});
@@ -41,7 +21,7 @@ MAP.push({clazz: 'Road', position: {i:6, j:22}});
 
 
 MAP.push({clazz: 'GovernorMansion', position: {i:15, j:2}});
-circleWithSigns(15, 2, 4)
+Map.circleWithSigns(15, 2, 4)
 
 
 MAP.push({clazz: 'Prefecture', position: {i:8, j:8}});
