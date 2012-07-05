@@ -180,8 +180,7 @@ var Board = function() {
 	 * Paint an object on the board.
 	 */
 	Class.prototype.paintGObject = function(objects, i, j) {
-		if(!this.gcontext.isVisible({i:i,j:j})) return;
-		if(!!objects[j] && !!objects[j][i]) {
+		if(!!objects[j] && !!objects[j][i] && this.gcontext.isVisible(objects[j][i])) {
 			objects[j][i].paint({i:i, j:j});
 		}
 	}

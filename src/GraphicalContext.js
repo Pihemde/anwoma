@@ -104,14 +104,16 @@ var GraphicalContext = function() {
 		this.preRenderContext.drawImage(image, x, y, width, height);
 	};
 
-	Class.prototype.isVisible = function(position) {
+	Class.prototype.isVisible = function(gobject) {
+		var position = gobject.position;
+		var size = gobject.size;
 		var c = this.position2Coord({i: position.i, j: position.j});
 		if(c.x>0 && c.y>0 && c.x<this.canvas.width && c.y<this.canvas.height) return true;
-		c = this.position2Coord({i: position.i+1, j: position.j});
+		c = this.position2Coord({i: position.i+size.width, j: position.j});
 		if(c.x>0 && c.y>0 && c.x<this.canvas.width && c.y<this.canvas.height) return true;
-		c = this.position2Coord({i: position.i+1, j: position.j+1});
+		c = this.position2Coord({i: position.i+size.width, j: position.j+size.height});
 		if(c.x>0 && c.y>0 && c.x<this.canvas.width && c.y<this.canvas.height) return true;
-		c = this.position2Coord({i: position.i, j: position.j+1});
+		c = this.position2Coord({i: position.i, j: position.j+size.height});
 		if(c.x>0 && c.y>0 && c.x<this.canvas.width && c.y<this.canvas.height) return true;
 		return false;
 	}
