@@ -16,3 +16,8 @@ canvas {
 	left: 1420px;
 	text-align: center;
 }
+
+.progression {
+	border: solid 1px black;
+	position: absolute;
+}
