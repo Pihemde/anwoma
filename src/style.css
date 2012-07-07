@@ -17,9 +17,37 @@ canvas {
 	text-align: center;
 }
 
+.hide {
+	opacity:0;
+	transition-property: all;
+	transition-duration: 0.5s;
+	transition-timing-function: ease-in;
+	-moz-transition-property: all;
+	-moz-transition-duration: 0.5s;
+	-moz-transition-timing-function: ease-in;
+	-webkit-transition-property: all;
+	-webkit-transition-duration: 0.5s;
+	-webkit-transition-timing-function: ease-in;
+}
+
+.show {
+	opacity:1;
+	transition-property: all;
+	transition-duration: 0.5s;
+	transition-timing-function: ease-out;
+	-moz-transition-property: all;
+	-moz-transition-duration: 0.5s;
+	-moz-transition-timing-function: ease-out;
+	-webkit-transition-property: all;
+	-webkit-transition-duration: 0.5s;
+	-webkit-transition-timing-function: ease-out;
+}
+
 .progressbar {
 	text-align: center;
 	width: 80%;
+	left: 10%;
+	top: 50px;
 	border: solid 1px #4A4;
   	background: #FAA;
 	border-radius: 3px;
