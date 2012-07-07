@@ -8,9 +8,8 @@ var Cursor = function() {
 	 * @param gcontext the graphical context
 	 */
 	var Class = function(gcontext) {
-		this.gcontext = gcontext;
+		$sc(this, [gcontext, {width: 1, height: 1}]);
 		this.gcontext.addEventListener("move", this.onmove, this);
-		this.size = {width: 1, height: 1};
 	};
 	
 	/**
@@ -37,5 +36,6 @@ var Cursor = function() {
 	Class.prototype.onmove = function(e) {
 		this.position = e.position;
 	}
-	return Class;
+
+	return $extends(Class, GraphicalObject);
 }();

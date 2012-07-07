@@ -24,11 +24,7 @@ var Farm = function() { // FIXME Comment on fait pour hériter ?
 	 *            0,0 ; second 1,0 ; ...)
 	 */
 	var Class = function(gcontext) {
-		this.gcontext = gcontext;
-		this.size = {
-			width : 3,
-			height : 3
-		};
+		$sc(this, [ gcontext, { width : 3, height : 3 }]);
 	};
 
 	/**
@@ -71,5 +67,5 @@ var Farm = function() { // FIXME Comment on fait pour hériter ?
 		this.good = description.good;
 	};
 
-	return Class;
+	return $extends(Class, GraphicalObject);
 }();

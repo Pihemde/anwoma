@@ -10,9 +10,8 @@ var Road = function() { // FIXME Comment on fait pour hériter ?
 	 * @param position absolute position object instance on the game board (first : 0,0 ; second 1,0 ; ...)
 	 */
 	var Class = function(gcontext) {
-		this.gcontext = gcontext;
+		$sc(this, [gcontext, {width: 1, height: 1}]);
 		this.clazz = 'Road';
-		this.size = {width: 1, height: 1};
 		this.orientation = ORIENTATION.N; // FIXME fire a 'rotate' event after loading 
 		this.gcontext.addEventListener("rotate", this.onrotate, this);
 	};
@@ -74,10 +73,10 @@ var Road = function() { // FIXME Comment on fait pour hériter ?
 	Class.prototype.unserialize = function(description) {
 		this.position = description.position;
 	};
-	
+
 	Class.prototype.onrotate = function(event) {
 		this.orientation = event.orientation;
 	};
 		
-	return Class;
+	return $extends(Class, GraphicalObject);
 }();

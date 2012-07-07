@@ -1,7 +1,7 @@
 /**
  * Grass 
  */
-var Grass = function() { // FIXME Comment on fait pour hériter ?
+var Grass = function() {
 	const SET = SETS['roman'];
 
 	/**
@@ -10,8 +10,7 @@ var Grass = function() { // FIXME Comment on fait pour hériter ?
 	 * @param position absolute position object instance on the game board (first : 0,0 ; second 1,0 ; ...)
 	 */
 	var Class = function(gcontext) {
-		this.gcontext = gcontext;
-		this.size = {width: 1, height: 1};
+		$sc(this, [gcontext, {width: 1, height: 1}]);
 		this.number = Math.floor(Math.random()*58);
 	};
 	
@@ -37,6 +36,6 @@ var Grass = function() { // FIXME Comment on fait pour hériter ?
 	Class.prototype.unserialize = function(description) {
 		this.position = description.position;
 	};
-		
-	return Class;
+
+	return $extends(Class, GraphicalObject);
 }();
