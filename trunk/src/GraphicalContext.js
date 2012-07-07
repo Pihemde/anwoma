@@ -251,22 +251,40 @@ var GraphicalContext = function() {
 	
 	Class.prototype.onzoom = function(isZoomIn) {
 			var step = 1.1;
+			var tmp = this.zoom;
 			if (isZoomIn) {
-				this.zoom *= step;
+				tmp *= step;
 			} else {
-				this.zoom /= step;
+				tmp /= step;
 			}
-			if(this.zoom < 0.1) this.zoom = 0.1;
-			else if(this.zoom > 10) this.zoom = 10;
+			if(tmp < 0.1) tmp = 0.1;
+			else if(tmp > 10) tmp = 10;
+			if(tmp != this.zoom) {
+				this.zoom = tmp;
+				var x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
+				var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
+				var c = this.coord2Position({x: x, y: y});
+				this.fireEvent("zoom", {position: c});
+			}
 	};
 
 	Class.prototype.onmousedown = function(event) {
 		var evt = event || window.event;
-		this.moveMap = {x: evt.clientX, y: evt.clientY};
+		if(event.button==1) { // Middle click
+			this.moveMap = {x: evt.clientX, y: evt.clientY};
+		}
+		var x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
+		var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
+		var c = this.coord2Position({x: x, y: y});
+		this.fireEvent("mousedown", {position: c});
 	};
 
 	Class.prototype.onmouseup = function(event) {
 		this.moveMap = undefined;
+		var x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
+		var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
+		var c = this.coord2Position({x: x, y: y});
+		this.fireEvent("mouseup", {position: c});
 	};
 		
 	return Class;

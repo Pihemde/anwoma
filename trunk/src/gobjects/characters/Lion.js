@@ -9,7 +9,7 @@ var Lion = function() { // FIXME Comment on fait pour hériter ?
 	 * @param gcontext the graphical context
 	 * @param position absolute position object instance on the game board (first : 0,0 ; second 1,0 ; ...)
 	 */
-	var Class = function(gcontext) {
+	var Lion = function(gcontext) {
 		$sc(this, [gcontext, {width: 1, height: 1}]);
 		this.counter = 0;
 	};
@@ -17,7 +17,7 @@ var Lion = function() { // FIXME Comment on fait pour hériter ?
 	/**
 	 * Draw object on canvas
 	 */
-	Class.prototype.paint = function() {
+	Lion.prototype.paint = function() {
 		if(!!this.parent && !!this.parent.paint) {
 			this.parent.paint();
 		}
@@ -33,7 +33,7 @@ var Lion = function() { // FIXME Comment on fait pour hériter ?
 	/*
 	 * Retrieve a JSON string to save object state
 	 */
-	Class.prototype.serialize = function() {
+	Lion.prototype.serialize = function() {
 		return {
 			position: this.position
 		};
@@ -42,9 +42,9 @@ var Lion = function() { // FIXME Comment on fait pour hériter ?
 	/*
 	 * Set attributes from json object
 	 */
-	Class.prototype.unserialize = function(description) {
+	Lion.prototype.unserialize = function(description) {
 		this.position = description.position;
 	};
 	
-	return $extends(Class, GraphicalObject);
+	return $extends(Lion, GraphicalObject);
 }();

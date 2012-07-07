@@ -9,21 +9,21 @@ var Road = function() { // FIXME Comment on fait pour hériter ?
 	 * @param gcontext the graphical context
 	 * @param position absolute position object instance on the game board (first : 0,0 ; second 1,0 ; ...)
 	 */
-	var Class = function(gcontext) {
+	var Road = function(gcontext) {
 		$sc(this, [gcontext, {width: 1, height: 1}]);
 		this.clazz = 'Road';
 		this.orientation = ORIENTATION.N; // FIXME fire a 'rotate' event after loading 
 		this.gcontext.addEventListener("rotate", this.onrotate, this);
 	};
 	
-	Class.prototype.init = function(grid) {
+	Road.prototype.init = function(grid) {
 		this.grid = grid;
 	}
 	
 	/**
 	 * Draw object on canvas
 	 */
-	Class.prototype.paint = function() {
+	Road.prototype.paint = function() {
 		var type = this.computeType();
 		var name = 'ROAD_SOIL_' + type;
 		this.gcontext.drawImage(SET[name], this.size, this.position);
@@ -32,7 +32,7 @@ var Road = function() { // FIXME Comment on fait pour hériter ?
 	/*
 	 * Retrieve a JSON string to save object state
 	 */
-	Class.prototype.computeType = function() {
+	Road.prototype.computeType = function() {
 		var p = this.position;
 		var type = '';
 		var o = this.orientation;
@@ -54,14 +54,14 @@ var Road = function() { // FIXME Comment on fait pour hériter ?
 		return type;
 	};
 	
-	Class.prototype.isRoad = function(i, j) {
+	Road.prototype.isRoad = function(i, j) {
 		return i >= 0 && j >= 0 && i < MAP_SIZE.width && j < MAP_SIZE.height && !!this.grid[j][i].clazz && this.grid[j][i].clazz == 'Road';
 	}
 	
 	/*
 	 * Retrieve a JSON string to save object state
 	 */
-	Class.prototype.serialize = function() {
+	Road.prototype.serialize = function() {
 		return {
 			position: this.position
 		};
@@ -70,13 +70,13 @@ var Road = function() { // FIXME Comment on fait pour hériter ?
 	/*
 	 * Set attributes from json object
 	 */
-	Class.prototype.unserialize = function(description) {
+	Road.prototype.unserialize = function(description) {
 		this.position = description.position;
 	};
 	
-	Class.prototype.onrotate = function(event) {
+	Road.prototype.onrotate = function(event) {
 		this.orientation = event.orientation;
 	};
 		
-	return $extends(Class, GraphicalObject);
+	return $extends(Road, GraphicalObject);
 }();

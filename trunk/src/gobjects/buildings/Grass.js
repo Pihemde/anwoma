@@ -9,7 +9,7 @@ var Grass = function() { // FIXME Comment on fait pour hériter ?
 	 * @param gcontext the graphical context
 	 * @param position absolute position object instance on the game board (first : 0,0 ; second 1,0 ; ...)
 	 */
-	var Class = function(gcontext) {
+	var Grass = function(gcontext) {
 		$sc(this, [gcontext, {width: 1, height: 1}]);
 		this.number = Math.floor(Math.random()*58);
 	};
@@ -17,14 +17,14 @@ var Grass = function() { // FIXME Comment on fait pour hériter ?
 	/**
 	 * Draw object on canvas
 	 */
-	Class.prototype.paint = function() {
+	Grass.prototype.paint = function() {
 		this.gcontext.drawImage(SET['GRASS_' + this.number], this.size, this.position);
 	};
 	
 	/*
 	 * Retrieve a JSON string to save object state
 	 */
-	Class.prototype.serialize = function() {
+	Grass.prototype.serialize = function() {
 		return {
 			position: this.position
 		};
@@ -33,9 +33,9 @@ var Grass = function() { // FIXME Comment on fait pour hériter ?
 	/*
 	 * Set attributes from json object
 	 */
-	Class.prototype.unserialize = function(description) {
+	Grass.prototype.unserialize = function(description) {
 		this.position = description.position;
 	};
 		
-	return $extends(Class, GraphicalObject);
+	return $extends(Grass, GraphicalObject);
 }();

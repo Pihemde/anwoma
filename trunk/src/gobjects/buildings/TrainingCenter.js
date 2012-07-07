@@ -8,7 +8,7 @@ var TrainingCenter = function() { // FIXME Comment on fait pour hériter ?
 	 * Constructor
 	 * @param gcontext the graphical context
 	 */
-	var Class = function(gcontext) {
+	var TrainingCenter = function(gcontext) {
 		$sc(this, [gcontext, {width: 3, height: 3}]);
 		this.counter = 0;
 	};
@@ -16,7 +16,7 @@ var TrainingCenter = function() { // FIXME Comment on fait pour hériter ?
 	/**
 	 * Draw object on canvas
 	 */
-	Class.prototype.paint = function(p) {
+	TrainingCenter.prototype.paint = function(p) {
 		if(this.position.i + 1 == p.i && this.position.j + 1 == p.j) {
 			this.gcontext.drawImage(SET.TRAINING_CENTER_BASE, this.size, this.position);
 			this.gcontext.drawImage(SET['TRAINING_CENTER_ANIMATION_' + this.counter], this.size, this.position, {x:15, y:-10});
@@ -31,7 +31,7 @@ var TrainingCenter = function() { // FIXME Comment on fait pour hériter ?
 	/*
 	 * Retrieve a JSON string to save object state
 	 */
-	Class.prototype.serialize = function() {
+	TrainingCenter.prototype.serialize = function() {
 		return {
 			position: this.position
 		};
@@ -40,9 +40,9 @@ var TrainingCenter = function() { // FIXME Comment on fait pour hériter ?
 	/*
 	 * Set attributes from json object
 	 */
-	Class.prototype.unserialize = function(description) {
+	TrainingCenter.prototype.unserialize = function(description) {
 		this.position = description.position;
 	};
 
-	return $extends(Class, GraphicalObject);
+	return $extends(TrainingCenter, GraphicalObject);
 }();
