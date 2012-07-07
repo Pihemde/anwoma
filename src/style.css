@@ -17,7 +17,21 @@ canvas {
 	text-align: center;
 }
 
-.progression {
-	border: solid 1px black;
+.progressbar {
+	text-align: center;
+	width: 80%;
+	border: solid 1px #4A4;
+  	background: #FAA;
+	border-radius: 3px;
 	position: absolute;
+	z-index: 1;
+	overflow: hidden;
+}
+.progression {
+
+	text-align: center;
+	font-size: 12px;
+  	background: #AFA;
+	z-index: 1;
+	overflow: hidden;
 }

@@ -1,11 +1,22 @@
 var Loader = function(){
 	function Loader() {
 		var body = document.getElementsByTagName("body")[0];
+		var div = document.createElement("div");
+		div.setAttribute("class", "progressbar");
 		this.div = document.createElement("div");
 		this.div.setAttribute("class", "progression");
-		body.appendChild(this.div);
-		this.counter = 0;
-		this.count = 0;
+		div.appendChild(this.div);
+		body.appendChild(div);
+		this.counter = 1000;
+		this.count = this.counter;
+		
+		//TODO: just remove (used for test)
+		var instance = this;
+		var interval = setInterval(function() {
+			instance.count--;
+			progress(instance);
+			if(instance.count == 0) clearInterval(interval);
+		}, 1);
 	}
 
 	/*
@@ -23,7 +34,7 @@ var Loader = function(){
 				set[i] = new Image();
 				set[i].onload = function() {
 					loader.count--;
-					loader.div.innerText = Math.round((1-loader.count/loader.counter)*100)+"%";
+					progress(loader);
 					if(loader.count == 0) {
 						callback();
 					}
@@ -31,6 +42,12 @@ var Loader = function(){
 				set[i].src = src;
 			}
 		}
+	}
+
+	function progress(loader) {
+		var progress = Math.round((1-loader.count/loader.counter)*100);
+		loader.div.innerHTML = progress+"%";
+		loader.div.style.width = progress+"%";
 	}
 
 	return Loader;
