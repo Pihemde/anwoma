@@ -9,8 +9,9 @@ var GraphicalObject = function() {
 	 * @param tile object description. Include image to paint, size, flags (buildable, destructible, ...), lifecycle rules.
 	 * @param position absolute position object instance on the game board (first : 0,0 ; second 1,0 ; ...)
 	 */
-	var Class = function(gcontext) {
+	var Class = function(gcontext, size) {
 		this.gcontext = gcontext;
+		this.size = size;
 	};
 	
 	/**
@@ -56,6 +57,6 @@ var GraphicalObject = function() {
 		this.position = description.position;
 		// TODO generic
 	};
-		
+
 	return Class;
 }();

@@ -1,7 +1,7 @@
 /**
  * GovernorMansion 
  */
-var GovernorMansion = function() { // FIXME Comment on fait pour hériter ?
+var GovernorMansion = function() {
 	const SET = SETS['roman'];
 	
 	/**
@@ -10,8 +10,7 @@ var GovernorMansion = function() { // FIXME Comment on fait pour hériter ?
 	 * @param position absolute position object instance on the game board (first : 0,0 ; second 1,0 ; ...)
 	 */
 	var Class = function(gcontext) {
-		this.gcontext = gcontext;
-		this.size = {width: 4, height: 4};
+		$sc(this, [gcontext, {width: 4, height: 4}]);
 	};
 	
 	/**
@@ -43,5 +42,5 @@ var GovernorMansion = function() { // FIXME Comment on fait pour hériter ?
 		this.position = description.position;
 	};
 		
-	return Class;
+	return $extends(Class, GraphicalObject);
 }();

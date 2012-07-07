@@ -10,8 +10,7 @@ var Mountain = function() { // FIXME Comment on fait pour hériter ?
 	 * @param position absolute position object instance on the game board (first : 0,0 ; second 1,0 ; ...)
 	 */
 	var Class = function(gcontext) {
-		this.gcontext = gcontext;
-		this.size = {width: 3, height: 3};
+		$sc(this, [gcontext, {width: 3, height: 3}]);
 	};
 	
 	/**
@@ -39,5 +38,5 @@ var Mountain = function() { // FIXME Comment on fait pour hériter ?
 		this.position = description.position;
 	};
 		
-	return Class;
+	return $extends(Class, GraphicalObject);
 }();

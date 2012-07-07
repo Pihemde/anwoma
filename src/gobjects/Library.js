@@ -9,8 +9,7 @@ var Library = function() { // FIXME Comment on fait pour hériter ?
 	 * @param gcontext the graphical context
 	 */
 	var Class = function(gcontext) {
-		this.gcontext = gcontext;
-		this.size = {width: 2, height: 2};
+		$sc(this, [gcontext, {width: 2, height: 2}]);
 	};
 	
 	/**
@@ -36,5 +35,5 @@ var Library = function() { // FIXME Comment on fait pour hériter ?
 		this.position = description.position;
 	};
 
-	return Class;
+	return $extends(Class, GraphicalObject);
 }();

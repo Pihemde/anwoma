@@ -10,8 +10,7 @@ var Sign = function() { // FIXME Comment on fait pour hériter ?
 	 * @param position absolute position object instance on the game board (first : 0,0 ; second 1,0 ; ...)
 	 */
 	var Class = function(gcontext) {
-		this.gcontext = gcontext;
-		this.size = {width: 1, height: 1};
+		$sc(this, [gcontext, {width: 1, height: 1}]);
 		this.gcontext.addEventListener("rotate", this.onrotate, this);
 	};
 	
@@ -59,5 +58,5 @@ var Sign = function() { // FIXME Comment on fait pour hériter ?
 		this.displayOrientationName = ORIENTATION_NAME[this.orientationCorrectionGrid[event.orientation]];
 	};
 
-	return Class;
+	return $extends(Class, GraphicalObject);
 }();
