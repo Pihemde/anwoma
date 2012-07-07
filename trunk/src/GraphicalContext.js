@@ -79,8 +79,6 @@ var GraphicalContext = function() {
 	}
 
 	Class.prototype.drawImage = function(image, size, position, offset) {
-//		this.drawSquare(position, size, {color:"green"});
-//		return;
 		var width = image.width * this.zoom;
 		var height = image.height * this.zoom;
 

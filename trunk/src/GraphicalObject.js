@@ -45,7 +45,7 @@ var GraphicalObject = function() {
 	 */
 	Class.prototype.serialize = function() {
 		return {
-			position : this.position,
+			position : this.position
 			// TODO generic
 		};
 	};
