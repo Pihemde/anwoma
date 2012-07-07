@@ -1,6 +1,6 @@
 const ROMAN_IMAGES_PATH = '../images/'; 
 const ROMAN_BULDINGS_IMAGES_PATH = ROMAN_IMAGES_PATH + 'buildings/';
-const ROMAN_PERSONAGES_IMAGES_PATH = ROMAN_IMAGES_PATH + 'personnages/';
+const ROMAN_CHARACTERS_IMAGES_PATH = ROMAN_IMAGES_PATH + 'characters/';
 SETS['roman'] = {};
 
 /*
@@ -300,6 +300,28 @@ SETS['roman'].TIMBER_ANIMATION_7 = ROMAN_BULDINGS_IMAGES_PATH + 'timber/animatio
 SETS['roman'].TIMBER_ANIMATION_8 = ROMAN_BULDINGS_IMAGES_PATH + 'timber/animation_8.png';
 SETS['roman'].TIMBER_ANIMATION_9 = ROMAN_BULDINGS_IMAGES_PATH + 'timber/animation_9.png';
 /*
+ * Training center (lion parc)
+ */
+SETS['roman'].TRAINING_CENTER_BASE = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/base.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_0 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_0.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_1 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_1.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_2 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_2.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_3 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_3.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_4 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_4.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_5 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_5.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_6 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_6.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_7 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_7.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_8 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_8.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_9 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_9.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_10 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_10.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_11 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_11.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_12 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_12.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_13 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_13.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_14 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_14.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_15 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_15.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_16 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_16.png';
+SETS['roman'].TRAINING_CENTER_ANIMATION_17 = ROMAN_BULDINGS_IMAGES_PATH + 'training_center/animation_17.png';
+/*
  * Warehouse
  */
 SETS['roman'].WAREHOUSE_BASE = ROMAN_BULDINGS_IMAGES_PATH + 'warehouse/base.png';
@@ -368,7 +390,34 @@ SETS['roman'].WAREHOUSE_FISH_1 = ROMAN_BULDINGS_IMAGES_PATH + 'warehouse/fish_1.
 SETS['roman'].WAREHOUSE_FISH_2 = ROMAN_BULDINGS_IMAGES_PATH + 'warehouse/fish_2.png';
 SETS['roman'].WAREHOUSE_FISH_3 = ROMAN_BULDINGS_IMAGES_PATH + 'warehouse/fish_3.png';
 SETS['roman'].WAREHOUSE_FISH_4 = ROMAN_BULDINGS_IMAGES_PATH + 'warehouse/fish_4.png';
-// --------------------------------------------------------------------------------------------------------------
-
-
-SETS['roman'].MOUNTAIN1 = ROMAN_BULDINGS_IMAGES_PATH + 'terrains/land3a_00083.png';
+/* ********************************************************************************
+ * ******************************      PERSONNAGES   ******************************
+ * ********************************************************************************
+ */
+/*
+ * Lion
+ */
+SETS['roman'].LION_N_0 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/n/lion_n_0.png';
+SETS['roman'].LION_N_1 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/n/lion_n_1.png';
+SETS['roman'].LION_N_2 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/n/lion_n_2.png';
+SETS['roman'].LION_N_3 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/n/lion_n_3.png';
+SETS['roman'].LION_N_4 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/n/lion_n_4.png';
+SETS['roman'].LION_N_5 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/n/lion_n_5.png';
+SETS['roman'].LION_N_6 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/n/lion_n_6.png';
+SETS['roman'].LION_N_7 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/n/lion_n_7.png';
+SETS['roman'].LION_N_8 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/n/lion_n_8.png';
+SETS['roman'].LION_N_9 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/n/lion_n_9.png';
+SETS['roman'].LION_N_10 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/n/lion_n_10.png';
+SETS['roman'].LION_N_11 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/n/lion_n_11.png';
+SETS['roman'].LION_E_0 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/e/lion_e_0.png';
+SETS['roman'].LION_E_1 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/e/lion_e_1.png';
+SETS['roman'].LION_E_2 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/e/lion_e_2.png';
+SETS['roman'].LION_E_3 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/e/lion_e_3.png';
+SETS['roman'].LION_E_4 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/e/lion_e_4.png';
+SETS['roman'].LION_E_5 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/e/lion_e_5.png';
+SETS['roman'].LION_E_6 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/e/lion_e_6.png';
+SETS['roman'].LION_E_7 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/e/lion_e_7.png';
+SETS['roman'].LION_E_8 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/e/lion_e_8.png';
+SETS['roman'].LION_E_9 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/e/lion_e_9.png';
+SETS['roman'].LION_E_10 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/e/lion_e_10.png';
+SETS['roman'].LION_E_11 = ROMAN_CHARACTERS_IMAGES_PATH + 'lion/e/lion_e_11.png';
