@@ -15,6 +15,7 @@ var Board = function() {
 		this.grid = [];
 		this.orientation = orientation;
 		this.cursor = new Cursor(this.gcontext);
+		this.selection = new Selection(this.gcontext, this.grid);
 		this.gcontext.addEventListener("move", function(e) {
 			var pos = e.position;
 			console.log(pos.i, pos.j);
