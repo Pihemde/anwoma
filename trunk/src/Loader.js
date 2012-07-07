@@ -7,7 +7,7 @@ var Loader = function(){
 		this.div.setAttribute("class", "progression");
 		div.appendChild(this.div);
 		body.appendChild(div);
-		this.counter = 1000;
+		this.counter = 100;
 		this.count = this.counter;
 		
 		//TODO: just remove (used for test)
@@ -15,6 +15,9 @@ var Loader = function(){
 		var interval = setInterval(function() {
 			instance.count--;
 			progress(instance);
+			if(instance.count == 0) {
+				main();
+			}
 			if(instance.count == 0) clearInterval(interval);
 		}, 1);
 	}
@@ -48,6 +51,11 @@ var Loader = function(){
 		var progress = Math.round((1-loader.count/loader.counter)*100);
 		loader.div.innerHTML = progress+"%";
 		loader.div.style.width = progress+"%";
+		if(progress==100) {
+			setTimeout(function() {
+				loader.div.parentNode.className = "progressbar hide";
+			}, 500);
+		}
 	}
 
 	return Loader;
