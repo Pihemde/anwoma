@@ -7,9 +7,12 @@ var Loader = function(){
 		this.div.setAttribute("class", "progression");
 		div.appendChild(this.div);
 		body.appendChild(div);
-		this.counter = 100;
+		this.counter = 0;
+		this.count = 0;
+
+/*
+		this.counter = 1000;
 		this.count = this.counter;
-		
 		//TODO: just remove (used for test)
 		var instance = this;
 		var interval = setInterval(function() {
@@ -20,6 +23,7 @@ var Loader = function(){
 			}
 			if(instance.count == 0) clearInterval(interval);
 		}, 1);
+//*/
 	}
 
 	/*
