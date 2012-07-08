@@ -1,46 +1,52 @@
 /**
  * Senat 
  */
-var Senat = function() { // FIXME Comment on fait pour hériter ?
+var Senat = function() {
 	const SET = SETS['roman'];
 	
 	/**
 	 * Constructor
 	 * @param gcontext the graphical context
-	 * @param position absolute position object instance on the game board (first : 0,0 ; second 1,0 ; ...)
 	 */
-	var Class = function(gcontext) {
+	var Senat = function(gcontext) {
 		$sc(this, [gcontext, {width: 5, height: 5}]);
 	};
 	
 	/**
-	 * Draw object on canvas
-	 */
-	Class.prototype.paint = function(p) {
-		if(this.position.i + 2 == p.i && this.position.j + 2 == p.j) {
-			
-			/*
-			 * Draw base images
-			 */
-			this.gcontext.drawImage(SET.SENAT_BASE, this.size, this.position);
-		}
-	};
-	
-	/*
 	 * Retrieve a JSON string to save object state
 	 */
-	Class.prototype.serialize = function() {
+	Senat.prototype.serialize = function() {
 		return {
 			position: this.position
 		};
 	};
 	
-	/*
+	/**
 	 * Set attributes from json object
 	 */
-	Class.prototype.unserialize = function(description) {
+	Senat.prototype.unserialize = function(description) {
 		this.position = description.position;
 	};
+
+	/**
+	 * Retrieve painting position
+	 */
+	Senat.prototype.load = function() {
+		return {
+			i: this.position.i + 2,
+			j: this.position.j + 2
+		};
+	};
+	
+	/**
+	 * Draw object on canvas
+	 */
+	Senat.prototype.paint = function() {
+		/*
+		 * Draw base images
+		 */
+		this.gcontext.drawImage(SET.SENAT_BASE, this.size, this.position);
+	};
 		
-	return $extends(Class, GraphicalObject);
+	return $extends(Senat, GraphicalObject);
 }();

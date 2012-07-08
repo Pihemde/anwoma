@@ -11,7 +11,7 @@ var Board = function() {
 		this.map = map;
 		this.width = width;
 		this.height = height;
-		this.objects = [];
+		this.gObjects = [];
 		this.grid = [];
 		this.orientation = orientation;
 		this.cursor = new Cursor(this.gcontext);
@@ -26,13 +26,6 @@ var Board = function() {
 	 * Load all elements needs to paint the board
 	 */
 	Class.prototype.load = function() {
-		this.loadGObjects();		
-	}
-	
-	/**
-	 * Load objects
-	 */
-	Class.prototype.loadGObjects = function() {
 		for(var i = 0 ; i < MAP.length ; i++) {
 			var description = MAP[i];
 			if(description.id == undefined) {
@@ -46,26 +39,48 @@ var Board = function() {
 	 * Load an object
 	 */
 	Class.prototype.loadGObject = function(description) {
-		var object;
+		var gObject;
 		try {
 			var Clazz = eval(description.clazz);
-			object = new Clazz(this.gcontext);
+			gObject = new Clazz(this.gcontext);
 		} catch(e) {
 			throw "Unknow object class.";
 		}
-		this.objects.push(object);
-		object.unserialize(description);
+		this.gObjects.push(gObject);
+		gObject.unserialize(description);
 		var p = description.position;
-		for(var i = p.i ; i < p.i + object.size.width ; i++) {
-			for(var j = p.j ; j < p.j + object.size.height ; j++) {
+		for(var i = p.i ; i < p.i + gObject.size.width ; i++) {
+			for(var j = p.j ; j < p.j + gObject.size.height ; j++) {
 				if(this.grid[j] == undefined) {
 					this.grid[j] = [];
 				}
 				if(!!this.grid[j][i]) {
-					object.parent = this.grid[j][i]; 
+					gObject.parent.push(this.grid[j][i]); 
+					this.grid[j][i] = new Dummy({i:i, j:j});
 				}
-				this.grid[j][i] = object;
 			}
+		}
+		p = gObject.load();
+		this.grid[p.j][p.i] = gObject;
+	}
+	
+	/**
+	 * Init
+	 */
+	Class.prototype.init = function() {
+		for(var n = 0 ; n < this.gObjects.length ; n++) {
+			this.initGObject(this.gObjects[n]);
+		}
+	}
+	
+	/**
+	 * Init an object
+	 */
+	Class.prototype.initGObject = function(gObject) {
+		if(gObject instanceof Road) {
+			gObject.init(this.grid);
+		} else if(!!gObject.init) {
+			gObject.init();
 		}
 	}
 	
@@ -73,7 +88,6 @@ var Board = function() {
 	 * Paint the board
 	 */
 	Class.prototype.paint = function() {
-		this.init();
 		this.clear();
 		this.paintGObjects();
 		this.cursor.paint();
@@ -88,34 +102,6 @@ var Board = function() {
 		}
 		setTimeout(repaint, REPAINT_DELAI);
 	};
-	
-	/**
-	 * Init
-	 */
-	Class.prototype.init = function() {
-		this.initGObjects();		
-	}
-	
-	/**
-	 * Init objects
-	 */
-	Class.prototype.initGObjects = function() {
-		for(var i = 0 ; i < this.objects.length ; i++) {
-			this.initGObject(this.objects[i]);
-		}
-	}
-	
-	/**
-	 * Init an object
-	 */
-	Class.prototype.initGObject = function(object) {
-		if(object instanceof Road) {
-			object.init(this.grid);
-		}
-		if(object instanceof Sign) {
-			object.init();
-		}
-	}
 	
 	/**
 	 * Clear the board
@@ -183,9 +169,9 @@ var Board = function() {
 	/**
 	 * Paint an object on the board.
 	 */
-	Class.prototype.paintGObject = function(objects, i, j) {
-		if(!!objects[j] && !!objects[j][i] && this.gcontext.isVisible(objects[j][i])) {
-			objects[j][i].paint({i:i, j:j});
+	Class.prototype.paintGObject = function(gObjects, i, j) {
+		if(!!gObjects[j] && !!gObjects[j][i] && this.gcontext.isVisible(gObjects[j][i])) {
+			gObjects[j][i].paint({i:i, j:j});
 		}
 	}
 	
@@ -194,51 +180,6 @@ var Board = function() {
 		this.orientation = orientation;
 		this.gcontext.changeOrientation(orientation);
 	};
-
-	/**
-	 * Paint a grid corresponding to square on board
-	 * @deprecated
-	 */
-	function paintGrid(board) {
-		var c = undefined;
-		board.gcontext.context.lineWidth = 0.5;
-		board.gcontext.context.strokeStyle = "#ff0000";
-		for ( var i = 0; i <= board.width; i++) {
-			board.gcontext.context.beginPath();
-			c = board.position2Coord([i, 0]);
-			board.gcontext.context.moveTo(c[0], c[1]);
-			c = board.gcontext.position2Coord([i, board.height]);
-			board.gcontext.context.lineTo(c[0], c[1]);
-			board.gcontext.context.stroke();
-		}
-		for ( var i = 0; i <= board.height; i++) {
-			board.gcontext.context.beginPath();
-			c = board.gcontext.position2Coord([0, i]);
-			board.gcontext.context.moveTo(c[0], c[1]);
-			c = board.gcontext.position2Coord([board.width, i]);
-			board.gcontext.context.lineTo(c[0], c[1]);
-			board.gcontext.context.stroke();
-		}
-	}
-
-	/**
-	 * Paint selected object
-	 * @deprecated
-	 */
-	function paintSelectedTile(board) {
-		var c = board.coord2Position([board.mousePosition.x, board.mousePosition.y]);
-		var x = c[0];
-		var y = c[1];
-		
-		if(!board.selectedTile || x < 0 || x > MAP_SIZE.width - 1 || y < 0 || y > MAP_SIZE.height - 1) {
-			return;
-		}
-
-		board.gcontext.context.globalAlpha = 0.5; // Transparence 
-		c = board.gcontext.position2Coord([x, y]);
-		paintTileOnGrid(board.gcontext.context, board.selectedTile, c[0], c[1]); 
-		board.gcontext.context.globalAlpha = 1; // On la reset pour les copains 
-	}
 
 	return Class;
 }();

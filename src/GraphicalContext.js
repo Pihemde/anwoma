@@ -9,7 +9,7 @@ var GraphicalContext = function() {
 	 * Constructor
 	 * @param canvas canvas
 	 */
-	var Class = function(canvas, width, height, orientation) {
+	var GraphicalContext = function(canvas, width, height, orientation) {
 		this.canvas = canvas;
 		this.context = canvas.getContext("2d");
 		this.preRenderCanvas = document.createElement("canvas");
@@ -35,12 +35,12 @@ var GraphicalContext = function() {
 		canvas.addEventListener("mousedown", function(event) {gcontext.onmousedown(event);}, false);
 	};
 	
-	Class.prototype.render = function() {
+	GraphicalContext.prototype.render = function() {
 		//this.context.clearRect(0, 0, this.preRenderCanvas.width, this.preRenderCanvas.height);
 		//this.context.drawImage(this.preRenderCanvas, 0, 0);
 	}
 	
-	Class.prototype.changeOrientation = function(orientation) {
+	GraphicalContext.prototype.changeOrientation = function(orientation) {
 		this.orientation = orientation;
 		this.angle = orientation*Math.PI/2 + Math.PI/4;
 		this.fireEvent("rotate", {orientation: orientation});
@@ -49,11 +49,11 @@ var GraphicalContext = function() {
 	/**
 	 * Clear canvas
 	 */
-	Class.prototype.clear = function() {
+	GraphicalContext.prototype.clear = function() {
 		this.preRenderContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	};
 	
-	Class.prototype.drawSquare = function(position, size, data) {
+	GraphicalContext.prototype.drawSquare = function(position, size, data) {
 		var x = position.i;
 		var y = position.j;
 		this.preRenderContext.beginPath();
@@ -78,7 +78,7 @@ var GraphicalContext = function() {
 		}
 	}
 
-	Class.prototype.drawImage = function(image, size, position, offset) {
+	GraphicalContext.prototype.drawImage = function(image, size, position, offset) {
 		var width = image.width * this.zoom;
 		var height = image.height * this.zoom;
 
@@ -102,7 +102,7 @@ var GraphicalContext = function() {
 		this.preRenderContext.drawImage(image, x, y, width, height);
 	};
 
-	Class.prototype.isVisible = function(gobject) {
+	GraphicalContext.prototype.isVisible = function(gobject) {
 		var position = gobject.position;
 		var size = gobject.size;
 		var c = this.position2Coord({i: position.i, j: position.j});
@@ -116,7 +116,7 @@ var GraphicalContext = function() {
 		return false;
 	}
 
-	Class.prototype.addEventListener = function(eventType, callback, object) {
+	GraphicalContext.prototype.addEventListener = function(eventType, callback, object) {
 		var listeners = this.listeners[eventType];
 		if(!listeners) {
 			listeners = [];
@@ -125,7 +125,7 @@ var GraphicalContext = function() {
 		listeners.push({callback: callback, object: object}); 
 	}
 	
-	Class.prototype.fireEvent = function(eventType, event) {
+	GraphicalContext.prototype.fireEvent = function(eventType, event) {
 		var listeners = this.listeners[eventType];
 		if(!!listeners) {
 			for(var i=0; i<listeners.length; i++) {
@@ -139,7 +139,7 @@ var GraphicalContext = function() {
 		}
 	}
 
-	Class.prototype.position2Coord = function(coord) {
+	GraphicalContext.prototype.position2Coord = function(coord) {
 		var x = coord.i;
 		var y = coord.j;
 
@@ -169,7 +169,7 @@ var GraphicalContext = function() {
 		return {x: x, y: y};
 	};
 
-	Class.prototype.coord2Position = function(coord) {
+	GraphicalContext.prototype.coord2Position = function(coord) {
 		var x = coord.x
 		var y = coord.y;
 		// Déplacement de la carte pour la centrer correctement
@@ -206,7 +206,7 @@ var GraphicalContext = function() {
 		};
 	};
 
-	Class.prototype.onmousemove = function(event) {
+	GraphicalContext.prototype.onmousemove = function(event) {
 		var evt = event || window.event;
 		var x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
 		var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
@@ -225,7 +225,7 @@ var GraphicalContext = function() {
 		}
 	};
 
-	Class.prototype.onclick = function(event) {
+	GraphicalContext.prototype.onclick = function(event) {
 		var x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
 		var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
 		var c = this.coord2Position({x: x, y: y});
@@ -233,7 +233,7 @@ var GraphicalContext = function() {
 		this.fireEvent("click", {position: c});
 	};
 	
-	Class.prototype.onmousewheel = function(event) {
+	GraphicalContext.prototype.onmousewheel = function(event) {
 		if(event.shiftKey) {
 			this.onzoom(event.wheelDelta>0);
 			event.preventDefault();
@@ -241,7 +241,7 @@ var GraphicalContext = function() {
 		}
 	};
 	
-	Class.prototype.onmousewheelff = function(event) {
+	GraphicalContext.prototype.onmousewheelff = function(event) {
 		if(event.altKey) {
 			this.onzoom(event.wheelDelta <= 0 || event.detail > 0 );
 			event.preventDefault();
@@ -249,7 +249,7 @@ var GraphicalContext = function() {
 		}
 	};
 	
-	Class.prototype.onzoom = function(isZoomIn) {
+	GraphicalContext.prototype.onzoom = function(isZoomIn) {
 			var step = 1.1;
 			var tmp = this.zoom;
 			if (isZoomIn) {
@@ -268,10 +268,10 @@ var GraphicalContext = function() {
 			}
 	};
 
-	Class.prototype.onmousedown = function(event) {
+	GraphicalContext.prototype.onmousedown = function(event) {
 		var evt = event || window.event;
 		if(event.button==1) { // Middle click
-			this.moveMap = {x: evt.clientX, y: evt.clientY};
+			this.moveMap = {x: evt.clientX, y: evt.clientY}; // FIXME Type mismatch: cannot convert from ___anonymous9364_9395 to ___anonymous7961_7992
 		}
 		var x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
 		var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
@@ -279,7 +279,7 @@ var GraphicalContext = function() {
 		this.fireEvent("mousedown", {position: c});
 	};
 
-	Class.prototype.onmouseup = function(event) {
+	GraphicalContext.prototype.onmouseup = function(event) {
 		this.moveMap = undefined;
 		var x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
 		var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
@@ -287,5 +287,5 @@ var GraphicalContext = function() {
 		this.fireEvent("mouseup", {position: c});
 	};
 		
-	return Class;
+	return GraphicalContext;
 }();

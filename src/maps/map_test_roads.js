@@ -9,4 +9,3 @@ Map.road(13, 23, 16, 1);
 Map.road(1, 23, 23, 0);
 
 Map.simple('TrainingCenter', 2, 2);
-Map.simple('Lion', 10, 1);
