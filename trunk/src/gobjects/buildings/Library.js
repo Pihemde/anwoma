@@ -1,39 +1,49 @@
 /**
  * Library 
  */
-var Library = function() { // FIXME Comment on fait pour hériter ?
+var Library = function() {
 	const SET = SETS['roman'];
 
 	/**
 	 * Constructor
 	 * @param gcontext the graphical context
 	 */
-	var Class = function(gcontext) {
+	var Library = function(gcontext) {
 		$sc(this, [gcontext, {width: 2, height: 2}]);
 	};
 	
 	/**
-	 * Draw object on canvas
-	 */
-	Class.prototype.paint = function() {
-		this.gcontext.drawImage(SET.LIBRARY, this.size, this.position);
-	};
-	
-	/*
 	 * Retrieve a JSON string to save object state
 	 */
-	Class.prototype.serialize = function() {
+	Library.prototype.serialize = function() {
 		return {
 			position: this.position
 		};
 	};
 	
-	/*
+	/**
 	 * Set attributes from json object
 	 */
-	Class.prototype.unserialize = function(description) {
+	Library.prototype.unserialize = function(description) {
 		this.position = description.position;
 	};
 
-	return $extends(Class, GraphicalObject);
+	/**
+	 * Retrieve painting position
+	 */
+	Library.prototype.load = function() {
+		return {
+			i: this.position.i + 1,
+			j: this.position.j + 1
+		};
+	};
+	
+	/**
+	 * Draw object on canvas
+	 */
+	Library.prototype.paint = function() {
+		this.gcontext.drawImage(SET.LIBRARY, this.size, this.position);
+	};
+
+	return $extends(Library, GraphicalObject);
 }();

@@ -1,7 +1,7 @@
 /**
  * Warehouse
  */
-var Warehouse = function() { // FIXME Comment on fait pour hériter ?
+var Warehouse = function() {
 	const SET = SETS['roman'];
 	/*
 	 * offsets
@@ -20,37 +20,58 @@ var Warehouse = function() { // FIXME Comment on fait pour hériter ?
 	/**
 	 * Constructor
 	 * 
-	 * @param gcontext
-	 *            the graphical context
-	 * @param position
-	 *            absolute position object instance on the game board (first :
-	 *            0,0 ; second 1,0 ; ...)
+	 * @param gcontext the graphical context
 	 */
-	var Class = function(gcontext) {
+	var Warehouse = function(gcontext) {
 		$sc(this, [gcontext, {width: 3, height: 3}]);
+	};
+
+	/**
+	 * Retrieve a JSON string to save object state
+	 */
+	Warehouse.prototype.serialize = function() {
+		return {
+			position : this.position,
+		};
+	};
+
+	/**
+	 * Set attributes from json object
+	 */
+	Warehouse.prototype.unserialize = function(description) {
+		this.position = description.position;
+		this.goods = description.goods;
+	};
+
+	/**
+	 * Retrieve painting position
+	 */
+	Warehouse.prototype.load = function() {
+		return {
+			i: this.position.i + 1,
+			j: this.position.j + 1
+		};
 	};
 
 	/**
 	 * Draw object on canvas
 	 */
-	Class.prototype.paint = function(p) {
-		if(this.position.i + 1 == p.i && this.position.j + 1 == p.j) {
-			/*
-			 * Draw base images
-			 */
-			this.gcontext.drawImage(SET.WAREHOUSE_BASE, this.size, this.position, {x : 0,y : -60}); // 0,0
-			this.gcontext.drawImage(SET.WAREHOUSE_ROOF, this.size, this.position, {x : 0,y : -70});
-	
-			/*
-			 * Draw goods * stock
-			 */
-			for ( var i = 0; i < 8; i++) { // Only 8 squares
-				this.paintSquare(this.goods[i], OFFSETS[i]);
-			}
+	Warehouse.prototype.paint = function() {
+		/*
+		 * Draw base images
+		 */
+		this.gcontext.drawImage(SET.WAREHOUSE_BASE, this.size, this.position, {x : 0,y : -60}); // 0,0
+		this.gcontext.drawImage(SET.WAREHOUSE_ROOF, this.size, this.position, {x : 0,y : -70});
+
+		/*
+		 * Draw goods * stock
+		 */
+		for ( var i = 0; i < 8; i++) { // Only 8 squares
+			this.paintSquare(this.goods[i], OFFSETS[i]);
 		}
 	};
 
-	Class.prototype.paintSquare = function(good, offset) {
+	Warehouse.prototype.paintSquare = function(good, offset) {
 		var image = SET.WAREHOUSE_BASE;
 		if (!!good && good.quantity > 0) {
 			image = SET['WAREHOUSE_' + good.type + '_' + good.quantity];
@@ -58,22 +79,5 @@ var Warehouse = function() { // FIXME Comment on fait pour hériter ?
 		this.gcontext.drawImage(image, this.size, this.position, offset);
 	}
 
-	/*
-	 * Retrieve a JSON string to save object state
-	 */
-	Class.prototype.serialize = function() {
-		return {
-			position : this.position,
-		};
-	};
-
-	/*
-	 * Set attributes from json object
-	 */
-	Class.prototype.unserialize = function(description) {
-		this.position = description.position;
-		this.goods = description.goods;
-	};
-
-	return $extends(Class, GraphicalObject);
+	return $extends(Warehouse, GraphicalObject);
 }();

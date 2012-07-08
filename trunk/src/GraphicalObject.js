@@ -12,6 +12,9 @@ var GraphicalObject = function() {
 	var Class = function(gcontext, size) {
 		this.gcontext = gcontext;
 		this.size = size;
+		this.buildable = false;
+		this.destructible = false;
+		this.parent = new Array();
 	};
 	
 	/**
@@ -40,22 +43,20 @@ var GraphicalObject = function() {
 		}
 	};
 	
-	/*
+	/**
 	 * Retrieve a JSON string to save object state
 	 */
 	Class.prototype.serialize = function() {
 		return {
 			position : this.position
-			// TODO generic
 		};
 	};
 
-	/*
+	/**
 	 * Set attributes from json object
 	 */
 	Class.prototype.unserialize = function(description) {
 		this.position = description.position;
-		// TODO generic
 	};
 
 	return Class;
