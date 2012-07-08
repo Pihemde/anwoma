@@ -30,16 +30,14 @@ var Sign = function() {
 		this.position = description.position;
 		this.orientation = setData(description.orientation, ORIENTATION.N);
 		this.color = setData(description.color, 'BLUE').toUpperCase();
-		
-		// FIXME move to init() when the method will be call only one time
-		this.orientationCorrectionGrid = ORIENTATION_CORRECTION[this.orientation]; 
-		this.displayOrientationName = ORIENTATION_NAME[this.orientationCorrectionGrid[ORIENTATION.N]];
 	};
 
 	/**
 	 * Retrieve painting position
 	 */
 	Sign.prototype.load = function() {
+		this.orientationCorrectionGrid = ORIENTATION_CORRECTION[this.orientation]; 
+		this.displayOrientationName = ORIENTATION_NAME[this.orientationCorrectionGrid[ORIENTATION.N]];
 		return this.position;
 	};
 	

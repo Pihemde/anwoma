@@ -11,7 +11,7 @@ var Road = function() {
 	var Road = function(gcontext) {
 		$sc(this, [gcontext, {width: 1, height: 1}]);
 		this.clazz = 'Road';
-		this.orientation = ORIENTATION.N; // FIXME fire a 'rotate' event after loading 
+		this.orientation = ORIENTATION.N; 
 		this.gcontext.addEventListener("rotate", this.onrotate, this);
 	};
 	
@@ -38,17 +38,17 @@ var Road = function() {
 		return this.position;
 	};
 	
-	Road.prototype.init = function(grid) {
-		this.grid = grid;
+	Road.prototype.activate = function() {
+		if(this.type == undefined) {
+			this.type = this.computeType();
+		}
 	}
 	
 	/**
 	 * Draw object on canvas
 	 */
 	Road.prototype.paint = function() {
-		var type = this.computeType();
-		var name = 'ROAD_SOIL_' + type;
-		this.gcontext.drawImage(SET[name], this.size, this.position);
+		this.gcontext.drawImage(SET['ROAD_SOIL_' + this.type], this.size, this.position);
 	};
 	
 	/*
@@ -58,30 +58,27 @@ var Road = function() {
 		var p = this.position;
 		var type = '';
 		var o = this.orientation;
-		if(this.isRoad(p.i + Math.round(Math.cos((0-o)*Math.PI/2)), p.j + Math.round(Math.sin((0-o)*Math.PI/2)))) {
+		if(finder.isRoad(p.i + Math.round(Math.cos((0-o)*Math.PI/2)), p.j + Math.round(Math.sin((0-o)*Math.PI/2)))) {
 			type += 'E';
 		}
-		if(this.isRoad(p.i + Math.round(Math.cos((3-o)*Math.PI/2)), p.j + Math.round(Math.sin((3-o)*Math.PI/2)))) {
+		if(finder.isRoad(p.i + Math.round(Math.cos((3-o)*Math.PI/2)), p.j + Math.round(Math.sin((3-o)*Math.PI/2)))) {
 			type += 'N';
 		}
-		if(this.isRoad(p.i + Math.round(Math.cos((1-o)*Math.PI/2)), p.j + Math.round(Math.sin((1-o)*Math.PI/2)))) {
+		if(finder.isRoad(p.i + Math.round(Math.cos((1-o)*Math.PI/2)), p.j + Math.round(Math.sin((1-o)*Math.PI/2)))) {
 			type += 'S';
 		}
-		if(this.isRoad(p.i + Math.round(Math.cos((2-o)*Math.PI/2)), p.j + Math.round(Math.sin((2-o)*Math.PI/2)))) {
+		if(finder.isRoad(p.i + Math.round(Math.cos((2-o)*Math.PI/2)), p.j + Math.round(Math.sin((2-o)*Math.PI/2)))) {
 			type += 'W';
 		}
 		if(type.length == 0) {
-			type += 'W';
+			type = 'N';
 		}
 		return type;
 	};
 	
-	Road.prototype.isRoad = function(i, j) {
-		return i >= 0 && j >= 0 && i < MAP_SIZE.width && j < MAP_SIZE.height && !!this.grid[j][i].clazz && this.grid[j][i].clazz == 'Road';
-	}
-	
 	Road.prototype.onrotate = function(event) {
 		this.orientation = event.orientation;
+		this.type = this.computeType();
 	};
 		
 	return $extends(Road, GraphicalObject);

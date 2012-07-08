@@ -32,17 +32,24 @@ var Lion = function() {
 	/**
 	 * Retrieve painting position
 	 */
-	Engineer.prototype.load = function() {
-		this.animator = new Animator(this.gcontext, SET, this.size, this.position);
-		this.animator.initIds('LION_E_', 11);
+	Lion.prototype.load = function() {
+		this.animator = new Animator(this.gcontext, SET, this.size, this.position, {x:-20, y:-20}, {x:3, y:2});
+		this.animator.initIds('LION_E_', 12);
 		return this.position;
 	};
+	
+	Lion.prototype.activate = function() {
+		return this.position;
+	}
 	
 	/**
 	 * Draw object on canvas
 	 */
 	Lion.prototype.paint = function() {
-		this.animator.paint();
+		this.animator.play();
+		if(this.animator.id == 0) {
+			this.position.i++;
+		}
 	};
 	
 	return $extends(Lion, GraphicalObject);
