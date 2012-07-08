@@ -9,56 +9,64 @@ var Finder = function() {
 		this.grid = grid;
 	};
 
-	function scanForRoad(grid, position, lenght, direction) {
-		// FIXME rajouter les contrôles
-		switch (direction) {
-		case DIRECTION.HORIZONTAL:
-			for ( var i = position.i; i <= position.i + lenght; i++) {
-				if (!!grid[position.j][i][OBJECT_LAYER.BUILDING] && grid[position.j][i][OBJECT_LAYER.BUILDING] instanceof Road) {
-					return grid[position.j][i][OBJECT_LAYER.BUILDING];
-				}
-			}
-			break;
-		case DIRECTION.VERTICAL:
-			for ( var j = position.j; j <= position.j + lenght; j++) {
-				if (!!grid[position.j][position.i][OBJECT_LAYER.BUILDING] && grid[j][position.i][OBJECT_LAYER.BUILDING] instanceof Road) {
-					return grid[j][position.i];
-				}
-			}
-			break;
-		}
-		return undefined;
-	}
-
 	Finder.prototype.findCommunicationRoad = function(building)
 	{
-		var road = scanForRoad(this.grid, {
+		var road = this.scanForRoad({
 			i : building.position.i,
 			j : building.position.j - 1
 		}, building.size.width, DIRECTION.HORIZONTAL);
 		if(!!road) {
 			return road;
 		}
-		road = scanForRoad(this.grid, {
+		road = this.scanForRoad({
 			i : building.position.i,
 			j : building.position.j + building.height
 		}, building.size.width, DIRECTION.HORIZONTAL);
 		if(!!road) {
 			return road;
 		}
-		road = scanForRoad(this.grid, {
+		road = this.scanForRoad({
 			i : building.position.i - 1,
 			j : building.position.j
 		}, building.size.height, DIRECTION.VERTICAL);
 		if(!!road) {
 			return road;
 		}
-		road = scanForRoad(this.grid, {
+		road = this.scanForRoad({
 			i : building.position.i + building.width,
 			j : building.position.j
 		}, building.size.height, DIRECTION.VERTICAL);
 		return road;
 	};
+
+	Finder.prototype.scanForRoad = function(position, lenght, direction) {
+		switch (direction) {
+		case DIRECTION.HORIZONTAL:
+			var j = position.j;
+			for ( var i = position.i; i <= position.i + lenght; i++) {
+				if (!!this.grid[j][i] && this.isRoad(i, j)) {
+					return this.grid[j][i];
+				}
+			}
+			break;
+		case DIRECTION.VERTICAL:
+			var i = position.i;
+			for ( var j = position.j; j <= position.j + lenght; j++) {
+				if (!!this.grid[j][i] && this.isRoad(i, j)) {
+					return this.grid[j][i];
+				}
+			}
+			break;
+		}
+		return undefined;
+	}
+	
+	Finder.prototype.isRoad = function(i, j) {
+		result = i >= 0 && j >= 0;
+		result &= i < MAP_SIZE.width && j < MAP_SIZE.height;
+		result &= this.grid[j][i] instanceof Road;
+		return result;
+	}
 
 	return Finder;
 }();

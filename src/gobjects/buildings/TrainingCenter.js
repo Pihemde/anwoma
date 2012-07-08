@@ -28,6 +28,18 @@ var TrainingCenter = function() {
 	TrainingCenter.prototype.unserialize = function(description) {
 		this.position = description.position;
 	};
+	
+	TrainingCenter.prototype.activate = function() {
+		if(this.lion == undefined) { 
+			var road = finder.findCommunicationRoad(this);
+			if(!!road) {
+				this.lion = new Lion(this.gcontext);
+				this.lion.unserialize({position: {i:road.position.i, j:road.position.j}});
+				this.lion.load();
+				board.addCharacter(this.lion);
+			}
+		}
+	}
 
 	/**
 	 * Retrieve painting position
@@ -35,11 +47,6 @@ var TrainingCenter = function() {
 	TrainingCenter.prototype.load = function() {
 		this.animator = new Animator(this.gcontext, SET, this.size, this.position, {x:25, y:-12});
 		this.animator.initIds('TRAINING_CENTER_ANIMATION_', 17);
-//		var road = finder.findCommunicationRoad(this);
-//		if(!!road) {
-//			this.lion = new Lion(this.gcontext);
-//			this.lion.unserialize({position: {i:road.position.i, j:road.position.j}});
-//		}
 		return {
 			i: this.position.i + 1,
 			j: this.position.j + 1
