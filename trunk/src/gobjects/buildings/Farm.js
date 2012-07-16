@@ -28,7 +28,7 @@ var Farm = function() {
 	 */
 	Farm.prototype.serialize = function() {
 		return {
-			position : this.position,
+			position : this.position
 		};
 	};
 
@@ -57,14 +57,14 @@ var Farm = function() {
 		/*
 		 * Draw base images
 		 */
-		this.gcontext.drawImage(SET.FARM_BASE, this.size, this.position, {x:0, y:-30}); // 0,0
+		this.gcontext.drawImage(SET.FARM.BASE, this.size, this.position, {x:0, y:-30}); // 0,0
 
 		/*
 		 * Draw goods * stock
 		 */
-		var image = SET['FARM_' + this.good.type + '_0'];
+		var image = SET.FARM[this.good.type][0];
 		if (!!this.good && this.good.quantity > 0) {
-			image = SET['FARM_' + this.good.type + '_' + this.good.quantity];
+			image = SET.FARM[this.good.type][this.good.quantity];
 		}
 		for ( var i = 0; i < 5; i++) { // Only 5 squares
 			this.gcontext.drawImage(image, this.size, this.position, OFFSETS[i]);

@@ -33,8 +33,7 @@ var Prefecture = function() {
 	 * Retrieve painting position
 	 */
 	Prefecture.prototype.load = function() {
-		this.animator = new Animator(this.gcontext, SET, this.size, this.position, {x:5, y:-27});
-		this.animator.initIds('PREFECTURE_ANIMATION_', 9);
+		this.animator = new Animator(this.gcontext, SET.PREFECTURE.ANIMATION, this.size, this.position, {x:5, y:-27});
 		return this.position;
 	};
 	
@@ -42,7 +41,7 @@ var Prefecture = function() {
 	 * Draw object on canvas
 	 */
 	Prefecture.prototype.paint = function() {
-		this.gcontext.drawImage(SET.PREFECTURE_BASE, this.size, this.position, {x:0, y:0});
+		this.gcontext.drawImage(SET.PREFECTURE.BASE, this.size, this.position, {x:0, y:0});
 		this.animator.play();
 	};
 	
