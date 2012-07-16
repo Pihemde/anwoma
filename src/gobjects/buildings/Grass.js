@@ -40,7 +40,7 @@ var Grass = function() {
 	 * Draw object on canvas
 	 */
 	Grass.prototype.paint = function() {
-		this.gcontext.drawImage(SET['GRASS_' + this.number], this.size, this.position);
+		this.gcontext.drawImage(SET['GRASS'][this.number], this.size, this.position);
 	};
 		
 	return $extends(Grass, GraphicalObject);

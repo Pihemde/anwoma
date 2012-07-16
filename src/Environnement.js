@@ -13,8 +13,8 @@ var Environnement = function() {
 	 * Load images in the set 
 	 */
 	Environnement.prototype.loadSet = function (callback) {
-		this.callback = callback;
-		new Loader().loadImage(SETS[this.name], callback);
+		new Loader().loadImage(SETS[this.name]);
+		callback();
 	}
 
 	return Environnement;
