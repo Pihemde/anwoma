@@ -79,6 +79,7 @@ var GraphicalContext = function() {
 	}
 
 	GraphicalContext.prototype.drawImage = function(image, size, position, offset) {
+		if(!(image instanceof Image)) return;
 		var width = image.width * this.zoom;
 		var height = image.height * this.zoom;
 

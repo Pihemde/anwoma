@@ -31,9 +31,7 @@ var Loader = function(){
 	 */
 	Loader.prototype.loadImage = function(set, callback) {
 		for(var i in set) {
-			if(set[i] instanceof Array) {
-				loadImage(set[i], callback);
-			} else {
+			if(typeof set[i] == "string") {
 				this.counter++;
 				this.count++;
 				var loader = this;
@@ -42,11 +40,14 @@ var Loader = function(){
 				set[i].onload = function() {
 					loader.count--;
 					progress(loader);
-					if(loader.count == 0) {
+					if(loader.count == 0 && !!callback) {
 						callback();
 					}
 				};
 				set[i].src = src;
+			} else {
+//				console.log(set[i]);
+				this.loadImage(set[i], callback);
 			}
 		}
 	}

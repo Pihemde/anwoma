@@ -42,7 +42,7 @@ var Mountain = function() {
 	 * Draw object on canvas
 	 */
 	Mountain.prototype.paint = function() {
-		this.gcontext.drawImage(SET.MOUNTAIN_0, this.size, this.position);
+		this.gcontext.drawImage(SET.MOUNTAIN[0], this.size, this.position);
 	};
 		
 	return $extends(Mountain, GraphicalObject);

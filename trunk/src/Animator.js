@@ -10,8 +10,8 @@ var Animator = function() {
 		this.images = images;
 		this.size = size;
 		this.position = position;
-		this.offset = setData(offset, {x:0, y:0});
-		this.stepOffset = setData(stepOffset, {x:0, y:0});
+		this.offset = offset || {x:0, y:0};
+		this.stepOffset = stepOffset || {x:0, y:0};
 		this.id = -1;
 		this.next = this.nextNumber;
 	};

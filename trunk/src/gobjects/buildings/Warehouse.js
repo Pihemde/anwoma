@@ -74,7 +74,7 @@ var Warehouse = function() {
 	Warehouse.prototype.paintSquare = function(good, offset) {
 		var image = SET.WAREHOUSE_BASE;
 		if (!!good && good.quantity > 0) {
-			image = SET['WAREHOUSE_' + good.type + '_' + good.quantity];
+			image = SET['WAREHOUSE_' + good.type][good.quantity-1];
 		}
 		this.gcontext.drawImage(image, this.size, this.position, offset);
 	}
