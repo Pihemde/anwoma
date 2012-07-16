@@ -16,15 +16,6 @@ var Animator = function() {
 		this.next = this.nextNumber;
 	};
 	
-	Animator.prototype.initIds = function(prefix, lenght) {
-		this.ids = new Array();
-		for(var i = 0 ; i < lenght ; i++) {
-			this.ids.push(prefix + i);
-		}		
-		this.lenght = lenght;
-		this.next = this.nextId;
-	}
-	
 	Animator.prototype.play = function() {
 		var image = this.images[this.next()];
 		var offset = {
@@ -36,14 +27,10 @@ var Animator = function() {
 	
 	Animator.prototype.nextNumber = function() {
 		this.id += 1;
-		if(this.id == this.lenght) {
+		if(this.id == this.images.length) {
 			this.id = 0;
 		}
 		return this.id;
-	}
-	
-	Animator.prototype.nextId = function() {
-		return this.ids[this.nextNumber()];
 	}
 	
 	return Animator;

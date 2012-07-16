@@ -33,8 +33,7 @@ var Lion = function() {
 	 * Retrieve painting position
 	 */
 	Lion.prototype.load = function() {
-		this.animator = new Animator(this.gcontext, SET, this.size, this.position, {x:-20, y:-20}, {x:3, y:2});
-		this.animator.initIds('LION_E_', 12);
+		this.animator = new Animator(this.gcontext, SET['LION_E'], this.size, this.position, {x:-20, y:-20}, {x:3, y:2});
 		return this.position;
 	};
 	

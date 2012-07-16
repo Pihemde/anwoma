@@ -45,8 +45,7 @@ var TrainingCenter = function() {
 	 * Retrieve painting position
 	 */
 	TrainingCenter.prototype.load = function() {
-		this.animator = new Animator(this.gcontext, SET, this.size, this.position, {x:25, y:-12});
-		this.animator.initIds('TRAINING_CENTER_ANIMATION_', 17);
+		this.animator = new Animator(this.gcontext, SET['TRAINING_CENTER_ANIMATION'], this.size, this.position, {x:25, y:-12});
 		return {
 			i: this.position.i + 1,
 			j: this.position.j + 1
