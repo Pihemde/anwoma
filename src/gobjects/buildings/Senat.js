@@ -45,7 +45,7 @@ var Senat = function() {
 		/*
 		 * Draw base images
 		 */
-		this.gcontext.drawImage(SET.SENAT_BASE, this.size, this.position);
+		this.gcontext.drawImage(SET.SENAT.BASE, this.size, this.position);
 	};
 		
 	return $extends(Senat, GraphicalObject);

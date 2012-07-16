@@ -32,8 +32,7 @@ var Engineer = function() {
 	 * Retrieve painting position
 	 */
 	Engineer.prototype.load = function() {
-		this.animator = new Animator(this.gcontext, SET, this.size, this.position, {x:-5, y:-35});
-		this.animator.initIds('ENGINEER_ANIMATION_', 9);
+		this.animator = new Animator(this.gcontext, SET.ENGINEER.ANIMATION, this.size, this.position, {x:-5, y:-35});
 		return this.position;
 	};
 	
@@ -41,7 +40,7 @@ var Engineer = function() {
 	 * Draw object on canvas
 	 */
 	Engineer.prototype.paint = function() {
-		this.gcontext.drawImage(SET.ENGINEER_BASE, this.size, this.position, {x:0, y:0});
+		this.gcontext.drawImage(SET.ENGINEER.BASE, this.size, this.position, {x:0, y:0});
 		this.animator.play();
 	};
 	

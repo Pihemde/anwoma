@@ -31,7 +31,7 @@ var Warehouse = function() {
 	 */
 	Warehouse.prototype.serialize = function() {
 		return {
-			position : this.position,
+			position : this.position
 		};
 	};
 
@@ -60,8 +60,8 @@ var Warehouse = function() {
 		/*
 		 * Draw base images
 		 */
-		this.gcontext.drawImage(SET.WAREHOUSE_BASE, this.size, this.position, {x : 0,y : -60}); // 0,0
-		this.gcontext.drawImage(SET.WAREHOUSE_ROOF, this.size, this.position, {x : 0,y : -70});
+		this.gcontext.drawImage(SET.WAREHOUSE.BASE, this.size, this.position, {x : 0,y : -60}); // 0,0
+		this.gcontext.drawImage(SET.WAREHOUSE.ROOF, this.size, this.position, {x : 0,y : -70});
 
 		/*
 		 * Draw goods * stock
@@ -72,9 +72,9 @@ var Warehouse = function() {
 	};
 
 	Warehouse.prototype.paintSquare = function(good, offset) {
-		var image = SET.WAREHOUSE_BASE;
+		var image = SET.WAREHOUSE.BASE;
 		if (!!good && good.quantity > 0) {
-			image = SET['WAREHOUSE_' + good.type][good.quantity-1];
+			image = SET.WAREHOUSE[good.type][good.quantity-1];
 		}
 		this.gcontext.drawImage(image, this.size, this.position, offset);
 	}
