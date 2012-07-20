@@ -33,7 +33,7 @@ var Lion = function() {
 	 * Retrieve painting position
 	 */
 	Lion.prototype.load = function() {
-		this.animator = new Animator(this.gcontext, SET['LION_E'], this.size, this.position, {x:-20, y:-20}, {x:3, y:2});
+		this.animator = new Animator(this.gcontext, SET['LION_E'], this.size, this.position, {x:-20, y:-20}, true);
 		return this.position;
 	};
 	
@@ -46,7 +46,8 @@ var Lion = function() {
 	 */
 	Lion.prototype.paint = function() {
 		this.animator.play();
-		if(this.animator.id == 0) {
+		this.counter = (this.counter+1)%SET['LION_E'].length;
+		if(this.counter == 0) {
 			this.position.i++;
 		}
 	};
