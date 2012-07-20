@@ -48,7 +48,8 @@ var Selection = function() {
 
 			var i = e.position.i;
 			var j = e.position.j;
-			this.selection.position = e.position;
+			this.selection.position.i = i;
+			this.selection.position.j = j;
 			this.selection.parent = this.grid[j][i];
 			this.grid[j][i] = this.selection;
 		}

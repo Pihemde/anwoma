@@ -105,6 +105,7 @@ var GraphicalContext = function() {
 
 	GraphicalContext.prototype.isVisible = function(gobject) {
 		var position = gobject.position;
+		if(!position) return false;
 		var size = gobject.size;
 		var c = this.position2Coord({i: position.i, j: position.j});
 		if(c.x>0 && c.y>0 && c.x<this.canvas.width && c.y<this.canvas.height) return true;
