@@ -15,6 +15,7 @@
 <script type="text/javascript" src="GraphicalContext.js"></script>
 <script type="text/javascript" src="GraphicalObject.js"></script>
 <script type="text/javascript" src="Board.js"></script>
+<script type="text/javascript" src="Tile.js"></script>
 <script type="text/javascript" src="Animator.js"></script>
 <script type="text/javascript" src="Finder.js"></script>
 <script type="text/javascript" src="gobjects/Cursor.js"></script>
@@ -50,7 +51,7 @@
 	function main() {
 		var canvas = document.getElementById("canvas");
 		board = new Board(canvas, MAP, MAP_SIZE.width, MAP_SIZE.height, ORIENTATION.N);
-		finder = new Finder(board.land);
+		finder = new Finder(board.grid);
 		board.load();
 		
 		/*

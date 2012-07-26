@@ -15,7 +15,7 @@ var Selection = function() {
 		this.grid = grid;
 		this.selection = undefined;
 	};
-	
+
 	/**
 	 * Draw object on canvas
 	 */
@@ -36,7 +36,7 @@ var Selection = function() {
 
 		this.gcontext.drawSquare(this.position, this.size, {color: "red", alpha: 0.5}); 
 	};
-	
+
 	Selection.prototype.onmove = function(e) {
 		if(!!this.selection) {
 			var i = this.selection.position.i;
@@ -44,23 +44,30 @@ var Selection = function() {
 			if(i < 0 || i > MAP_SIZE.width - 1 || j < 0 || j > MAP_SIZE.height - 1) {
 				return;
 			}
-			this.grid[j][i] = this.selection.parent;
+			// Remove the selection from the old tile
+			var tile = this.grid[j][i];
+			tile.gObject = this.selection.parent;
 
 			var i = e.position.i;
 			var j = e.position.j;
+			// Place the selection on the new tile
+			tile = this.grid[j][i];
 			this.selection.position.i = i;
 			this.selection.position.j = j;
-			this.selection.parent = this.grid[j][i];
-			this.grid[j][i] = this.selection;
+			this.selection.parent = tile.gObject;
+			tile.gObject = this.selection;
 		}
 	}
+
 	Selection.prototype.onmousedown = function(e) {
-		this.selection = this.grid[e.position.j][e.position.i];
+		var tile = this.grid[e.position.j][e.position.i];
+		this.selection = tile.gObject;
 		console.log(this.selection);
 		if(!this.selection.parent) {
 			this.selection = undefined;
 		}
 	}
+
 	Selection.prototype.onmouseup = function(e) {
 		this.selection = undefined;
 	}

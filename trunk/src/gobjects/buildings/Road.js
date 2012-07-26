@@ -39,8 +39,9 @@ var Road = function() {
 	};
 	
 	Road.prototype.activate = function() {
-		if(this.type == undefined) {
-			this.type = this.computeType();
+//		if(!this.type)
+		{
+		this.type = this.computeType();
 		}
 	}
 	
@@ -56,6 +57,9 @@ var Road = function() {
 	 */
 	Road.prototype.computeType = function() {
 		var p = this.position;
+		if(p.i==1 && p.j==6) {
+			console.log("break");
+		}
 		var type = '';
 		var o = this.orientation;
 		if(finder.isRoad(p.i + Math.round(Math.cos((0-o)*Math.PI/2)), p.j + Math.round(Math.sin((0-o)*Math.PI/2)))) {
