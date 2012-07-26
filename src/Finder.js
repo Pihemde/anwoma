@@ -20,7 +20,7 @@ var Finder = function() {
 		}
 		road = this.scanForRoad({
 			i : building.position.i,
-			j : building.position.j + building.height
+			j : building.position.j + building.size.height
 		}, building.size.width, DIRECTION.HORIZONTAL);
 		if(!!road) {
 			return road;
@@ -33,7 +33,7 @@ var Finder = function() {
 			return road;
 		}
 		road = this.scanForRoad({
-			i : building.position.i + building.width,
+			i : building.position.i + building.size.width,
 			j : building.position.j
 		}, building.size.height, DIRECTION.VERTICAL);
 		return road;
@@ -45,7 +45,7 @@ var Finder = function() {
 			var j = position.j;
 			for ( var i = position.i; i <= position.i + lenght; i++) {
 				if (!!this.grid[j][i] && this.isRoad(i, j)) {
-					return this.grid[j][i];
+					return this.grid[j][i].gObject;
 				}
 			}
 			break;
@@ -53,18 +53,16 @@ var Finder = function() {
 			var i = position.i;
 			for ( var j = position.j; j <= position.j + lenght; j++) {
 				if (!!this.grid[j][i] && this.isRoad(i, j)) {
-					return this.grid[j][i];
+					return this.grid[j][i].gObject;
 				}
 			}
 			break;
 		}
 		return undefined;
 	}
-	
+
 	Finder.prototype.isRoad = function(i, j) {
-		result = i >= 0 && j >= 0;
-		result &= i < MAP_SIZE.width && j < MAP_SIZE.height;
-		result &= this.grid[j][i] instanceof Road;
+		result = i >= 0 && j >= 0 && i < MAP_SIZE.width && j < MAP_SIZE.height && this.grid[j][i].gObject instanceof Road;
 		return result;
 	}
 

@@ -9,32 +9,39 @@ var GraphicalObject = function() {
 	 * @param tile object description. Include image to paint, size, flags (buildable, destructible, ...), lifecycle rules.
 	 * @param position absolute position object instance on the game board (first : 0,0 ; second 1,0 ; ...)
 	 */
-	var Class = function(gcontext, size) {
+	var GraphicalObject = function(gcontext, size, position) {
 		this.gcontext = gcontext;
 		this.size = size;
+		this.position = position;
 		this.buildable = false;
 		this.destructible = false;
-		this.parent = new Array();
+		this.parent = undefined;
 	};
-	
+
+	GraphicalObject.prototype.activate = function() {
+		if(!!this.parent) {
+			this.parent.activate();
+		}
+	}
+
 	/**
 	 * Return true if something can be build on it
 	 */
-	Class.prototype.isBuildable = function() {
+	GraphicalObject.prototype.isBuildable = function() {
 		return this.buildable;
 	};
 	
 	/**
 	 * Return true if it can be destroy
 	 */
-	Class.prototype.isDestructible = function() {
+	GraphicalObject.prototype.isDestructible = function() {
 		return this.destructible;
 	};
 	
 	/**
 	 * Return true if it can be destroy
 	 */
-	Class.prototype.destroy = function() {
+	GraphicalObject.prototype.destroy = function() {
 		if(!this.destructible) {
 			throw "Not destructible !";
 		}
@@ -46,7 +53,7 @@ var GraphicalObject = function() {
 	/**
 	 * Retrieve a JSON string to save object state
 	 */
-	Class.prototype.serialize = function() {
+	GraphicalObject.prototype.serialize = function() {
 		return {
 			position : this.position
 		};
@@ -55,9 +62,9 @@ var GraphicalObject = function() {
 	/**
 	 * Set attributes from json object
 	 */
-	Class.prototype.unserialize = function(description) {
+	GraphicalObject.prototype.unserialize = function(description) {
 		this.position = description.position;
 	};
 
-	return Class;
+	return GraphicalObject;
 }();
