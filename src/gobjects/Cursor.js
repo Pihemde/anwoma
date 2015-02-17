@@ -7,15 +7,17 @@ var Cursor = function() {
 	 * Constructor
 	 * @param gcontext the graphical context
 	 */
-	var Class = function(gcontext) {
-		$sc(this, [gcontext, {width: 1, height: 1}]);
-		this.gcontext.addEventListener("move", this.onmove, this);
+	function Cursor(context) {
+		GraphicalObject.call(this, context, {width: 1, height: 1});
+		this.context.eventManager.addEventListener(EventManager.EVENT_TYPE.MOVE, this.onmove, this);
 	};
-	
+	Cursor.prototype = Object.create(GraphicalObject.prototype);
+	Cursor.prototype.constructor = Cursor;
+
 	/**
 	 * Draw object on canvas
 	 */
-	Class.prototype.paint = function() {
+	Cursor.prototype.paint = function() {
 		if(!this.position) {
 			return;
 		}
@@ -30,12 +32,12 @@ var Cursor = function() {
 			return;
 		}
 
-		this.gcontext.drawSquare(this.position, this.size, {color: "red", alpha: 0.5}); 
+		this.context.gcontext.drawSquare(this.position, this.size, {color: "red", alpha: 0.5}); 
 	};
 	
-	Class.prototype.onmove = function(e) {
+	Cursor.prototype.onmove = function(e) {
 		this.position = e.position;
 	}
 
-	return $extends(Class, GraphicalObject);
+	return Cursor;
 }();

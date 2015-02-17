@@ -19,9 +19,11 @@ var Farm = function() {
 	 * 
 	 * @param gcontext the graphical context
 	 */
-	var Farm = function(gcontext) {
-		$sc(this, [gcontext, {width: 3, height: 3}]);
+	function Farm(context) {
+		GraphicalObject.call(this, context, {width: 3, height: 3});
 	};
+	Farm.prototype = Object.create(GraphicalObject.prototype);
+	Farm.prototype.constructor = Farm;
 
 	/**
 	 * Retrieve a JSON string to save object state
@@ -57,7 +59,7 @@ var Farm = function() {
 		/*
 		 * Draw base images
 		 */
-		this.gcontext.drawImage(SET.FARM.BASE, this.size, this.position, {x:0, y:-30}); // 0,0
+		this.context.gcontext.drawImage(SET.FARM.BASE, this.size, this.position, {x:0, y:-30}); // 0,0
 
 		/*
 		 * Draw goods * stock
@@ -67,9 +69,9 @@ var Farm = function() {
 			image = SET.FARM[this.good.type][this.good.quantity];
 		}
 		for ( var i = 0; i < 5; i++) { // Only 5 squares
-			this.gcontext.drawImage(image, this.size, this.position, OFFSETS[i]);
+			this.context.gcontext.drawImage(image, this.size, this.position, OFFSETS[i]);
 		}
 	}
 
-	return $extends(Farm, GraphicalObject);
+	return Farm;
 }();

@@ -8,9 +8,11 @@ var Senat = function() {
 	 * Constructor
 	 * @param gcontext the graphical context
 	 */
-	var Senat = function(gcontext) {
-		$sc(this, [gcontext, {width: 5, height: 5}]);
+	function Senat(context) {
+		GraphicalObject.call(this, context, {width: 5, height: 5});
 	};
+	Senat.prototype = Object.create(GraphicalObject.prototype);
+	Senat.prototype.constructor = Senat;
 	
 	/**
 	 * Retrieve a JSON string to save object state
@@ -45,8 +47,8 @@ var Senat = function() {
 		/*
 		 * Draw base images
 		 */
-		this.gcontext.drawImage(SET.SENAT.BASE, this.size, this.position);
+		this.context.gcontext.drawImage(SET.SENAT.BASE, this.size, this.position);
 	};
 		
-	return $extends(Senat, GraphicalObject);
+	return Senat;
 }();

@@ -8,10 +8,12 @@ var GovernorMansion = function() {
 	 * Constructor
 	 * @param gcontext the graphical context
 	 */
-	var GovernorMansion = function(gcontext) {
-		$sc(this, [gcontext, {width: 4, height: 4}]);
+	function GovernorMansion(context) {
+		GraphicalObject.call(this, context, {width: 4, height: 4});
 	};
-	
+	GovernorMansion.prototype = Object.create(GraphicalObject.prototype);
+	GovernorMansion.prototype.constructor = GovernorMansion;
+
 	/**
 	 * Retrieve a JSON string to save object state
 	 */
@@ -45,8 +47,8 @@ var GovernorMansion = function() {
 		/*
 		 * Draw base images
 		 */
-		this.gcontext.drawImage(SET.GOVERNOR_MANSION, this.size, this.position);
+		this.context.gcontext.drawImage(SET.GOVERNOR_MANSION, this.size, this.position);
 	};
 		
-	return $extends(GovernorMansion, GraphicalObject);
+	return GovernorMansion;
 }();

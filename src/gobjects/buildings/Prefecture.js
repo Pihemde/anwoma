@@ -8,10 +8,12 @@ var Prefecture = function() {
 	 * Constructor
 	 * @param gcontext the graphical context
 	 */
-	var Prefecture = function(gcontext) {
-		$sc(this, [gcontext, {width: 1, height: 1}]);
+	function Prefecture(context) {
+		GraphicalObject.call(this, context, {width: 3, height: 3});
 		this.counter = 0;
 	};
+	Prefecture.prototype = Object.create(GraphicalObject.prototype);
+	Prefecture.prototype.constructor = Prefecture;
 	
 	/**
 	 * Retrieve a JSON string to save object state
@@ -33,7 +35,7 @@ var Prefecture = function() {
 	 * Retrieve painting position
 	 */
 	Prefecture.prototype.load = function() {
-		this.animator = new Animator(this.gcontext, SET.PREFECTURE.ANIMATION, this.size, this.position, {x:5, y:-27});
+		this.animator = new Animator(this.context.gcontext, SET.PREFECTURE.ANIMATION, this.size, this.position, {x:5, y:-27});
 		return this.position;
 	};
 	
@@ -41,9 +43,9 @@ var Prefecture = function() {
 	 * Draw object on canvas
 	 */
 	Prefecture.prototype.paint = function() {
-		this.gcontext.drawImage(SET.PREFECTURE.BASE, this.size, this.position, {x:0, y:0});
+		this.context.gcontext.drawImage(SET.PREFECTURE.BASE, this.size, this.position, {x:0, y:0});
 		this.animator.play();
 	};
 	
-	return $extends(Prefecture, GraphicalObject);
+	return Prefecture;
 }();

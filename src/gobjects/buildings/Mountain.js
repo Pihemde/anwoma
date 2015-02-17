@@ -8,9 +8,11 @@ var Mountain = function() {
 	 * Constructor
 	 * @param gcontext the graphical context
 	 */
-	var Mountain = function(gcontext) {
-		$sc(this, [gcontext, {width: 3, height: 3}]);
+	function Mountain(context) {
+		GraphicalObject.call(this, context, {width: 3, height: 3});
 	};
+	Mountain.prototype = Object.create(GraphicalObject.prototype);
+	Mountain.prototype.constructor = Mountain;
 	
 	/**
 	 * Retrieve a JSON string to save object state
@@ -42,8 +44,8 @@ var Mountain = function() {
 	 * Draw object on canvas
 	 */
 	Mountain.prototype.paint = function() {
-		this.gcontext.drawImage(SET.MOUNTAIN[0], this.size, this.position);
+		this.context.gcontext.drawImage(SET.MOUNTAIN[0], this.size, this.position);
 	};
 		
-	return $extends(Mountain, GraphicalObject);
+	return Mountain;
 }();

@@ -6,10 +6,14 @@ var Dummy = function() {
 	 * Constructor
 	 * @param gcontext the graphical context
 	 */
-	var Dummy = function(position) {
+	function Dummy(position) {
+		GraphicalObject.call(this, undefined, {width: 1, height: 1});
 		this.size = {width: 1, height: 1};
 		this.position = position;
 	};
+	Dummy.prototype = Object.create(GraphicalObject.prototype);
+	Dummy.prototype.constructor = Dummy;
+
 
 	/**
 	 * Retrieve painting position
@@ -25,5 +29,5 @@ var Dummy = function() {
 		//
 	};
 	
-	return $extends(Dummy, GraphicalObject);
+	return Dummy;
 }();

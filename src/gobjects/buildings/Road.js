@@ -8,17 +8,19 @@ var Road = function() {
 	 * Constructor
 	 * @param gcontext the graphical context
 	 */
-	var Road = function(gcontext) {
-		$sc(this, [gcontext, {width: 1, height: 1}]);
+	function Road(context) {
+		GraphicalObject.call(this, context, {width: 1, height: 1});
 		this.clazz = 'Road';
 		this.orientation = ORIENTATION.N; 
-		this.gcontext.addEventListener("rotate", this.onrotate, this);
+		this.context.eventManager.addEventListener("rotate", this.onrotate, this);
 	};
+	Road.prototype = Object.create(GraphicalObject.prototype);
+	Road.prototype.constructor = Road;
 	
 	/**
 	 * Retrieve a JSON string to save object state
 	 */
-	Road.prototype.serialize = function() {
+	Road.prototype.serialize = function () {
 		return {
 			position: this.position
 		};
@@ -49,7 +51,7 @@ var Road = function() {
 	 * Draw object on canvas
 	 */
 	Road.prototype.paint = function() {
-		this.gcontext.drawImage(SET['ROAD_SOIL_' + this.type], this.size, this.position);
+		this.context.gcontext.drawImage(SET['ROAD_SOIL_' + this.type], this.size, this.position);
 	};
 	
 	/*
@@ -85,5 +87,5 @@ var Road = function() {
 		this.type = this.computeType();
 	};
 		
-	return $extends(Road, GraphicalObject);
+	return Road;
 }();

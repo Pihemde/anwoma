@@ -8,10 +8,12 @@ var Lion = function() {
 	 * Constructor
 	 * @param gcontext the graphical context
 	 */
-	var Lion = function(gcontext) {
-		$sc(this, [gcontext, {width: 1, height: 1}]);
+	function Lion(context) {
+		Character.call(this, context);
 		this.counter = 0;
 	};
+	Lion.prototype = Object.create(Character.prototype);
+	Lion.prototype.constructor = Lion;
 	
 	/**
 	 * Retrieve a JSON string to save object state
@@ -33,7 +35,7 @@ var Lion = function() {
 	 * Retrieve painting position
 	 */
 	Lion.prototype.load = function() {
-		this.animator = new Animator(this.gcontext, SET['LION_E'], this.size, this.position, {x:-20, y:-20}, true);
+		this.animator = new Animator(this.context.gcontext, SET['LION_E'], this.size, this.position, {x:-20, y:-20}, true);
 		return this.position;
 	};
 	
@@ -52,5 +54,5 @@ var Lion = function() {
 		}
 	};
 	
-	return $extends(Lion, GraphicalObject);
+	return Lion;
 }();
