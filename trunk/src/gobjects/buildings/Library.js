@@ -8,9 +8,11 @@ var Library = function() {
 	 * Constructor
 	 * @param gcontext the graphical context
 	 */
-	var Library = function(gcontext) {
-		$sc(this, [gcontext, {width: 2, height: 2}]);
+	function Library(context) {
+		GraphicalObject.call(this, context, {width: 2, height: 2});
 	};
+	Library.prototype = Object.create(GraphicalObject.prototype);
+	Library.prototype.constructor = Library;
 	
 	/**
 	 * Retrieve a JSON string to save object state
@@ -42,8 +44,8 @@ var Library = function() {
 	 * Draw object on canvas
 	 */
 	Library.prototype.paint = function() {
-		this.gcontext.drawImage(SET.LIBRARY, this.size, this.position);
+		this.context.gcontext.drawImage(SET.LIBRARY, this.size, this.position);
 	};
 
-	return $extends(Library, GraphicalObject);
+	return Library;
 }();

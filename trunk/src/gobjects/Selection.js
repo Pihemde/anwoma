@@ -7,14 +7,16 @@ var Selection = function() {
 	 * Constructor
 	 * @param gcontext the graphical context
 	 */
-	var Selection = function(gcontext, grid) {
-		$sc(this, [gcontext, {width: 0, height: 0}]);
-		this.gcontext.addEventListener("move", this.onmove, this);
-		this.gcontext.addEventListener("mousedown", this.onmousedown, this);
-		this.gcontext.addEventListener("mouseup", this.onmouseup, this);
+	function Selection(context, grid) {
+		GraphicalObject.call(this, context, {width: 0, height: 0});
+		this.context.eventManager.addEventListener(EventManager.EVENT_TYPE.MOVE, this.onmove, this);
+		this.context.eventManager.addEventListener(EventManager.EVENT_TYPE.MOUSE_DOWN, this.onmousedown, this);
+		this.context.eventManager.addEventListener(EventManager.EVENT_TYPE.MOUSE_UP, this.onmouseup, this);
 		this.grid = grid;
 		this.selection = undefined;
 	};
+	Selection.prototype = Object.create(GraphicalObject.prototype);
+	Selection.prototype.constructor = Selection;
 
 	/**
 	 * Draw object on canvas
@@ -72,5 +74,5 @@ var Selection = function() {
 		this.selection = undefined;
 	}
 
-	return $extends(Selection, GraphicalObject);
+	return Selection;
 }();

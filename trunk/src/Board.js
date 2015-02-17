@@ -7,14 +7,17 @@ var Board = function() {
 	 * Constructor
 	 */
 	var Board = function(canvas, map, width, height, orientation) {
-		this.gcontext = new GraphicalContext(canvas, width, height, orientation);
+		this.eventManager = new EventManager();
+		this.gcontext = new GraphicalContext(this.eventManager, canvas, width, height, orientation);
+		this.context = {eventManager: this.eventManager, gcontext: this.gcontext};
 		this.map = map;
 		this.width = width;
 		this.height = height;
 		this.grid = [];
 		this.orientation = orientation;
-		this.cursor = new Cursor(this.gcontext);
-		this.selection = new Selection(this.gcontext, this.grid);
+		this.cursor = new Cursor(this.context);
+		this.selection = new Selection(this.context, this.grid);
+		this.context.eventManager.addEventListener(EventManager.EVENT_TYPE.PAINT, this.paint, this);
 	};
 
 	/**
@@ -37,7 +40,7 @@ var Board = function() {
 		var gObject;
 		try {
 			var Clazz = eval(description.clazz);
-			gObject = new Clazz(this.gcontext);
+			gObject = new Clazz(this.context);
 			gObject.unserialize(description);
 		} catch(e) {
 			throw "Unknow object class.";
@@ -61,9 +64,9 @@ var Board = function() {
 	}
 
 	Board.prototype.start = function() {
-		this.activate();
-		this.paint();
-		
+		this.context.eventManager.fireEvent(EventManager.EVENT_TYPE.ACTIVATE);
+		this.context.eventManager.fireEvent(EventManager.EVENT_TYPE.PAINT);
+
 		/*
 		 * Repainting
 		 */
@@ -72,15 +75,6 @@ var Board = function() {
 			board.start();
 		}
 		setTimeout(loop, REPAINT_DELAI);
-	}
-
-	Board.prototype.activate = function() {
-		for(var j = 0 ; j < this.grid.length ; j++) {
-			for(var i = 0 ; i < this.grid[j].length ; i++) {
-				var tile = this.grid[j][i];
-				tile.activate();
-			}
-		}
 	}
 
 	/**

@@ -8,11 +8,13 @@ var Sign = function() {
 	 * Constructor
 	 * @param gcontext the graphical context
 	 */
-	var Sign = function(gcontext) {
-		$sc(this, [gcontext, {width: 1, height: 1}]);
-		this.gcontext.addEventListener("rotate", this.onrotate, this);
+	function Sign(context) {
+		GraphicalObject.call(this, context, {width: 1, height: 1});
+		this.context.eventManager.addEventListener("rotate", this.onrotate, this);
 	};
-	
+	Sign.prototype = Object.create(GraphicalObject.prototype);
+	Sign.prototype.constructor = Sign;
+
 	/**
 	 * Retrieve a JSON string to save object state
 	 */
@@ -45,7 +47,7 @@ var Sign = function() {
 	 * Draw object on canvas
 	 */
 	Sign.prototype.paint = function() {
-		this.gcontext.drawImage(SET['SIGN_' + this.color + '_' + this.displayOrientationName], this.size, this.position);
+		this.context.gcontext.drawImage(SET['SIGN_' + this.color + '_' + this.displayOrientationName], this.size, this.position);
 	};
 	
 	/**
@@ -55,5 +57,5 @@ var Sign = function() {
 		this.displayOrientationName = ORIENTATION_NAME[this.orientationCorrectionGrid[event.orientation]];
 	};
 
-	return $extends(Sign, GraphicalObject);
+	return Sign;
 }();

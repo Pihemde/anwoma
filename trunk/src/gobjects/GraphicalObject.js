@@ -9,16 +9,24 @@ var GraphicalObject = function() {
 	 * @param tile object description. Include image to paint, size, flags (buildable, destructible, ...), lifecycle rules.
 	 * @param position absolute position object instance on the game board (first : 0,0 ; second 1,0 ; ...)
 	 */
-	var GraphicalObject = function(gcontext, size, position) {
-		this.gcontext = gcontext;
+	var GraphicalObject = function(context, size, position) {
+		this.context = context;
 		this.size = size;
 		this.position = position;
 		this.buildable = false;
 		this.destructible = false;
 		this.parent = undefined;
+		this.context.eventManager.addEventListener(EventManager.EVENT_TYPE.ACTIVATE, this.activate, this);
 	};
 
+	GraphicalObject.prototype.paint = function() {
+	}
+
 	GraphicalObject.prototype.activate = function() {
+		if(this==this.parent) {
+			console.log(this, this.parent);
+			return;
+		}
 		if(!!this.parent) {
 			this.parent.activate();
 		}

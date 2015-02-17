@@ -9,7 +9,7 @@ var GraphicalContext = function() {
 	 * Constructor
 	 * @param canvas canvas
 	 */
-	var GraphicalContext = function(canvas, width, height, orientation) {
+	var GraphicalContext = function(eventManager, canvas, width, height, orientation) {
 		this.canvas = canvas;
 		this.context = canvas.getContext("2d");
 		this.preRenderCanvas = document.createElement("canvas");
@@ -25,7 +25,7 @@ var GraphicalContext = function() {
 		this.offset = {x: 0, y: 0};
 		this.mousePosition = {x : 0, y : 0};
 		this.selectedTile = undefined;
-		this.listeners = {};
+		this.eventManager = eventManager;
 		var gcontext = this;
 		canvas.addEventListener('mousemove', function(event) {gcontext.onmousemove(event);}, false);
 		canvas.addEventListener('click', function(event) {gcontext.onclick(event);}, false);
@@ -43,7 +43,7 @@ var GraphicalContext = function() {
 	GraphicalContext.prototype.changeOrientation = function(orientation) {
 		this.orientation = orientation;
 		this.angle = orientation*Math.PI/2 + Math.PI/4;
-		this.fireEvent("rotate", {orientation: orientation});
+		this.fireEvent(EventManager.EVENT_TYPE.ROTATE, {orientation: orientation});
 	};
 	
 	/**
@@ -119,26 +119,11 @@ var GraphicalContext = function() {
 	}
 
 	GraphicalContext.prototype.addEventListener = function(eventType, callback, object) {
-		var listeners = this.listeners[eventType];
-		if(!listeners) {
-			listeners = [];
-			this.listeners[eventType] = listeners;
-		}
-		listeners.push({callback: callback, object: object}); 
+		this.eventManager.addEventListener(eventType, callback, object);
 	}
-	
+
 	GraphicalContext.prototype.fireEvent = function(eventType, event) {
-		var listeners = this.listeners[eventType];
-		if(!!listeners) {
-			for(var i=0; i<listeners.length; i++) {
-				var listener = listeners[i];
-				if(listener.object) {
-					listener.callback.apply(listener.object, [event]);
-				} else {
-					listener.callback(event);
-				}
-			}
-		}
+		this.eventManager.fireEvent(eventType, event);
 	}
 
 	GraphicalContext.prototype.position2Coord = function(coord) {
@@ -216,7 +201,7 @@ var GraphicalContext = function() {
 		var c = this.coord2Position({x: x, y: y});
 		if(!this.mousePosition || this.mousePosition.i != c.i || this.mousePosition.j != c.j) {
 			this.mousePosition = c;
-			this.fireEvent("move", {position: this.mousePosition});
+			this.fireEvent(EventManager.EVENT_TYPE.MOVE, {position: this.mousePosition});
 		}
 
 
@@ -232,7 +217,7 @@ var GraphicalContext = function() {
 		var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
 		var c = this.coord2Position({x: x, y: y});
 
-		this.fireEvent("click", {position: c});
+		this.fireEvent(EventManager.EVENT_TYPE.CLICK, {position: c});
 	};
 	
 	GraphicalContext.prototype.onmousewheel = function(event) {
@@ -266,7 +251,7 @@ var GraphicalContext = function() {
 				var x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
 				var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
 				var c = this.coord2Position({x: x, y: y});
-				this.fireEvent("zoom", {position: c});
+				this.fireEvent(EventManager.EVENT_TYPE.ZOOM, {position: c});
 			}
 	};
 
@@ -278,7 +263,7 @@ var GraphicalContext = function() {
 		var x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
 		var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
 		var c = this.coord2Position({x: x, y: y});
-		this.fireEvent("mousedown", {position: c});
+		this.fireEvent(EventManager.EVENT_TYPE.MOUSE_DOWN, {position: c});
 	};
 
 	GraphicalContext.prototype.onmouseup = function(event) {
@@ -286,7 +271,7 @@ var GraphicalContext = function() {
 		var x = event.clientX - this.canvas.offsetLeft + window.pageXOffset;
 		var y = event.clientY - this.canvas.offsetTop + window.pageYOffset;
 		var c = this.coord2Position({x: x, y: y});
-		this.fireEvent("mouseup", {position: c});
+		this.fireEvent(EventManager.EVENT_TYPE.MOUSE_UP, {position: c});
 	};
 		
 	return GraphicalContext;

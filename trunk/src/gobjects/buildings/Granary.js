@@ -8,9 +8,11 @@ var Granary = function() {
 	 * Constructor
 	 * @param gcontext the graphical context
 	 */
-	var Granary = function(gcontext) {
-		$sc(this, [gcontext, {width: 3, height: 3}]);
+	function Granary(context) {
+		GraphicalObject.call(this, context, {width: 3, height: 3});
 	};
+	Granary.prototype = Object.create(GraphicalObject.prototype);
+	Granary.prototype.constructor = Granary;
 	
 	/**
 	 * Retrieve a JSON string to save object state
@@ -47,26 +49,26 @@ var Granary = function() {
 		/*
 		 * Draw base images
 		 */
-		this.gcontext.drawImage(SET.GRANARY.BASE[0], this.size, this.position);
-		this.gcontext.drawImage(SET.GRANARY.BASE[1], this.size, this.position, {x:1, y:-17});
+		this.context.gcontext.drawImage(SET.GRANARY.BASE[0], this.size, this.position);
+		this.context.gcontext.drawImage(SET.GRANARY.BASE[1], this.size, this.position, {x:1, y:-17});
 		
 		/*
 		 * Draw goods * stock
 		 */
 
 		if(this.good.quantity > 0) {
-			this.gcontext.drawImage(SET.GRANARY.STOCK[0], this.size, this.position, {x:-40, y:-63});
+			this.context.gcontext.drawImage(SET.GRANARY.STOCK[0], this.size, this.position, {x:-40, y:-63});
 		}
 		if(this.good.quantity > 1) {
-			this.gcontext.drawImage(SET.GRANARY.STOCK[1], this.size, this.position, {x:-15, y:-58});
+			this.context.gcontext.drawImage(SET.GRANARY.STOCK[1], this.size, this.position, {x:-15, y:-58});
 		}
 		if(this.good.quantity > 2) {
-			this.gcontext.drawImage(SET.GRANARY.STOCK[2], this.size, this.position, {x:20, y:-58});
+			this.context.gcontext.drawImage(SET.GRANARY.STOCK[2], this.size, this.position, {x:20, y:-58});
 		}
 		if(this.good.quantity > 3) {
-			this.gcontext.drawImage(SET.GRANARY.STOCK[3], this.size, this.position, {x:45, y:-65});
+			this.context.gcontext.drawImage(SET.GRANARY.STOCK[3], this.size, this.position, {x:45, y:-65});
 		}
 	};
 		
-	return $extends(Granary, GraphicalObject);
+	return Granary;
 }();

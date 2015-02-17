@@ -22,9 +22,11 @@ var Warehouse = function() {
 	 * 
 	 * @param gcontext the graphical context
 	 */
-	var Warehouse = function(gcontext) {
-		$sc(this, [gcontext, {width: 3, height: 3}]);
+	function Warehouse(context) {
+		GraphicalObject.call(this, context, {width: 3, height: 3});
 	};
+	Warehouse.prototype = Object.create(GraphicalObject.prototype);
+	Warehouse.prototype.constructor = Warehouse;
 
 	/**
 	 * Retrieve a JSON string to save object state
@@ -60,8 +62,8 @@ var Warehouse = function() {
 		/*
 		 * Draw base images
 		 */
-		this.gcontext.drawImage(SET.WAREHOUSE.BASE, this.size, this.position, {x : 0,y : -60}); // 0,0
-		this.gcontext.drawImage(SET.WAREHOUSE.ROOF, this.size, this.position, {x : 0,y : -70});
+		this.context.gcontext.drawImage(SET.WAREHOUSE.BASE, this.size, this.position, {x : 0,y : -60}); // 0,0
+		this.context.gcontext.drawImage(SET.WAREHOUSE.ROOF, this.size, this.position, {x : 0,y : -70});
 
 		/*
 		 * Draw goods * stock
@@ -76,8 +78,8 @@ var Warehouse = function() {
 		if (!!good && good.quantity > 0) {
 			image = SET.WAREHOUSE[good.type][good.quantity-1];
 		}
-		this.gcontext.drawImage(image, this.size, this.position, offset);
+		this.context.gcontext.drawImage(image, this.size, this.position, offset);
 	}
 
-	return $extends(Warehouse, GraphicalObject);
+	return Warehouse;
 }();
