@@ -7,8 +7,8 @@ var Loader = function(){
 		this.div.setAttribute("class", "progression");
 		div.appendChild(this.div);
 		body.appendChild(div);
-		this.counter = 0;
-		this.count = 0;
+		this.imageCount = 0;
+		this.remainingImageToLoadCount = 0;
 
 /*
 		this.counter = 1000;
@@ -32,15 +32,15 @@ var Loader = function(){
 	Loader.prototype.loadImage = function(set, callback) {
 		for(var i in set) {
 			if(typeof set[i] == "string") {
-				this.counter++;
-				this.count++;
+				this.imageCount++;
+				this.remainingImageToLoadCount++;
 				var loader = this;
 				var src = set[i];
 				set[i] = new Image();
 				set[i].onload = function() {
-					loader.count--;
+					loader.remainingImageToLoadCount--;
 					progress(loader);
-					if(loader.count == 0 && !!callback) {
+					if(loader.remainingImageToLoadCount == 0 && !!callback) {
 						callback();
 					}
 				};
@@ -53,7 +53,7 @@ var Loader = function(){
 	}
 
 	function progress(loader) {
-		var progress = Math.round((1-loader.count/loader.counter)*100);
+		var progress = Math.round((1-loader.remainingImageToLoadCount/loader.imageCount)*100);
 		loader.div.innerHTML = progress+"%";
 		loader.div.style.width = progress+"%";
 		if(progress==100) {
