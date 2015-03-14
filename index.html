@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<!-- 3rd party libs -->
+<script type="text/javascript" src="../lib/sylvester.src.js"></script>
+<!-- Anwoma -->
+<script type="text/javascript" src="Class.js"></script>
+<script type="text/javascript" src="constants.js"></script>
+<script type="text/javascript" src="common.js"></script>
+<script type="text/javascript" src="env/roman.js"></script>
+<script type="text/javascript" src="Loader.js"></script>
+<script type="text/javascript" src="Environnement.js"></script>
+<script type="text/javascript" src="Map.js"></script>
+<script type="text/javascript" src="GraphicalContext.js"></script>
+<script type="text/javascript" src="EventManager.js"></script>
+<script type="text/javascript" src="Board.js"></script>
+<script type="text/javascript" src="Tile.js"></script>
+<script type="text/javascript" src="Animator.js"></script>
+<script type="text/javascript" src="Finder.js"></script>
+<script type="text/javascript" src="gobjects/GraphicalObject.js"></script>
+<script type="text/javascript" src="gobjects/Cursor.js"></script>
+<script type="text/javascript" src="gobjects/Dummy.js"></script>
+<script type="text/javascript" src="gobjects/Selection.js"></script>
+<script type="text/javascript" src="gobjects/buildings/Engineer.js"></script>
+<script type="text/javascript" src="gobjects/buildings/Farm.js"></script>
+<script type="text/javascript" src="gobjects/buildings/GovernorMansion.js"></script>
+<script type="text/javascript" src="gobjects/buildings/Granary.js"></script>
+<script type="text/javascript" src="gobjects/buildings/Grass.js"></script>
+<script type="text/javascript" src="gobjects/buildings/Library.js"></script>
+<script type="text/javascript" src="gobjects/buildings/Mountain.js"></script>
+<script type="text/javascript" src="gobjects/buildings/Prefecture.js"></script>
+<script type="text/javascript" src="gobjects/buildings/Road.js"></script>
+<script type="text/javascript" src="gobjects/buildings/Senat.js"></script>
+<script type="text/javascript" src="gobjects/buildings/Sign.js"></script>
+<script type="text/javascript" src="gobjects/buildings/TrainingCenter.js"></script>
+<script type="text/javascript" src="gobjects/buildings/Warehouse.js"></script>
+<!-- Personnnages -->
+<script type="text/javascript" src="gobjects/characters/Character.js"></script>
+<script type="text/javascript" src="gobjects/characters/Lion.js"></script>
+<!-- Map definition -->
+<script type="text/javascript" src="maps/map_test.js"></script>
+<script>
+	var environnement = undefined;
+	var board = undefined;
+	var finder = undefined;
+
+	window.onload = function() {
+		environnement = new Environnement('roman');
+		environnement.loadSet(main);
+	};
+
+	function main() {
+		var canvas = document.getElementById("canvas");
+		board = new Board(canvas, MAP, MAP_SIZE.width, MAP_SIZE.height, ORIENTATION.N);
+		finder = new Finder(board.grid);
+		board.load();
+		
+		/*
+		 * On dessine
+		 */
+		board.start();
+	}
+	
+	function rotate(direction) {
+		var orientation = (4 + board.orientation + direction) % 4;
+		board.changeOrientation(orientation);
+	}
+</script>
+</head>
+<body>
+	<body>
+		<div id="topbar">
+			<div id="move-and-rotate">
+				<img src="../images/ui/paneling_00091.png" onclick="javascript:rotate(-1)" />
+				<img src="../images/ui/paneling_00094.png" onclick="javascript:rotate(1)" />
+				<img src="../images/ui/paneling_00101.png" onclick="" />
+				<img src="../images/ui/paneling_00097.png" onclick="" />
+			</div>
+		</div>
+		<canvas id="canvas" width="1400" height="768"></canvas>
+	</body>
+</body>
+</html>
